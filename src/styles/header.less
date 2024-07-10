@@ -1,0 +1,94 @@
+.header {
+    position: fixed;
+    width: 100vw;
+    z-index: var(--z-header);
+    left: 0;
+    top: 0;
+    height: var(--h-header);
+    background: rgb(4, 2, 20);
+    background: linear-gradient(180deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 58%, rgba(4, 2, 20, 0) 100%);
+
+    &__container {
+        height: 100%;
+    }
+
+    &__inner {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__orgs {
+        gap: 30px;
+        display: flex;
+        align-items: center;
+
+        >* {
+            display: flex;
+            gap: 10px;
+            letter-spacing: 2px;
+            font-size: 14px;
+            line-height: 1em;
+            text-transform: uppercase;
+            align-items: center;
+        }
+    }
+}
+
+.menu {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    padding: calc(var(--h-header) + 20px) 0 55px;
+    background-color: var(--c-dark-pink);
+    z-index: var(--z-menu);
+    transition: var(--tm);
+    overflow: hidden;
+
+    &[data-open='false'] {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &__container {
+        height: 100%;
+    }
+
+    &__inner {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    &__light {
+        position: absolute;
+        opacity: 0.2;
+        transition: var(--tl);
+        right: calc(100vw / 1440 * 400);
+        bottom: calc(100vh / 700 * 100);
+        z-index: 1;
+        pointer-events: none;
+        width: calc(100vw / 1440 * 400);
+        height: calc(100vw / 1440 * 400);
+        background-color: var(--c-light-pink);
+        filter: blur(10px);
+        border-radius: 50%;
+
+        [data-open='true'] & {
+            opacity: 1;
+            filter: blur(200px);
+            transition-delay: .2s;
+        }
+    }
+
+    &__mail {
+        .mobile-t(16px, 1.3em);
+        .tablet-t(20px, 1.3em);
+        .desktop-t(30px, 1.3em);
+    }
+}

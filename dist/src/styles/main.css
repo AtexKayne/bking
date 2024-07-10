@@ -1,0 +1,463 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html,
+body,
+div,
+span,
+object,
+iframe,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+code,
+em,
+img,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+b,
+u,
+i,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+main,
+canvas,
+embed,
+footer,
+header,
+nav,
+section,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: none;
+}
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+input {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+:root {
+  --z-header: 7;
+  --z-menu: 6;
+  --c-white: #ffffff;
+  --c-dark-pink: #340034;
+  --c-light-pink: #CC00FF;
+  --ts: 0.3s;
+  --tm: 0.4s;
+  --tl: 0.5s;
+  --h-header: 154px;
+  --space: 10px;
+}
+@font-face {
+  font-family: "Bender Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Regular"), url(../../src/fonts/bf2d136f158c0796316e.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Italic"), url(../../src/fonts/243a2503568a4814e4f3.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Light";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Light"), url(../../src/fonts/1a7a696787a8c31b3a62.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Light Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Light Italic"), url(../../src/fonts/e7e6c1ea895d129a542d.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Bold";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Bold"), url(../../src/fonts/fe871ef344e666c6bb50.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Bold Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Bold Italic"), url(../../src/fonts/5e87d7e98f231588883d.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Black";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Black"), url(../../src/fonts/48c8919c33a4c3553090.woff) format("woff");
+}
+@font-face {
+  font-family: "Bender Black Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Bender Black Italic"), url(../../src/fonts/a339957582ac728dfb9e.woff) format("woff");
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url(../../src/fonts/5fb81c36cc15b45f058e.eot);
+  src: local("Helvetica Neue Condensed Bold"), local("HelveticaNeueBoldCondensed"), url(../../src/fonts/5fb81c36cc15b45f058e.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/490e7ef63aa3d825442e.woff2) format("woff2"), url(../../src/fonts/032c5f4da263ec230768.woff) format("woff"), url(../../src/fonts/7ff1b25d7041efe11b45.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url(../../src/fonts/2fd967ecca3cf8f1a9bd.eot);
+  src: local("Helvetica Neue Condensed Black"), local("HelveticaNeueBlackCondensed"), url(../../src/fonts/2fd967ecca3cf8f1a9bd.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/c7df99f39634a23e1b6c.woff2) format("woff2"), url(../../src/fonts/d47ad62d25f9aee44126.woff) format("woff"), url(../../src/fonts/2e8b367db51828f58e83.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/83527cf0de2e28b5579b.eot);
+  src: local("HelveticaNeueCyr-Bold"), url(../../src/fonts/83527cf0de2e28b5579b.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/a737902275e936eaf242.woff2) format("woff2"), url(../../src/fonts/e8ac3e02953308d54ad6.woff) format("woff"), url(../../src/fonts/613e930355ab0b59fc48.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/fa2646c666ddd686575a.eot);
+  src: local("HelveticaNeueCyr-Light"), url(../../src/fonts/fa2646c666ddd686575a.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/ca1c9d28a98e39bc4088.woff2) format("woff2"), url(../../src/fonts/c1b4dce50601b85b61e7.woff) format("woff"), url(../../src/fonts/371670cc0c4aa701241a.ttf) format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/6053588ab977fb8f7880.eot);
+  src: local("HelveticaNeueCyr-Medium"), url(../../src/fonts/6053588ab977fb8f7880.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/751c19bd96c1fdbe6c88.woff2) format("woff2"), url(../../src/fonts/1c5a4d413294b14b36e0.woff) format("woff"), url(../../src/fonts/bfdbae3c80f7aa49c618.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/1af5f6be19c226c4e696.eot);
+  src: local("HelveticaNeueCyr-MediumItalic"), url(../../src/fonts/1af5f6be19c226c4e696.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/fbc43e274f21f1ca36ed.woff2) format("woff2"), url(../../src/fonts/6f15ca53ac5232e80832.woff) format("woff"), url(../../src/fonts/1c95d10a7a1e75a46dcb.ttf) format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/42eb8fb1e432ccb8cb3b.eot);
+  src: local("HelveticaNeueCyr-LightItalic"), url(../../src/fonts/42eb8fb1e432ccb8cb3b.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/bd4e9d1d0813fa37c753.woff2) format("woff2"), url(../../src/fonts/0fed6012d90fb1053b8e.woff) format("woff"), url(../../src/fonts/8d4fa63ad998071c6875.ttf) format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/d8226cff4546442ad22f.eot);
+  src: local("HelveticaNeueCyr-HeavyItalic"), url(../../src/fonts/d8226cff4546442ad22f.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/34e95009a9dc3a88b507.woff2) format("woff2"), url(../../src/fonts/1155b52c9ea607a642ae.woff) format("woff"), url(../../src/fonts/03e1ffd271ddbc1f3a19.ttf) format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/3ab0df24200b0c1d79c0.eot);
+  src: local("HelveticaNeueCyr-Black"), url(../../src/fonts/3ab0df24200b0c1d79c0.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/436267a0e2b580970561.woff2) format("woff2"), url(../../src/fonts/e46f690890ca78957b34.woff) format("woff"), url(../../src/fonts/284a83024e2df8c91f32.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/ffeb83b942d45ccc6fb3.eot);
+  src: local("HelveticaNeueCyr-Heavy"), url(../../src/fonts/ffeb83b942d45ccc6fb3.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/31abf4828115acce8d4e.woff2) format("woff2"), url(../../src/fonts/b5abc4a289cda2939dee.woff) format("woff"), url(../../src/fonts/c23733367c232fdea6f4.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/c02ec72c1b9e168556f5.eot);
+  src: local("HelveticaNeueCyr-Italic"), url(../../src/fonts/c02ec72c1b9e168556f5.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/0e02931ebfe2ee84edd6.woff2) format("woff2"), url(../../src/fonts/78ec9de57260e36191a1.woff) format("woff"), url(../../src/fonts/9ecfbd50a76530b5f7b5.ttf) format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/9d7c3316bda88462d707.eot);
+  src: local("HelveticaNeueCyr-Roman"), url(../../src/fonts/9d7c3316bda88462d707.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/d59df5a538d671a54c79.woff2) format("woff2"), url(../../src/fonts/0247694e510ebe67cce1.woff) format("woff"), url(../../src/fonts/0ca719c710b1fbd7e02f.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/f0bed924a36fcb36a9a6.eot);
+  src: local("HelveticaNeueCyr-BlackItalic"), url(../../src/fonts/f0bed924a36fcb36a9a6.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/aa3aba821167633605e0.woff2) format("woff2"), url(../../src/fonts/8583b8cc279eac573773.woff) format("woff"), url(../../src/fonts/9ee38d5c96737f0ceb9c.ttf) format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/5e96766165d7cb263f3a.eot);
+  src: local("HelveticaNeueCyr-UltraLightItalic"), url(../../src/fonts/5e96766165d7cb263f3a.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/e7533e52a0956c205070.woff2) format("woff2"), url(../../src/fonts/09b1d4ed64214487ae28.woff) format("woff"), url(../../src/fonts/62aca995ea725c98d8e6.ttf) format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/0712e3b2a36f1bc836e6.eot);
+  src: local("HelveticaNeueCyr-BoldItalic"), url(../../src/fonts/0712e3b2a36f1bc836e6.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/cbb08c15939e3f80e219.woff2) format("woff2"), url(../../src/fonts/cd0e9aaa4374f079da2e.woff) format("woff"), url(../../src/fonts/8aa92c3c0ccddf8cec47.ttf) format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/53e2f56215e64b347647.eot);
+  src: local("HelveticaNeueCyr-ThinItalic"), url(../../src/fonts/53e2f56215e64b347647.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/24eb1e00741337ef2751.woff2) format("woff2"), url(../../src/fonts/45d8142a6d17febfefb6.woff) format("woff"), url(../../src/fonts/c6a8d318290ef10a2f2f.ttf) format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/db6cdf138f8d75205b3f.eot);
+  src: local("HelveticaNeueCyr-UltraLight"), url(../../src/fonts/db6cdf138f8d75205b3f.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/92aee0fa03f7345b98a7.woff2) format("woff2"), url(../../src/fonts/7a9ed95490d291e3149e.woff) format("woff"), url(../../src/fonts/f0b5bdde1b074e7d9110.ttf) format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url(../../src/fonts/269fff804556e4161720.eot);
+  src: local("HelveticaNeueCyr-Thin"), url(../../src/fonts/269fff804556e4161720.eot?#iefix) format("embedded-opentype"), url(../../src/fonts/2f69ed0ac0885fc3f7e6.woff2) format("woff2"), url(../../src/fonts/7509330faf374d41f88d.woff) format("woff"), url(../../src/fonts/2df5e55fd0d45e98939d.ttf) format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+body {
+  font-family: "HelveticaNeueCyr", sans-serif;
+}
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  color: var(--c-white);
+}
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+@media only screen and (min-width: 992px) {
+  .btn {
+    transition: var(--ts);
+  }
+}
+.group {
+  display: flex;
+}
+.group > * {
+  display: block;
+}
+.group--center {
+  justify-content: center;
+  align-items: center;
+}
+.group--acenter {
+  align-items: center;
+}
+.group--between {
+  justify-content: space-between;
+}
+.group-jcenter {
+  justify-content: center;
+}
+.group--wrap {
+  flex-wrap: wrap;
+}
+.group--xl {
+  gap: 40px;
+}
+.icon-text {
+  display: flex;
+  gap: 12px;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  align-items: center;
+}
+.icon-text__text {
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  letter-spacing: 2px;
+  font-size: 20px;
+  line-height: 1.4em;
+  color: inherit;
+}
+.test {
+  background-image: url(../../src/cssimages/ad86928a903345511c18.png);
+  background-size: contain;
+  width: 385px;
+  height: 500px;
+  margin: 0 auto;
+}
+.mt-2 {
+  margin-top: calc(var(--space) * 2);
+}
+.mt-4 {
+  margin-top: calc(var(--space) * 4);
+}
+.header {
+  position: fixed;
+  width: 100vw;
+  z-index: var(--z-header);
+  left: 0;
+  top: 0;
+  height: var(--h-header);
+  background: #040214;
+  background: linear-gradient(180deg, #040214 0%, rgba(4, 2, 20, 0.75) 58%, rgba(4, 2, 20, 0.11) 100%);
+}
+.header__container {
+  height: 100%;
+}
+.header__inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header__orgs {
+  gap: 30px;
+  display: flex;
+  align-items: center;
+}
+.header__orgs > * {
+  display: flex;
+  gap: 10px;
+  letter-spacing: 2px;
+  font-size: 14px;
+  line-height: 1em;
+  text-transform: uppercase;
+  align-items: center;
+}
+.menu {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  padding: calc(var(--h-header) + 20px) 0 55px;
+  background-color: var(--c-dark-pink);
+  z-index: var(--z-menu);
+  transition: var(--tm);
+  overflow: hidden;
+}
+.menu[data-open='false'] {
+  opacity: 0;
+  pointer-events: none;
+}
+.menu__container {
+  height: 100%;
+}
+.menu__inner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  position: relative;
+}
+.menu__light {
+  position: absolute;
+  opacity: 0.2;
+  transition: var(--tl);
+  right: calc(100vw / 1440 * 400);
+  bottom: calc(100vh / 700 * 100);
+  z-index: 1;
+  pointer-events: none;
+  width: calc(100vw / 1440 * 400);
+  height: calc(100vw / 1440 * 400);
+  background-color: var(--c-light-pink);
+  filter: blur(10px);
+  border-radius: 50%;
+}
+[data-open='true'] .menu__light {
+  opacity: 1;
+  filter: blur(200px);
+  transition-delay: 0.2s;
+}
+@media only screen and (max-width: 767px) {
+  .menu__mail {
+    font-size: 16px;
+    line-height: 1.3em;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .menu__mail {
+    font-size: 20px;
+    line-height: 1.3em;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .menu__mail {
+    font-size: 30px;
+    line-height: 1.3em;
+  }
+}
+
