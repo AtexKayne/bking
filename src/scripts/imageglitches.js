@@ -490,7 +490,8 @@ const hiddenSecInit = async () => {
     const backgroundImage = await PIXI.Assets.load(src)
     const background = new PIXI.Sprite(backgroundImage)
     const blurSize = 32
-    const radius = 100
+    const radius = 200
+    let interval = null
 
     app.stage.addChild(background)
     background.width = width
@@ -517,7 +518,31 @@ const hiddenSecInit = async () => {
     });
 
     section.on('mouseleave', () => {
-        focus.x = -260
+        focus.width = 0
+        // if (interval) clearInterval(interval)
+        // interval = setInterval(() => {
+        //     const { height } = focus
+        //     if (height - 10 <= 0) {
+        //         focus.height = 0
+        //         clearInterval(interval)
+        //     } else {
+        //         focus.height = height - 20
+        //     }
+        // }, 10)
+    })
+
+    section.on('mouseenter', () => {
+        focus.width = (radius + blurSize) * 2
+        // if (interval) clearInterval(interval)
+        // interval = setInterval(() => {
+        //     const { height } = focus
+        //     if (height + 10 >= (radius + blurSize) * 2) {
+        //         focus.height = (radius + blurSize) * 2
+        //         clearInterval(interval)
+        //     } else {
+        //         focus.height = height + 20
+        //     }
+        // }, 10)
     })
 }
 

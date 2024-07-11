@@ -3,6 +3,7 @@ import { $ } from './helper'
 const headerInit = () => {
     const menuBtn = $('js-menu-btn')
     const menu = $('js-menu')
+    const header = $('js-header')
 
     let isOpen = false
 
@@ -11,6 +12,7 @@ const headerInit = () => {
 
         menuBtn.attr('data-open', isOpen)
         menu.attr('data-open', isOpen)
+        header.attr('data-open', isOpen)
         
         if (isOpen) {
             locscroll.stop()

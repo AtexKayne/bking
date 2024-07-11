@@ -1,0 +1,33 @@
+.footer {
+    padding: 80px 0;
+    z-index: 2;
+    position: relative;
+
+    &__top {
+        display: flex;
+        gap: 70px;
+        justify-content: space-between;
+    }
+
+    &__right {
+        max-width: 336px;
+    }
+
+    &__bottom {
+        padding-top: 80px;
+    }
+
+    &__light {
+        width: calc(100vw / 1440 * 300);
+        height: calc(100vw / 1440 * 300);
+        border-radius: 50%;
+        background-color: var(--c-green);
+        filter: blur(300px);
+        position: absolute;
+        z-index: 0;
+        pointer-events: none;
+        top: 35%;
+        left: 60%;
+        transform: translate(-50%);
+    }
+}

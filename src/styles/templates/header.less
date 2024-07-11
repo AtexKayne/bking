@@ -5,8 +5,13 @@
     left: 0;
     top: 0;
     height: var(--h-header);
+    transition: .3s;
     background: rgb(4, 2, 20);
     background: linear-gradient(180deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 58%, rgba(4, 2, 20, 0) 100%);
+
+    &[data-open='true'] {
+        background: transparent
+    }
 
     &__container {
         height: 100%;
@@ -17,6 +22,20 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    &__menu-btn {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        width: 155px;
+        height: 60px;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border: 1px solid var(--c-white);
     }
 
     &__orgs {
