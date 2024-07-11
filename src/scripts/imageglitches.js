@@ -265,7 +265,7 @@ const appendRect = (app) => {
 }
 
 const getSettings = () => {
-    const timePerState = 1000
+    const timePerState = 400
     const states = 4
     const perFrame = 7
     const aStates = []
@@ -300,7 +300,7 @@ const getSettings = () => {
 }
 
 const tickerHandler = (app, text, effect) => {
-    const co = 1
+    const co = 4
     if (effect === 'color') {
         text.filters[0].red.x = randomIntFromInterval(-co, co)
         text.filters[0].red.y = randomIntFromInterval(-co, co)
