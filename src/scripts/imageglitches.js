@@ -424,8 +424,11 @@ const btnsInit = () => {
             fontFamily,
             fontWeight,
             fill: color,
-            letterSpacing: +letterSpacing.replace('px', ''),
+            wordWrap: true,
             align: 'center',
+            wordWrapWidth: cWidth - 40,
+            letterSpacing: +letterSpacing.replace('px', ''),
+            // align: 'center',
         })
         const btnText = new PIXI.Text({ text, style })
         btnText.x = (cWidth / 2) - (btnText.width / 2)
@@ -479,24 +482,23 @@ const hiddenSecInit = async () => {
     const section = $('js-hidden-sec')
     if (!section.items.length) return
     const src = section.attr('data-src')
+    const node = section.eq(0)
+    const width = node.clientWidth
+    const height = node.clientHeight
+    const params = { background: '#040214', resizeTo: window, width, height }
+    const app = await appInit(node, [], params)
+    const backgroundImage = await PIXI.Assets.load(src)
+    const background = new PIXI.Sprite(backgroundImage)
+    const blurSize = 32
+    const radius = 100
 
-    const app = new PIXI.Application();
-    await app.init({ background: '#040214', resizeTo: window });
-    section.eq(0).appendChild(app.canvas);
-
-    const radius = 100;
-    const blurSize = 32;
-
-    const grassTexture = await PIXI.Assets.load(src);
-    const background = new PIXI.Sprite(grassTexture);
-
-    app.stage.addChild(background);
-    background.width = app.screen.width;
-    background.height = app.screen.height;
+    app.stage.addChild(background)
+    background.width = width
+    background.height = height
 
     const circle = new PIXI.Graphics().circle(radius + blurSize, radius + blurSize, radius).fill({ color: 0xff0000 });
     // { strength, quality, resolution, kernelSize }
-    circle.filters = [new PIXI.BlurFilter({ blur: blurSize + 20, quality: 10 })];
+    circle.filters = [new PIXI.BlurFilter({ strength: blurSize + 20, quality: 10 })];
     const bounds = new PIXI.Rectangle(0, 0, (radius + blurSize) * 2, (radius + blurSize) * 2);
     const texture = app.renderer.generateTexture({
         target: circle,
@@ -516,10 +518,6 @@ const hiddenSecInit = async () => {
 
     section.on('mouseleave', () => {
         focus.x = -260
-    })
-
-    section.on('mouseenter', () => {
-        // circle.renderable = true
     })
 }
 

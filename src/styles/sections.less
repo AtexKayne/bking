@@ -168,6 +168,52 @@
     }
 }
 
+.hidden-sec {
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vw / 2.057);
+
+    canvas {
+        top: 0;
+        left: 0;
+        z-index: 1;
+        position: absolute;
+    }
+
+    &__title {
+        text-align: center;
+        letter-spacing: 3px;
+
+        .desktop-t(60px, 80px);
+
+        strong {
+            font-family: 'Bender black';
+            color: var(--c-light-pink)
+        }
+    }
+
+    &__container {
+        display: flex;
+        position: relative;
+        z-index: 2;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__btn {
+        width: 515px;
+        margin-top: 60px;
+    }
+
+    &__link {
+        margin-top: 40px;
+    }
+}
+
 .nominations {
     width: 100%;
 

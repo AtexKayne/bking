@@ -12,7 +12,12 @@ const headerInit = () => {
         menuBtn.attr('data-open', isOpen)
         menu.attr('data-open', isOpen)
         
-        console.log(isOpen);
+        if (isOpen) {
+            locscroll.stop()
+            console.log(locscroll);
+        } else {
+            locscroll.start()
+        }
     }
 
     menuBtn.on('click', menuToggle)
