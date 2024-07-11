@@ -187,18 +187,19 @@ const appendText = async (app) => {
         new PIXI.Container()
     ]
     const standartStyle = {
-        fontFamily: 'Bender regular',
-        fontWeight: 'bold',
+        fontFamily: 'Bender black',
+        // fontWeight: 'black',
         fill: '#fff',
-        wordWrap: true,
+        wordWrap: false,
         align: 'center',
-        wordWrapWidth: width / 1440 * 500,
+        // wordWrapWidth: width / 1440 * 700,
     }
     const textList = [
-        { text: 'ㅤbarber kingㅤ 2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
-        { text: 'ㅤ21 - 22 оkтябряㅤ', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
+        { text: 'ㅤbarber kingㅤ', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
+        { text: '2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 + 130 },
+        { text: 'ㅤ21 - 22 оkтябряㅤ', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
         { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + 100 },
-        { text: 'ㅤМТС Live Холлㅤ', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
+        { text: 'ㅤМТС Live Холлㅤ', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
         { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + 100 },
         { text: 'barber king', fontSize: fontSize3, container: 4, x: width / 3.8, y: height / 4 },
         { text: '2o24', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
@@ -492,6 +493,8 @@ const hiddenSecInit = async () => {
     const blurSize = 32
     const radius = 200
     let interval = null
+    let posX = 0
+    let posY = 0
 
     app.stage.addChild(background)
     background.width = width
@@ -513,36 +516,46 @@ const hiddenSecInit = async () => {
     app.stage.eventMode = 'static';
     app.stage.hitArea = app.screen;
     app.stage.on('pointermove', (event) => {
-        focus.position.x = event.global.x - focus.width / 2;
-        focus.position.y = event.global.y - focus.height / 2;
+        posX = event.global.x
+        posY = event.global.y
+        focus.position.x = Math.max(posX - focus.width / 2, 0)
+        focus.position.y = Math.max(posY - focus.height / 2, 0)
     });
 
     section.on('mouseleave', () => {
-        focus.width = 0
-        // if (interval) clearInterval(interval)
-        // interval = setInterval(() => {
-        //     const { height } = focus
-        //     if (height - 10 <= 0) {
-        //         focus.height = 0
-        //         clearInterval(interval)
-        //     } else {
-        //         focus.height = height - 20
-        //     }
-        // }, 10)
+        // focus.width = 0
+        if (interval) clearInterval(interval)
+        interval = setInterval(() => {
+            const { height } = focus
+            if (height - 10 <= 1) {
+                focus.width = 1
+                focus.height = 1
+                clearInterval(interval)
+            } else {
+                focus.width = height - 20
+                focus.height = height - 20
+                focus.position.x = Math.max(posX - focus.width / 2, 0)
+                focus.position.y = Math.max(posY - focus.height / 2, 0)
+            }
+        }, 10)
     })
 
     section.on('mouseenter', () => {
-        focus.width = (radius + blurSize) * 2
-        // if (interval) clearInterval(interval)
-        // interval = setInterval(() => {
-        //     const { height } = focus
-        //     if (height + 10 >= (radius + blurSize) * 2) {
-        //         focus.height = (radius + blurSize) * 2
-        //         clearInterval(interval)
-        //     } else {
-        //         focus.height = height + 20
-        //     }
-        // }, 10)
+        // focus.width = (radius + blurSize) * 2
+        if (interval) clearInterval(interval)
+        interval = setInterval(() => {
+            const { height } = focus
+            if (height + 10 >= (radius + blurSize) * 2) {
+                focus.height = (radius + blurSize) * 2
+                focus.width = (radius + blurSize) * 2
+                clearInterval(interval)
+            } else {
+                focus.height = height + 20
+                focus.width = height + 20
+                focus.position.x = Math.max(posX - focus.width / 2, 0)
+                focus.position.y = Math.max(posY - focus.height / 2, 0)
+            }
+        }, 10)
     })
 }
 
