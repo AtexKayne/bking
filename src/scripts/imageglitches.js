@@ -420,15 +420,13 @@ const btnsInit = () => {
         })
 
         const btnText = new PIXI.Text({ text, style })
+        btnText.width = Math.floor(btnText.width)
+        btnText.height = Math.floor(btnText.height)
         if (text.includes('ПОДАТЬ')) {
-            btnText.width = btnText.width + 0.5
-            btnText.height = btnText.height + 0.5
-        } else if (text.includes('ВЫБРАТЬ')) {
-            btnText.width = btnText.width + 0.5
-        } else {
-            btnText.width = btnText.width + 2
+            btnText.width = +(btnText.width + 0.5).toFixed(1)
+            btnText.height = +(btnText.height + 0.5).toFixed(1)
         }
-        console.log('t');
+        console.log(btnText.width, btnText.height);
         btnText.x = (cWidth / 2) - (btnText.width / 2)
         btnText.y = (cHeight / 2) - (btnText.height / 2)
         app.stage.addChild(btnText)
