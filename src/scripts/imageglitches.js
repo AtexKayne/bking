@@ -4,13 +4,22 @@ import { $, createObserver, randomIntFromInterval } from './helper'
 
 const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange) => {
     const app = new PIXI.Application()
+    const ratio = window.devicePixelRatio
+    let isInView = false
+    console.log(ratio);
 
-    if (!params.width) params.width = node.clientWidth
-    if (!params.height) params.height = node.clientHeight
+    params.width = !params.width ? node.clientWidth * ratio : params.width * ratio
+    params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
 
     await app.init(params)
     const canvas = app.canvas
+    try {
+        canvas.getContext('2d').scale(ratio, ratio);
+    } catch (error) {
+        console.info(error)
+    }
     node.append(canvas)
+
     const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill(params.background)
     app.stage.addChild(rect)
 
@@ -45,11 +54,20 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange
 
     createObserver(node, (entries) => {
         const { isIntersecting } = entries[0]
+        isInView = isIntersecting
         if (isIntersecting) app.ticker.start()
         else app.ticker.stop()
         if (typeof onViewChange === 'function') {
             onViewChange(isIntersecting)
         }
+    })
+
+    window.addEventListener('blur', () => {
+        if (isInView) app.ticker.stop()
+    })
+
+    window.addEventListener('focus', () => {
+        if (isInView) app.ticker.start()
     })
 
     return app
@@ -276,8 +294,6 @@ const glitchImagesInit = async () => {
         sprite.filters[2].blur = 30
         sprite.filters[2].quality = 10
 
-
-
         app.ticker.add((ticker) => {
             const { top, height } = el.getBoundingClientRect()
             if (-top > height) return
@@ -358,13 +374,13 @@ const btnsInit = () => {
         let force = 0
         let forceInterval = null
         let forceTimeout = null
+        let isHovered = false
         const cDark = '#040214'
         const cLight = '#ffffff'
         const text = btn.innerHTML.trim().toUpperCase()
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
         const wrapWidth = btn.dataset.wrapwidth
 
-        
         const {
             fontSize,
             fontFamily,
@@ -375,7 +391,7 @@ const btnsInit = () => {
             height,
             backgroundColor
         } = getComputedStyle(btn)
-        
+
         const cWidth = btn.clientWidth
         const cHeight = btn.clientHeight
         const params = { background: cDark, width: cWidth, height: cHeight }
@@ -398,7 +414,35 @@ const btnsInit = () => {
 
         app.stage.addChild(rect)
 
+
+
         await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
+        // 
+        // const f = PIXI.BitmapFontManager.install({
+        //     name: fontFamily,
+        //     style: {
+        //         fontSize: +fontSize.replace('px', '')
+        //     }
+        // });
+        // const t1 = f.pages[0].texture;
+        // const rt = new Sprite(t1);
+        // let data = app.renderer.extract.pixels(rt);
+        // data = data.pixels.map((x, i) => x < (i % 4 === 3 ? 100 : 200) ? 0 : 255);
+
+        // const t2 = Texture.from({
+        //     resource: data,
+        //     width: t1.width,
+        //     height: t1.height
+        // });
+
+        // f.pages[0].texture.source = t2.source;
+        // for (const k in f.chars) {
+        //     if (k === " ") { return };
+        //     f.chars[k].texture.source = t2.source;
+        // };
+        // 
+
+
         const style = new PIXI.TextStyle({
             fontSize: +fontSize.replace('px', '') * 2,
             fontFamily,
@@ -415,7 +459,9 @@ const btnsInit = () => {
         btnText.y = (cHeight / 2) - (btnText.height / 2)
         app.stage.addChild(btnText)
 
+
         app.ticker.add(() => {
+            console.log(3);
             const of = Math.max(Math.floor(20 * force), 0)
             app.stage.filters[0].direction = randomIntFromInterval(-20, 20)
             app.stage.filters[0].offset = randomIntFromInterval(-of, of)
@@ -423,6 +469,8 @@ const btnsInit = () => {
         })
 
         btn.addEventListener('mouseenter', () => {
+            isHovered = true
+            app.ticker.start()
             force = 1
             if (type === 'secondary') {
                 rect.filters[0].color = cLight
@@ -442,6 +490,7 @@ const btnsInit = () => {
         })
 
         btn.addEventListener('mouseleave', () => {
+            isHovered = false
             force = 0
             if (forceTimeout) clearTimeout(forceTimeout)
             if (forceInterval) clearInterval(forceInterval)
@@ -452,6 +501,10 @@ const btnsInit = () => {
                 rect.filters[0].color = cDark
                 btnText.style.fill = cLight
             }
+
+            setTimeout(() => {
+                if (!isHovered) app.ticker.stop()
+            }, 1000);
         })
     })
 }
