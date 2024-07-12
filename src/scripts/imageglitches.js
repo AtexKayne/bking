@@ -372,8 +372,6 @@ const btnsInit = () => {
         const text = btn.innerHTML.trim().toUpperCase()
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
         const wrapWidth = btn.dataset.wrapwidth
-        let ratio = window.devicePixelRatio
-        // ratio=0.5
 
         const {
             fontSize,
@@ -409,7 +407,6 @@ const btnsInit = () => {
         app.stage.addChild(rect)
 
         await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
-        const container = new PIXI.Container()
 
         const style = new PIXI.TextStyle({
             fontSize: +fontSize.replace('px', ''),
@@ -421,14 +418,20 @@ const btnsInit = () => {
             wordWrapWidth: +wrapWidth,
             letterSpacing: +letterSpacing.replace('px', ''),
         })
-        
+
         const btnText = new PIXI.Text({ text, style })
-        btnText.width = btnText.width * ratio
-        container.addChild(btnText)
-        container.width = container.width / ratio - 1
-        container.x = (cWidth / 2) - (container.width / 2)
-        container.y = (cHeight / 2) - (container.height / 2)
-        app.stage.addChild(container)
+        if (text.includes('ПОДАТЬ')) {
+            btnText.width = btnText.width + 0.5
+            btnText.height = btnText.height + 0.5
+        } else if (text.includes('ВЫБРАТЬ')) {
+            btnText.width = btnText.width + 0.5
+        } else {
+            btnText.width = btnText.width + 2
+        }
+        console.log('t');
+        btnText.x = (cWidth / 2) - (btnText.width / 2)
+        btnText.y = (cHeight / 2) - (btnText.height / 2)
+        app.stage.addChild(btnText)
 
         app.ticker.add(() => {
             const of = Math.max(Math.floor(20 * force), 0)
