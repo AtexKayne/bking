@@ -2,126 +2,7 @@ import * as PIXI from 'pixi.js'
 import * as filters from 'pixi-filters'
 import { $, createObserver, randomIntFromInterval } from './helper'
 
-const glitchImagesIn = async () => {
-    const images = $('js-glitch-image')
-    const apps = []
-    images.items.forEach(async (el, index) => {
-        const app = new PIXI.Application()
-        await app.init({ width: el.dataset.width, height: el.dataset.height, background: '#040214' })
-        apps.push(app)
-        const rgb = new filters.RGBSplitFilter()
-        const glitch = new filters.GlitchFilter()
-        const shadow = new filters.DropShadowFilter()
-        // const blur = new filters.KawaseBlurFilter()
-        const canvas = app.canvas
-        el.append(canvas)
-        const src = el.dataset.src
-        await PIXI.Assets.load(src)
-        // const circle = new PIXI.Graphics().circle(250, 440, 150).fill('#CC00FF')
-        // app.stage.addChild(circle)
-        // circle.filters = [blur]
-        // circle.filters[0].strength = 40
-        // circle.filters[0].quality = 10
-        // circle.filters[0].pixelSizeY = 1
-        // circle.filters[0].pixelSizeX = 1
-
-        const sprite = PIXI.Sprite.from(src)
-        sprite.x = 0
-        sprite.y = 50
-        sprite.filters = [rgb, glitch, shadow]
-        sprite.width = 483
-        sprite.height = 580
-        app.stage.addChild(sprite)
-        app.ticker.maxFPS = 12
-
-
-        sprite.filters[0].red.x = 0
-        sprite.filters[0].red.y = 0
-        sprite.filters[0].green.x = 0
-        sprite.filters[0].green.y = 0
-        sprite.filters[0].blue.x = 0
-        sprite.filters[0].blue.y = 0
-        sprite.filters[1].offset = 0
-        sprite.filters[1].slices = 1
-        sprite.filters[2].color = '#CC00FF'
-        sprite.filters[2].blur = 30
-        sprite.filters[2].quality = 10
-
-
-        // 040214
-
-        const intervalOffset = 20
-        let intCount = 0
-        let newInterval = randomIntFromInterval(20, 70)
-        let isStartPos = false
-        let isInView = false
-        app.ticker.add((ticker) => {
-            // if (elapsed > interval && elapsed < interval + intervalOffset) {
-            if (isStartPos) {
-                sprite.filters[1].offset = 0
-                sprite.filters[1].slices = 1
-                sprite.filters[0].red.x = 0
-                sprite.filters[0].red.y = 0
-                sprite.filters[0].green.x = 0
-                sprite.filters[0].green.y = 0
-                sprite.filters[0].blue.x = 0
-                sprite.filters[0].blue.y = 0
-
-                isStartPos = false
-                app.ticker.stop()
-            } else {
-                sprite.filters[1].offset = randomIntFromInterval(-20, 20)
-                sprite.filters[1].slices = randomIntFromInterval(1, 6)
-                sprite.filters[0].red.x = randomIntFromInterval(-10, 10)
-                sprite.filters[0].red.y = randomIntFromInterval(-10, 10)
-                sprite.filters[0].green.x = randomIntFromInterval(-10, 10)
-                sprite.filters[0].green.y = randomIntFromInterval(-10, 10)
-                sprite.filters[0].blue.x = randomIntFromInterval(-10, 10)
-                sprite.filters[0].blue.y = randomIntFromInterval(-10, 10)
-            }
-            // } else if (elapsed > interval + intervalOffset) {
-            //     interval = randomIntFromInterval(30, 400)
-            //     elapsed = 0
-            // }
-        })
-
-        const inter = setInterval(() => {
-            if (!isInView) return
-            intCount++
-
-            if (intCount > newInterval && intCount < newInterval + intervalOffset) {
-                app.ticker.start()
-            } else if (intCount > newInterval + intervalOffset) {
-                intCount = 0
-                newInterval = randomIntFromInterval(50, 150)
-                app.ticker.stop()
-                setTimeout(() => {
-                    isStartPos = true
-                    app.ticker.start()
-                }, 80)
-            }
-        }, 20)
-
-        createObserver(el, (entries) => {
-            isInView = entries[0].isIntersecting
-            if (isInView) {
-                app.ticker.start()
-            } else {
-                app.ticker.stop()
-            }
-        })
-    })
-
-    window.addEventListener('blur', () => {
-        apps.forEach(app => app.ticker.stop())
-    })
-
-    window.addEventListener('focus', () => {
-        apps.forEach(app => app.ticker.start())
-    })
-}
-
-const appInit = async (node, effects = [], params = {}, maxFPS = 0) => {
+const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange) => {
     const app = new PIXI.Application()
 
     if (!params.width) params.width = node.clientWidth
@@ -166,6 +47,9 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0) => {
         const { isIntersecting } = entries[0]
         if (isIntersecting) app.ticker.start()
         else app.ticker.stop()
+        if (typeof onViewChange === 'function') {
+            onViewChange(isIntersecting)
+        }
     })
 
     return app
@@ -346,6 +230,98 @@ const setAnimationState = (app, index, textes) => {
     }
 }
 
+const glitchImagesInit = async () => {
+    const images = $('js-glitch-image')
+    const apps = []
+    images.items.forEach(async (el, index) => {
+        const params = {
+            width: el.dataset.width,
+            height: el.dataset.height,
+            background: '#040214'
+        }
+        const overlay = el.previousElementSibling
+        let isInView = false
+        let isStopped = false
+        let timeout = null
+
+        const stopFunc = () => {
+            if (!isInView) return
+            isStopped = !isStopped
+            clearTimeout(timeout)
+            timeout = setTimeout(stopFunc, randomIntFromInterval(100, 1200))
+        }
+
+        const obsHandler = (entry) => {
+            isInView = entry
+            if (isInView) stopFunc()
+            else clearTimeout(timeout)
+        }
+        const app = await appInit(el, [], params, 12, obsHandler)
+        apps.push(app)
+        const rgb = new filters.RGBSplitFilter()
+        const glitch = new filters.GlitchFilter()
+        const shadow = new filters.DropShadowFilter()
+        const src = el.dataset.src
+
+        await PIXI.Assets.load(src)
+        const sprite = PIXI.Sprite.from(src)
+        sprite.x = 0
+        sprite.y = 50
+        sprite.filters = [rgb, glitch, shadow]
+        sprite.width = 483
+        sprite.height = 580
+        app.stage.addChild(sprite)
+
+        sprite.filters[2].color = '#CC00FF'
+        sprite.filters[2].blur = 30
+        sprite.filters[2].quality = 10
+
+
+
+        app.ticker.add((ticker) => {
+            const { top, height } = el.getBoundingClientRect()
+            if (-top > height) return
+
+            const wc = innerHeight / 2
+            const ic = height / 2
+            const p = Math.abs(top + ic - wc)
+            const l = innerHeight - (wc - ic)
+            const m = p / l
+
+            overlay.style.opacity = m + 0.1
+
+            if (isStopped) {
+                sprite.filters[0].green.x = 0
+                sprite.filters[0].green.y = 0
+                sprite.filters[0].red.x = 0
+                sprite.filters[0].red.y = 0
+                sprite.filters[0].blue.x = 0
+                sprite.filters[0].blue.y = 0
+                sprite.filters[1].offset = 0
+                sprite.filters[1].slices = 0
+
+                return
+            }
+
+            const i = m < 0.25 ? 0 : m
+            const s = Math.max(1 - i, 0)
+            const co = s * 10
+            const so = s * 20
+            const bo = s * 30
+
+            sprite.filters[0].red.x = randomIntFromInterval(-co, co)
+            sprite.filters[0].red.y = randomIntFromInterval(-co, co)
+            sprite.filters[0].green.x = randomIntFromInterval(-co, co)
+            sprite.filters[0].green.y = randomIntFromInterval(-co, co)
+            sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
+            sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
+            sprite.filters[1].offset = randomIntFromInterval(-so, so)
+            sprite.filters[1].slices = randomIntFromInterval(1, 6)
+            sprite.filters[2].blur = bo
+        })
+    })
+}
+
 const mainSecInit = async () => {
     const main = $('js-main-sec')
     if (!main.items.length) return
@@ -386,6 +362,9 @@ const btnsInit = () => {
         const cLight = '#ffffff'
         const text = btn.innerHTML.trim().toUpperCase()
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
+        const wrapWidth = btn.dataset.wrapwidth
+
+        
         const {
             fontSize,
             fontFamily,
@@ -396,7 +375,7 @@ const btnsInit = () => {
             height,
             backgroundColor
         } = getComputedStyle(btn)
-
+        
         const cWidth = btn.clientWidth
         const cHeight = btn.clientHeight
         const params = { background: cDark, width: cWidth, height: cHeight }
@@ -421,28 +400,26 @@ const btnsInit = () => {
 
         await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
         const style = new PIXI.TextStyle({
-            fontSize,
+            fontSize: +fontSize.replace('px', '') * 2,
             fontFamily,
             fontWeight,
             fill: color,
-            wordWrap: true,
             align: 'center',
-            wordWrapWidth: cWidth - 40,
+            wordWrap: !!wrapWidth,
+            wordWrapWidth: +wrapWidth,
             letterSpacing: +letterSpacing.replace('px', ''),
-            // align: 'center',
         })
         const btnText = new PIXI.Text({ text, style })
+        btnText.scale = 0.5
         btnText.x = (cWidth / 2) - (btnText.width / 2)
         btnText.y = (cHeight / 2) - (btnText.height / 2)
         app.stage.addChild(btnText)
 
-        // app.ticker.stop()
         app.ticker.add(() => {
             const of = Math.max(Math.floor(20 * force), 0)
-            const sl = Math.max(Math.floor(60 * force), 0)
             app.stage.filters[0].direction = randomIntFromInterval(-20, 20)
             app.stage.filters[0].offset = randomIntFromInterval(-of, of)
-            app.stage.filters[0].slices = randomIntFromInterval(sl, sl * 2)
+            app.stage.filters[0].slices = 150
         })
 
         btn.addEventListener('mouseenter', () => {
@@ -560,7 +537,7 @@ const hiddenSecInit = async () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    glitchImagesIn()
+    glitchImagesInit()
     mainSecInit()
     btnsInit()
     hiddenSecInit()

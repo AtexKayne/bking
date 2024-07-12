@@ -48,6 +48,10 @@ export const $ = (q) => {
             },
             eq: function (index) {
                 return this.items[index]
+            },
+            find: function (query) {
+                const elems = this.items[0].querySelectorAll(query)
+                return !!elems.length ? Array.from(elems) : null
             }
         }
         return obj
