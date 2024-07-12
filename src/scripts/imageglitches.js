@@ -372,6 +372,8 @@ const btnsInit = () => {
         const text = btn.innerHTML.trim().toUpperCase()
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
         const wrapWidth = btn.dataset.wrapwidth
+        let ratio = window.devicePixelRatio
+        // ratio=0.5
 
         const {
             fontSize,
@@ -407,9 +409,10 @@ const btnsInit = () => {
         app.stage.addChild(rect)
 
         await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
+        const container = new PIXI.Container()
 
         const style = new PIXI.TextStyle({
-            fontSize: +fontSize.replace('px', '') * 4,
+            fontSize: +fontSize.replace('px', ''),
             fontFamily,
             fontWeight,
             fill: color,
@@ -418,19 +421,16 @@ const btnsInit = () => {
             wordWrapWidth: +wrapWidth,
             letterSpacing: +letterSpacing.replace('px', ''),
         })
+        
         const btnText = new PIXI.Text({ text, style })
-        btnText.scale = 0.25
-        const ratio = window.devicePixelRatio
-        console.log(ratio);
         btnText.width = btnText.width * ratio
-        btnText.x = (cWidth / 2) - (btnText.width / 2)
-        btnText.y = (cHeight / 2) - (btnText.height / 2)
-        // console.log(btnText);
-        app.stage.addChild(btnText)
-
+        container.addChild(btnText)
+        container.width = container.width / ratio - 1
+        container.x = (cWidth / 2) - (container.width / 2)
+        container.y = (cHeight / 2) - (container.height / 2)
+        app.stage.addChild(container)
 
         app.ticker.add(() => {
-            console.log(3);
             const of = Math.max(Math.floor(20 * force), 0)
             app.stage.filters[0].direction = randomIntFromInterval(-20, 20)
             app.stage.filters[0].offset = randomIntFromInterval(-of, of)
