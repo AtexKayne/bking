@@ -3,14 +3,23 @@ import * as filters from 'pixi-filters'
 import { $, createObserver, randomIntFromInterval } from './helper'
 
 const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange) => {
+    const ratio = window.devicePixelRatio;
+    console.log(ratio);
     const app = new PIXI.Application()
     let isInView = false
 
-    if (!params.width) params.width = node.clientWidth
-    if (!params.height) params.height = node.clientHeight
+    params.width = !params.width ? node.clientWidth * ratio : params.width * ratio
+    params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
 
     await app.init(params)
+
+
     const canvas = app.canvas
+
+    canvas.style.width = params.width / ratio + 'px';
+    canvas.style.height = params.height / ratio + 'px';
+    // const ctx2 = can2.getContext('2d');
+    // ctx2.scale(pixelRatio, pixelRatio);
     node.append(canvas)
     const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill(params.background)
     app.stage.addChild(rect)
@@ -66,9 +75,10 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange
 }
 
 const appendText = async (app) => {
+    const ratio = devicePixelRatio
     await PIXI.Assets.load('/src/fonts/bf2d136f158c0796316e.woff')
-    const width = app.canvas.clientWidth
-    const height = app.canvas.clientHeight
+    const width = app.canvas.clientWidth * ratio
+    const height = app.canvas.clientHeight * ratio
     const fontSize1 = width / 1440 * 96
     const fontSize2 = width / 1440 * 40
     const fontSize3 = width / 1440 * 58
@@ -243,6 +253,7 @@ const setAnimationState = (app, index, textes) => {
 const glitchImagesInit = async () => {
     const images = $('js-glitch-image')
     const apps = []
+    const ratio = devicePixelRatio
     images.items.forEach(async (el, index) => {
         const params = {
             width: el.dataset.width,
@@ -276,10 +287,10 @@ const glitchImagesInit = async () => {
         await PIXI.Assets.load(src)
         const sprite = PIXI.Sprite.from(src)
         sprite.x = 0
-        sprite.y = 50
+        sprite.y = 50 * ratio
         sprite.filters = [rgb, glitch, shadow]
-        sprite.width = 483
-        sprite.height = 580
+        sprite.width = 483 * ratio
+        sprite.height = 580 * ratio
         app.stage.addChild(sprite)
 
         sprite.filters[2].color = '#CC00FF'
@@ -333,8 +344,9 @@ const glitchImagesInit = async () => {
 const mainSecInit = async () => {
     const main = $('js-main-sec')
     if (!main.items.length) return
+    const ratio = devicePixelRatio
     const mainNode = main.eq(0)
-    const params = { background: '#040214', resizeTo: window }
+    const params = { background: '#040214', width: innerWidth, height: innerHeight }
     const app = await appInit(mainNode, ['glitch'], params, 1)
     const circle = appendRect(app)
     const textes = await appendText(app)
@@ -368,6 +380,7 @@ const btnsInit = () => {
         let forceTimeout = null
         let isHovered = false
         const cDark = '#040214'
+        const ratio = devicePixelRatio
         const cLight = '#ffffff'
         const text = btn.innerHTML.trim().toUpperCase()
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
@@ -396,7 +409,7 @@ const btnsInit = () => {
         app.stage.filters[0].fillMode = 0
 
         const rect = new PIXI.Graphics()
-        rect.rect(0, 0, cWidth, cHeight)
+        rect.rect(0, 0, cWidth * ratio, cHeight * ratio)
         rect.fill(backgroundColor)
 
         if (type === 'secondary') {
@@ -409,7 +422,7 @@ const btnsInit = () => {
         await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
 
         const style = new PIXI.TextStyle({
-            fontSize: +fontSize.replace('px', ''),
+            fontSize: +fontSize.replace('px', '') * ratio,
             fontFamily,
             fontWeight,
             fill: color,
@@ -420,15 +433,8 @@ const btnsInit = () => {
         })
 
         const btnText = new PIXI.Text({ text, style })
-        btnText.width = Math.floor(btnText.width)
-        btnText.height = Math.floor(btnText.height)
-        if (text.includes('ПОДАТЬ')) {
-            btnText.width = +(btnText.width + 0.5).toFixed(1)
-            btnText.height = +(btnText.height + 0.5).toFixed(1)
-        }
-        console.log(btnText.width, btnText.height);
-        btnText.x = (cWidth / 2) - (btnText.width / 2)
-        btnText.y = (cHeight / 2) - (btnText.height / 2)
+        btnText.x = (cWidth * ratio / 2) - (btnText.width / 2)
+        btnText.y = (cHeight * ratio / 2) - (btnText.height / 2)
         app.stage.addChild(btnText)
 
         app.ticker.add(() => {
@@ -561,8 +567,8 @@ const hiddenSecInit = async () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     glitchImagesInit()
-    mainSecInit()
     btnsInit()
+    mainSecInit()
     hiddenSecInit()
 })
 
