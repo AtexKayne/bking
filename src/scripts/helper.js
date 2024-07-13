@@ -74,6 +74,8 @@ export const createObserver = (element, fn) => {
     return observer
 }
 
+export const detectMobile = () => window.innerWidth < 768
+
 Number.prototype.isBetween = function (a, b) {
     return a <= this && this <= b;
 };

@@ -3,7 +3,13 @@ import { $ } from './helper'
 
 window.locscroll = new locomotiveScroll({
     el: document.querySelector('.scroll'),
-    smooth: true
+    smooth: true,
+    tablet: {
+        smooth: true
+    },
+    smartphone: {
+        smooth: true
+    }
 })
 
 document.addEventListener('DOMContentLoaded', () => {

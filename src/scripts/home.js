@@ -1,4 +1,4 @@
-import { $, createObserver, randomIntFromInterval } from './helper'
+import { $, createObserver, detectMobile, randomIntFromInterval } from './helper'
 
 const linesInit = () => {
     const lines = $('js-lines')
@@ -28,6 +28,7 @@ const linesInit = () => {
 }
 
 const nominationsInit = () => {
+    if (detectMobile()) return
     const section = $('js-nominations')
     if (!section) return
     const items = section.find('.nominations__item')

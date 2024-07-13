@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js'
 import * as filters from 'pixi-filters'
-import { $, createObserver, randomIntFromInterval } from './helper'
+import { $, createObserver, detectMobile, randomIntFromInterval } from './helper'
+
+const ratio = window.devicePixelRatio
 
 const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange) => {
-    const ratio = window.devicePixelRatio;
-    console.log(ratio);
     const app = new PIXI.Application()
     let isInView = false
 
@@ -13,13 +13,9 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange
 
     await app.init(params)
 
-
     const canvas = app.canvas
-
     canvas.style.width = params.width / ratio + 'px';
     canvas.style.height = params.height / ratio + 'px';
-    // const ctx2 = can2.getContext('2d');
-    // ctx2.scale(pixelRatio, pixelRatio);
     node.append(canvas)
     const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill(params.background)
     app.stage.addChild(rect)
@@ -75,14 +71,15 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange
 }
 
 const appendText = async (app) => {
-    const ratio = devicePixelRatio
     await PIXI.Assets.load('/src/fonts/bf2d136f158c0796316e.woff')
-    const width = app.canvas.clientWidth * ratio
-    const height = app.canvas.clientHeight * ratio
+    const isMobile = detectMobile()
+    const width = app.canvas.width
+    const height = app.canvas.height
     const fontSize1 = width / 1440 * 96
     const fontSize2 = width / 1440 * 40
     const fontSize3 = width / 1440 * 58
     const fontSize4 = width / 1440 * 120
+    console.log(width);
     const rgb = new filters.RGBSplitFilter()
     const textes = [
         new PIXI.Container(),
@@ -94,20 +91,28 @@ const appendText = async (app) => {
         fontFamily: 'Bender black',
         // fontWeight: 'black',
         fill: '#fff',
-        wordWrap: false,
+        // wordWrap: isMobile,
         align: 'center',
-        // wordWrapWidth: width / 1440 * 700,
+        // wordWrapWidth: width - 40,
     }
-    const textList = [
-        { text: 'ㅤbarber kingㅤ', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
-        { text: '2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 + 130 },
-        { text: 'ㅤ21 - 22 оkтябряㅤ', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
+    const textList = !isMobile ? [
+        { text: 'barber king\n2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
+        { text: '21 - 22 оkтября', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
         { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + 100 },
-        { text: 'ㅤМТС Live Холлㅤ', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
+        { text: 'МТС Live Холл', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
         { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + 100 },
         { text: 'barber king', fontSize: fontSize3, container: 4, x: width / 3.8, y: height / 4 },
         { text: '2o24', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
+    ] : [
+        { text: 'barber king\n2o24', fontSize: fontSize1 * 2, container: 1, x: width / 2, y: height / 2 - 75 },
+        { text: '21 - 22\nоkтября', fontSize: fontSize1 * 2, container: 2, x: width / 2, y: height / 2 - 75 },
+        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + 125 },
+        { text: 'МТС\nLive Холл', fontSize: fontSize1 * 2, container: 3, x: width / 2, y: height / 2 - 75 },
+        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + 125 },
+        { text: 'barber king', fontSize: fontSize3 * 2.5, container: 4, x: width / 3, y: height / 3 },
+        { text: '2o24', fontSize: fontSize4 * 2, container: 4, x: width / 1.3, y: height / 1.5 },
     ]
+
     const sourses = [
         '/src/images/main/slider/1.jpg',
         '/src/images/main/slider/2.jpg',
@@ -118,8 +123,8 @@ const appendText = async (app) => {
     sourses.forEach(async src => {
         await PIXI.Assets.load(src)
         const sprite = PIXI.Sprite.from(src)
-        const imageWidth = width / 1440 * 658
-        const imageHeight = width / 1440 * 538
+        const imageWidth = isMobile ? width / 375 * 278 : width / 1440 * 658
+        const imageHeight = isMobile ? width / 375 * 237 : width / 1440 * 538
         sprite.width = imageWidth
         sprite.height = imageHeight
         sprite.x = (width / 2) - (imageWidth / 2)
@@ -132,6 +137,7 @@ const appendText = async (app) => {
         const fontSize = el.fontSize
         const style = {
             ...standartStyle,
+            lineHeight: fontSize,
             fontSize,
         }
         const text = new PIXI.Text({ text: el.text, style })
@@ -154,9 +160,9 @@ const appendRect = (app) => {
     const width = app.canvas.clientWidth
     const height = app.canvas.clientHeight
     const blur = new filters.KawaseBlurFilter()
-    const radius = height / 700 * 90
-    const coordX = width / 2
-    const coordY = height / 2
+    const radius = height / 700 * 90 * ratio
+    const coordX = width / 2 * ratio
+    const coordY = height / 2 * ratio
     const circle = new PIXI.Graphics().circle(coordX, coordY, radius).fill('#CC00FF')
     circle.filters = [blur]
     circle.filters[0].strength = 90
@@ -253,11 +259,12 @@ const setAnimationState = (app, index, textes) => {
 const glitchImagesInit = async () => {
     const images = $('js-glitch-image')
     const apps = []
-    const ratio = devicePixelRatio
     images.items.forEach(async (el, index) => {
+        const iWidth = el.clientWidth
+        const iHeight = el.clientHeight
         const params = {
-            width: el.dataset.width,
-            height: el.dataset.height,
+            width: iWidth,
+            height: iHeight,
             background: '#040214'
         }
         const overlay = el.previousElementSibling
@@ -287,10 +294,10 @@ const glitchImagesInit = async () => {
         await PIXI.Assets.load(src)
         const sprite = PIXI.Sprite.from(src)
         sprite.x = 0
-        sprite.y = 50 * ratio
+        sprite.y = 50 * 0.996 * ratio
         sprite.filters = [rgb, glitch, shadow]
-        sprite.width = 483 * ratio
-        sprite.height = 580 * ratio
+        sprite.width = iWidth * 0.996 * ratio
+        sprite.height = iHeight * 0.996 * ratio
         app.stage.addChild(sprite)
 
         sprite.filters[2].color = '#CC00FF'
@@ -344,7 +351,6 @@ const glitchImagesInit = async () => {
 const mainSecInit = async () => {
     const main = $('js-main-sec')
     if (!main.items.length) return
-    const ratio = devicePixelRatio
     const mainNode = main.eq(0)
     const params = { background: '#040214', width: innerWidth, height: innerHeight }
     const app = await appInit(mainNode, ['glitch'], params, 1)
@@ -380,7 +386,6 @@ const btnsInit = () => {
         let forceTimeout = null
         let isHovered = false
         const cDark = '#040214'
-        const ratio = devicePixelRatio
         const cLight = '#ffffff'
         const text = btn.innerHTML.trim().toUpperCase()
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
@@ -409,7 +414,7 @@ const btnsInit = () => {
         app.stage.filters[0].fillMode = 0
 
         const rect = new PIXI.Graphics()
-        rect.rect(0, 0, cWidth * ratio, cHeight * ratio)
+        rect.rect(0, 0, app.canvas.width, app.canvas.height)
         rect.fill(backgroundColor)
 
         if (type === 'secondary') {
@@ -428,13 +433,13 @@ const btnsInit = () => {
             fill: color,
             align: 'center',
             wordWrap: !!wrapWidth,
-            wordWrapWidth: +wrapWidth,
             letterSpacing: +letterSpacing.replace('px', ''),
+            wordWrapWidth: !wrapWidth ? 0 : +wrapWidth * ratio,
         })
 
         const btnText = new PIXI.Text({ text, style })
-        btnText.x = (cWidth * ratio / 2) - (btnText.width / 2)
-        btnText.y = (cHeight * ratio / 2) - (btnText.height / 2)
+        btnText.x = (app.canvas.width / 2) - (btnText.width / 2)
+        btnText.y = (app.canvas.height / 2) - (btnText.height / 2)
         app.stage.addChild(btnText)
 
         app.ticker.add(() => {

@@ -1,3 +1,9 @@
+html {
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+}
+
 body {
     width: 100vw;
     height: 100dvh;
@@ -10,8 +16,11 @@ body {
 }
 
 .scroll {
-    width: 100%;
-    background-color: var(--c-dark);
+    // width: 100vw;
+    // height: 100dvh;
+    // overflow-x: hidden;
+    // overflow-y: hidden;
+    // background-color: var(--c-dark);
 }
 
 .container {
@@ -42,8 +51,8 @@ body {
     }
 
     &--lg {
-        padding: 25px;
-        font-size: 20px;
+        padding: 20px;
+        font-size: 16px;
         font-weight: 500;
         letter-spacing: 2px;
     }
@@ -102,6 +111,11 @@ body {
 
     @media @desktop {
         transition: var(--ts);
+
+        &--lg {
+            padding: 25px;
+            font-size: 20px;
+        }
     }
 }
 
@@ -134,7 +148,11 @@ body {
     }
 
     &--xl {
-        gap: 40px;
+        gap: 20px;
+
+        @media @desktop {
+            gap: 40px;
+        }
     }
 }
 
@@ -213,13 +231,23 @@ body {
     &-10 {
         margin-top: calc(var(--space) * 10);
     }
+
+    @media @desktop {
+        &-2\:d {
+            margin-top: calc(var(--space) * 2);
+        }
+
+        &-4\:d {
+            margin-top: calc(var(--space) * 4);
+        }
+    }
 }
 
 .glitch-image {
     border: 20px;
     overflow: hidden;
-    width: 503px;
-    height: 605px;
+    width: 100%;
+    height: 100%;
     border-radius: 40px;
     overflow: hidden;
     background-color: #040214;
@@ -278,7 +306,7 @@ body {
     }
 
     &-7 {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.4em;
         letter-spacing: 0.4px;
     }
@@ -299,6 +327,22 @@ body {
         font-size: 14px;
         line-height: 1.5em;
         letter-spacing: 0.4px;
+    }
+
+    @media @desktop {
+        &-7 {
+            font-size: 20px;
+            line-height: 1.4em;
+            letter-spacing: 0.4px;
+        }
+    }
+
+    &-s2 {
+        letter-spacing: 2px;
+    }
+
+    &-s5 {
+        letter-spacing: 5px;
     }
 
     &-u {
@@ -333,8 +377,18 @@ body {
 }
 
 .social-icon {
+    width: 44px;
+    height: 44px;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
 
     @media @desktop {
+        width: 60px;
+        height: 60px;
+
         path {
             transition: .3s;
         }
@@ -351,6 +405,22 @@ a.mailto {
     @media @desktop {
         &:hover {
             text-decoration: underline;
+        }
+    }
+}
+
+.is-hidden {
+    display: none;
+
+    &-mobile {
+        @media @phone {
+            display: none;
+        }
+    }
+
+    &-desktop {
+        @media @desktop {
+            display: none;
         }
     }
 }
