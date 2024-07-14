@@ -491,6 +491,7 @@ const btnsInit = () => {
 }
 
 const hiddenSecInit = async () => {
+    if (detectMobile()) return
     const section = $('js-hidden-sec')
     if (!section.items.length) return
     const src = section.attr('data-src')

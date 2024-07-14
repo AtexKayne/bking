@@ -22,3 +22,28 @@
         line-height: @lh;
     }
 }
+
+.t-m(@fz, @lh) {
+    @media @phone {
+        font-size: @fz;
+        line-height: @lh;
+    }
+    @media @tablet {
+        font-size: @fz;
+        line-height: @lh;
+    }
+}
+
+.t-t(@fz, @lh) {
+    @media @tablet {
+        font-size: @fz;
+        line-height: @lh;
+    }
+}
+
+.t-d(@fz, @lh) {
+    @media @desktop {
+        font-size: @fz;
+        line-height: @lh;
+    }
+}

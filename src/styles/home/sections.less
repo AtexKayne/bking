@@ -195,8 +195,13 @@
     &__text {
         padding: 0 20px;
         letter-spacing: 3px;
+        margin-bottom: 18px;
         .mobile-t(30px, 1.2em);
         .desktop-t(60px, 1.3em);
+
+        @media @desktop {
+            margin-bottom: 0;
+        }
 
         strong {
             color: var(--c-light-green);
@@ -211,7 +216,12 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    height: calc(100vw / 2.057);
+    margin: 140px 0;
+
+    @media @desktop {
+        margin: 0;
+        height: calc(100vw / 2.057);
+    }
 
     canvas {
         top: 0;
@@ -224,6 +234,7 @@
         text-align: center;
         letter-spacing: 3px;
 
+        .mobile-t(30px, 35px);
         .desktop-t(60px, 80px);
 
         strong {
@@ -241,12 +252,23 @@
     }
 
     &__btn {
-        width: 515px;
+        width: 100%;
         margin-top: 60px;
+        
+        @media @desktop {
+            width: 515px;
+        }
     }
 
     &__link {
         margin-top: 40px;
+        text-align: center;
+        .mobile-t(14px, 1.4em);
+        .desktop-t(16px, 1.4em);
+
+        @media @desktop {
+            text-align: left;
+        }
     }
 }
 
@@ -255,55 +277,90 @@
 
     &__item {
         display: flex;
-        padding: 60px 0;
+        padding: 30px 0;
         align-items: center;
         justify-content: space-between;
         flex-direction: column;
+        position: relative;
 
         @media @desktop {
             flex-direction: row;
+            padding: 60px 0;
         }
     }
 
     &__info {
         position: relative;
+        justify-content: space-between;
         flex-grow: 0;
         flex-shrink: 0;
         display: flex;
         align-items: center;
-    }
+        flex-direction: column;
+        padding-bottom: 16px;
 
-    &__info-inner {
-        position: absolute;
+        &-inner {
+            display: none;
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        &-mobile {
+            text-align: center;
+            padding-top: 16px;
+        }
+
+        @media @desktop {
+            justify-content: flex-start;
+            flex-direction: row;
+            padding-bottom: 0;
+
+            &-mobile {
+                display: none;
+            }
+
+            &-inner {
+                display: block;
+                position: absolute;
+            }
+        }
     }
 
     &__title {
         font-family: 'Bender black';
         margin-top: 10px;
         color: var(--c-white);
-        padding-left: 100px;
         text-transform: uppercase;
         letter-spacing: 4px;
         position: relative;
         z-index: 3;
 
+        @media @desktop {
+            padding-left: 100px;
+        }
+
+        .mobile-t(45px, 1em);
         .desktop-t(120px, 1em);
     }
 
     &__text {
         letter-spacing: 5px;
         text-transform: uppercase;
-        padding-left: 100px;
 
+        @media @desktop {
+            padding-left: 100px;
+        }
+
+        .mobile-t(14px, 1em);
         .desktop-t(20px, 1em);
     }
 
     &__pagination {
         letter-spacing: 10px;
         font-family: 'Bender light';
-        
+
         .desktop-t(20px, 1em);
-        
+
         @media @desktop {
             transform: rotate(-90deg);
         }
@@ -368,7 +425,7 @@
         position: absolute;
         bottom: 0px;
         left: 20px;
-        
+
         span {
             display: none
         }
@@ -378,9 +435,9 @@
             height: 34px;
             display: block
         }
-        
+
         .desktop-t(20px, 1em);
-        
+
         @media @desktop {
             border-radius: 90px;
             padding: 8px 8px 8px 34px;
@@ -429,40 +486,10 @@
         width: calc(100vw / 1440 * 3692);
     }
 
-    path {
-        stroke-dasharray: 10000;
-        stroke-dashoffset: 10000;
-        // transition: 4s ease-in-out;
-
-        // &:nth-child(1) {
-        //     transition-delay: 2s;
-        //     transition-duration: 3s;
-        // }
-
-        // &:nth-child(2) {
-        //     transition-delay: 1s;
-        //     transition-duration: 5s;
-        // }
-
-        // &:nth-child(3) {
-        //     transition-delay: 0.5s;
-        //     transition-duration: 4.5s;
-        // }
-
-        // &:nth-child(4) {
-        //     transition-delay: 1.5s;
-        //     transition-duration: 3.5s;
-        // }
-
-        // &:nth-child(5) {
-        //     transition-delay: 2s;
-        //     transition-duration: 5.5s;
-        // }
+    @media @desktop {
+        path {
+            stroke-dasharray: 10000;
+            stroke-dashoffset: 10000;
+        }
     }
-
-    // &[data-active='true'] {
-    //     path {
-    //         stroke-dashoffset: 0;
-    //     }
-    // }
 }

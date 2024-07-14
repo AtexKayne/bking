@@ -1,6 +1,7 @@
 import { $, createObserver, detectMobile, randomIntFromInterval } from './helper'
 
 const linesInit = () => {
+    if (detectMobile()) return
     const lines = $('js-lines')
     if (!lines.items.length) return
     const y = lines.eq(0).getBoundingClientRect().top - innerHeight
@@ -49,7 +50,7 @@ const nominationsInit = () => {
             locscroll.stop()
             locscroll.scrollTo(items[index], {
                 offset: -100,
-                duration: 300,
+                duration: 170,
             })
         }
 

@@ -159,14 +159,16 @@
         }
 
         @media @desktop {
-            [data-open='true'] & {
-                filter: blur(200px);
-            }
-
+            left: auto;
+            top: auto;
             right: calc(100vw / 1440 * 400);
             bottom: calc(100vh / 700 * 100);
             width: calc(100vw / 1440 * 400);
             height: calc(100vw / 1440 * 400);
+
+            [data-open='true'] & {
+                filter: blur(200px);
+            }
         }
     }
 

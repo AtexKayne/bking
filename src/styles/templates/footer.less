@@ -3,19 +3,33 @@
     z-index: 2;
     position: relative;
 
+    @media @phone {
+        padding-top: 0;
+    }
+
     &__top {
         display: flex;
-        gap: 70px;
+        gap: 40px;
+        flex-direction: column;
         justify-content: space-between;
+        
+        @media @desktop {
+            gap: 70px;
+            flex-direction: row;
+        }
     }
 
     &__right {
         max-width: 336px;
     }
 
-    &__bottom {
-        padding-top: 80px;
-    }
+    // &__bottom {
+    //     padding-top: 80px;
+
+    //     @media @desktop {
+    //         padding-top: 80px;
+    //     }
+    // }
 
     &__light {
         width: calc(100vw / 1440 * 300);
@@ -29,5 +43,13 @@
         top: 35%;
         left: 60%;
         transform: translate(-50%);
+    }
+
+    @media @phone {
+        &__logo {
+            width: 145px;
+            height: 60px;
+
+        }
     }
 }

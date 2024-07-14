@@ -166,13 +166,13 @@ body {
     align-items: center;
 
     &--lg .icon-text__text {
-        line-height: 1.4em;
-        font-size: 20px;
+        .t-m(20px, 1.4em);
+        .t-d(20px, 1.4em);
     }
 
     &--md .icon-text__text {
-        line-height: 1.4em;
-        font-size: 16px;
+        .t-m(14px, 1.4em);
+        .t-d(16px, 1.4em);
     }
 
     &__text {
@@ -233,12 +233,44 @@ body {
     }
 
     @media @desktop {
+        &-1\:d {
+            margin-top: calc(var(--space) * 1);
+        }
+
         &-2\:d {
             margin-top: calc(var(--space) * 2);
         }
 
+        &-3\:d {
+            margin-top: calc(var(--space) * 3);
+        }
+
         &-4\:d {
             margin-top: calc(var(--space) * 4);
+        }
+
+        &-5\:d {
+            margin-top: calc(var(--space) * 5);
+        }
+
+        &-6\:d {
+            margin-top: calc(var(--space) * 6);
+        }
+
+        &-7\:d {
+            margin-top: calc(var(--space) * 7);
+        }
+
+        &-8\:d {
+            margin-top: calc(var(--space) * 8);
+        }
+
+        &-9\:d {
+            margin-top: calc(var(--space) * 9);
+        }
+
+        &-10\:d {
+            margin-top: calc(var(--space) * 10);
         }
     }
 }
@@ -277,26 +309,32 @@ body {
 }
 
 .t {
-    &-3 {
+    &-1 {
         font-size: 64px;
         line-height: 80px;
         letter-spacing: 5px;
     }
 
-    &-3 {
+    &-2 {
         font-size: 60px;
         line-height: 80px;
         letter-spacing: 3px;
     }
 
-    &-4 {
+    &-3 {
         font-size: 42px;
         line-height: 1.3em;
+        // letter-spacing: 3px;
+    }
+
+    &-4 {
+        font-size: 40px;
+        line-height: 1.4em;
     }
 
     &-5 {
-        font-size: 40px;
-        line-height: 1.4em;
+        font-size: 20px;
+        line-height: 30px;
     }
 
     &-6 {
@@ -329,12 +367,90 @@ body {
         letter-spacing: 0.4px;
     }
 
+    &-11 {
+        font-size: 12px;
+        line-height: 1.5em;
+        letter-spacing: 0.4px;
+    }
+
     @media @desktop {
-        &-7 {
+        &-1\:d {
+            font-size: 64px;
+            line-height: 80px;
+            letter-spacing: 5px;
+        }
+
+        &-2\:d {
+            font-size: 60px;
+            line-height: 80px;
+            letter-spacing: 3px;
+        }
+
+        &-3\:d {
+            font-size: 42px;
+            line-height: 1.3em;
+        }
+
+        &-4\:d {
+            font-size: 40px;
+            line-height: 1.4em;
+        }
+
+        &-5\:d {
             font-size: 20px;
+            line-height: 30px;
+        }
+
+        &-6\:d {
+            font-size: 30px;
+            line-height: 1.4em;
+            letter-spacing: 2px;
+        }
+
+        &-7\:d {
+            font-size: 16px;
             line-height: 1.4em;
             letter-spacing: 0.4px;
         }
+
+        &-8\:d {
+            font-size: 18px;
+            line-height: 1.5em;
+            letter-spacing: 2px;
+        }
+
+        &-9\:d {
+            font-size: 16px;
+            letter-spacing: 2px;
+            line-height: 1.4em;
+        }
+
+        &-10\:d {
+            font-size: 14px;
+            line-height: 1.5em;
+            letter-spacing: 0.4px;
+        }
+
+        &-11\:d {
+            font-size: 12px;
+            line-height: 1.5em;
+            letter-spacing: 0.4px;
+        }
+
+        // &-5 {
+        //     font-size: 40px;
+        //     line-height: 1.4em;
+        // }
+
+        // &-7 {
+        //     font-size: 20px;
+        //     line-height: 1.4em;
+        //     letter-spacing: 0.4px;
+        // }
+    }
+
+    &-s2 {
+        letter-spacing: 1px;
     }
 
     &-s2 {
