@@ -284,7 +284,7 @@ const glitchImagesInit = async () => {
             `
         }
         for (let i = 0; i < countStars; i++) {
-            el.innerHTML += getStar()
+            // el.innerHTML += getStar()
         }
 
         const stopFunc = () => {
