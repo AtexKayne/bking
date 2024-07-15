@@ -464,44 +464,46 @@ const btnsInit = () => {
             app.stage.filters[0].slices = 150
         })
 
-        btn.addEventListener('mouseenter', () => {
-            isHovered = true
-            app.ticker.start()
-            force = 1
-            if (type === 'secondary') {
-                rect.filters[0].color = cLight
-                btnText.style.fill = cDark
-            }
-            forceInterval = setInterval(() => {
-                if (force > 0) {
-                    force -= 0.05
-                } else if (!forceTimeout) {
-                    forceTimeout = setTimeout(() => {
-                        force = 1
-                        clearTimeout(forceTimeout)
-                        forceTimeout = null
-                    }, 1000)
+        if (!detectMobile()) {
+            btn.addEventListener('mouseenter', () => {
+                isHovered = true
+                app.ticker.start()
+                force = 1
+                if (type === 'secondary') {
+                    rect.filters[0].color = cLight
+                    btnText.style.fill = cDark
                 }
-            }, 50)
-        })
-
-        btn.addEventListener('mouseleave', () => {
-            isHovered = false
-            force = 0
-            if (forceTimeout) clearTimeout(forceTimeout)
-            if (forceInterval) clearInterval(forceInterval)
-            forceTimeout = null
-            forceInterval = null
-
-            if (type === 'secondary') {
-                rect.filters[0].color = cDark
-                btnText.style.fill = cLight
-            }
-
-            setTimeout(() => {
-                if (!isHovered) app.ticker.stop()
-            }, 1000);
-        })
+                forceInterval = setInterval(() => {
+                    if (force > 0) {
+                        force -= 0.05
+                    } else if (!forceTimeout) {
+                        forceTimeout = setTimeout(() => {
+                            force = 1
+                            clearTimeout(forceTimeout)
+                            forceTimeout = null
+                        }, 1000)
+                    }
+                }, 50)
+            })
+    
+            btn.addEventListener('mouseleave', () => {
+                isHovered = false
+                force = 0
+                if (forceTimeout) clearTimeout(forceTimeout)
+                if (forceInterval) clearInterval(forceInterval)
+                forceTimeout = null
+                forceInterval = null
+    
+                if (type === 'secondary') {
+                    rect.filters[0].color = cDark
+                    btnText.style.fill = cLight
+                }
+    
+                setTimeout(() => {
+                    if (!isHovered) app.ticker.stop()
+                }, 1000);
+            })
+        }
     })
 }
 
