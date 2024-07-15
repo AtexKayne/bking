@@ -12,7 +12,7 @@
         gap: 40px;
         flex-direction: column;
         justify-content: space-between;
-        
+
         @media @desktop {
             gap: 70px;
             flex-direction: row;
@@ -32,17 +32,25 @@
     // }
 
     &__light {
-        width: calc(100vw / 1440 * 300);
-        height: calc(100vw / 1440 * 300);
+        width: calc(100vw / 1440 * 700);
+        height: calc(100vw / 1440 * 700);
         border-radius: 50%;
         background-color: var(--c-green);
-        filter: blur(300px);
+        filter: blur(100px);
         position: absolute;
         z-index: 0;
         pointer-events: none;
         top: 35%;
-        left: 60%;
+        left: 65%;
         transform: translate(-50%);
+
+        @media @desktop {
+            width: calc(100vw / 1440 * 300);
+            height: calc(100vw / 1440 * 300);
+            filter: blur(300px);
+            top: 35%;
+            left: 60%;
+        }
     }
 
     @media @phone {

@@ -102,14 +102,12 @@
     left: 0;
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     padding: calc(var(--h-header) + 20px) 0 55px;
     background-color: var(--c-dark-pink);
     z-index: var(--z-menu);
     transition: var(--tm);
     overflow-y: auto;
-
-    @media @desktop {}
 
     &[data-open='false'] {
         opacity: 0;

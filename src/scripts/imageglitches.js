@@ -98,9 +98,9 @@ const appendText = async (app) => {
     const textList = !isMobile ? [
         { text: 'barber king\n2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
         { text: '21 - 22 оkтября', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
-        { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + 100 },
+        { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + fontSize1 },
         { text: 'МТС Live Холл', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
-        { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + 100 },
+        { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + fontSize1 },
         { text: 'barber king', fontSize: fontSize3, container: 4, x: width / 3.8, y: height / 4 },
         { text: '2o24', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
     ] : [
@@ -271,6 +271,21 @@ const glitchImagesInit = async () => {
         let isInView = false
         let isStopped = false
         let timeout = null
+
+        const countStars = randomIntFromInterval(2, 5)
+        const getStar = () => {
+            const color = randomIntFromInterval(1, 2) === 1 ? '#00FF00' : '#FF00FF'
+            const left = randomIntFromInterval(20, iWidth - 20)
+            const top = randomIntFromInterval(20, iHeight - 20)
+            return `
+                <svg class="image-star" style="left: ${left}px;top: ${top}px;" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.3812 0.495117L17.793 8.57128L25.8691 12.9831L17.793 17.419L13.3812 25.4951L8.94532 17.419L0.869141 12.9831L8.94532 8.57128L13.3812 0.495117Z" fill="${color}"/>
+                </svg>
+            `
+        }
+        for (let i = 0; i < countStars; i++) {
+            el.innerHTML += getStar()
+        }
 
         const stopFunc = () => {
             if (!isInView) return

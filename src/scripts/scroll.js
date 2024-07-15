@@ -13,7 +13,7 @@ window.locscroll = new locomotiveScroll({
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    const scrollLinks = $('js-main-scroll')
+    const scrollLinks = $('js-scroll-to')
     if (!scrollLinks) return
 
     scrollLinks.on('click', function () {

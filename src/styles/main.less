@@ -2,6 +2,7 @@ html {
     width: 100vw;
     height: 100dvh;
     overflow: hidden;
+    background-color: var(--c-dark);
 }
 
 body {
@@ -20,7 +21,7 @@ body {
     // height: 100dvh;
     // overflow-x: hidden;
     // overflow-y: hidden;
-    // background-color: var(--c-dark);
+    background-color: var(--c-dark);
 }
 
 .container {
@@ -192,6 +193,10 @@ body {
 }
 
 .mt {
+    &-0.5 {
+        margin-top: calc(var(--space) * 0.5);
+    }
+
     &-1 {
         margin-top: calc(var(--space) * 1);
     }
@@ -306,6 +311,12 @@ body {
     color: var(--c-white);
     font-weight: 500;
     cursor: pointer;
+
+    @media @desktop {
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 .t {

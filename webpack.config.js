@@ -8,7 +8,10 @@ const isProduction = process.env.NODE_ENV == 'production'
 
 const config = {
     context: path.resolve(__dirname, 'src'),
-    entry: './index.js',
+    entry: {
+        main: './index.js',
+        oldschool: './index.js',
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         clean: true,
@@ -19,7 +22,14 @@ const config = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            filename: 'index.html',
             template: 'index.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'oldschool.html',
+            template: 'nominations/oldschool.html',
+            chunks: ['oldschool']
         }),
         new CopyPlugin({
             patterns: [

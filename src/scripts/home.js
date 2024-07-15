@@ -75,5 +75,5 @@ const nominationsInit = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     linesInit()
-    nominationsInit()
+    // nominationsInit()
 })
