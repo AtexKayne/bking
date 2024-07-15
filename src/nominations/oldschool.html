@@ -10,7 +10,15 @@
 <body>
     <%= require('html-loader!../templates/header.html').default %>
     <div class="scroll">
-        asdasdasd
+        <section class="section font-bender">
+            <div class="main-sec">
+                <div class="main-sec__line"></div>
+                <div data-text="Олдскул" data-image="/src/images/main/image-4.png" class="main-sec__container js-nomination-sec"></div>
+            </div>
+        </section>
+
+        <%= require('html-loader!../templates/hidden-sec.html').default %>
+        
         <%= require('html-loader!../templates/footer.html').default %>
     </div>
 </body>

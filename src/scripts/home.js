@@ -3,7 +3,7 @@ import { $, createObserver, detectMobile, randomIntFromInterval } from './helper
 const linesInit = () => {
     if (detectMobile()) return
     const lines = $('js-lines')
-    if (!lines.items.length) return
+    if (!lines) return
     const y = lines.eq(0).getBoundingClientRect().top - innerHeight
     const pathes = lines.find('path')
 

@@ -258,6 +258,7 @@ const setAnimationState = (app, index, textes) => {
 
 const glitchImagesInit = async () => {
     const images = $('js-glitch-image')
+    if (!images) return
     const apps = []
     images.items.forEach(async (el, index) => {
         const iWidth = el.clientWidth
@@ -365,7 +366,7 @@ const glitchImagesInit = async () => {
 
 const mainSecInit = async () => {
     const main = $('js-main-sec')
-    if (!main.items.length) return
+    if (!main) return
     const mainNode = main.eq(0)
     const params = { background: '#040214', width: innerWidth, height: innerHeight }
     const app = await appInit(mainNode, ['glitch'], params, 1)
@@ -393,7 +394,7 @@ const mainSecInit = async () => {
 
 const btnsInit = () => {
     const btns = $('js-btn')
-    if (!btns.items.length) return
+    if (!btns) return
 
     btns.items.forEach(async btn => {
         let force = 0
@@ -485,7 +486,7 @@ const btnsInit = () => {
                     }
                 }, 50)
             })
-    
+
             btn.addEventListener('mouseleave', () => {
                 isHovered = false
                 force = 0
@@ -493,12 +494,12 @@ const btnsInit = () => {
                 if (forceInterval) clearInterval(forceInterval)
                 forceTimeout = null
                 forceInterval = null
-    
+
                 if (type === 'secondary') {
                     rect.filters[0].color = cDark
                     btnText.style.fill = cLight
                 }
-    
+
                 setTimeout(() => {
                     if (!isHovered) app.ticker.stop()
                 }, 1000);
@@ -510,12 +511,12 @@ const btnsInit = () => {
 const hiddenSecInit = async () => {
     if (detectMobile()) return
     const section = $('js-hidden-sec')
-    if (!section.items.length) return
+    if (!section) return
     const src = section.attr('data-src')
     const node = section.eq(0)
     const width = node.clientWidth
     const height = node.clientHeight
-    const params = { background: '#040214', resizeTo: window, width, height }
+    const params = { background: '#040214', width, height }
     const app = await appInit(node, [], params)
     const backgroundImage = await PIXI.Assets.load(src)
     const background = new PIXI.Sprite(backgroundImage)
@@ -528,6 +529,7 @@ const hiddenSecInit = async () => {
     app.stage.addChild(background)
     background.width = width
     background.height = height
+    console.log(background);
 
     const circle = new PIXI.Graphics().circle(radius + blurSize, radius + blurSize, radius).fill({ color: 0xff0000 });
     // { strength, quality, resolution, kernelSize }
@@ -588,10 +590,34 @@ const hiddenSecInit = async () => {
     })
 }
 
+const nominationSecInint = async () => {
+    const section = $('js-nomination-sec')
+    if (!section) return
+    const src = section.attr('data-image')
+    const text = section.attr('data-text')
+    const params = { background: '#040214' }
+    const iWidth = innerWidth / 1440 * 657
+    const iHeight = innerWidth / 1440 * 788
+    const app = await appInit(section.eq(0), [], params)
+    const rgb = new filters.RGBSplitFilter()
+    const glitch = new filters.GlitchFilter()
+    await PIXI.Assets.load(src)
+    const sprite = PIXI.Sprite.from(src)
+    sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
+    sprite.y = innerHeight - iHeight
+    console.log(iWidth);
+    // sprite.filters = [rgb, glitch]
+    sprite.width = iWidth  * ratio
+    sprite.height = iHeight * ratio
+    app.stage.addChild(sprite)
+    // app.ticker.stop()
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     glitchImagesInit()
     btnsInit()
     mainSecInit()
     hiddenSecInit()
+    nominationSecInint()
 })
 
