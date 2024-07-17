@@ -4,7 +4,8 @@ import { $, createObserver, detectMobile, randomIntFromInterval } from './helper
 
 const ratio = window.devicePixelRatio
 
-const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange) => {
+const appInit = async (settings) => {
+    const { node, effects, params, maxFPS } = settings
     const app = new PIXI.Application()
     let isInView = false
 
@@ -20,7 +21,7 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange
     const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill(params.background)
     app.stage.addChild(rect)
 
-    if (effects.length) {
+    if (effects) {
         const appFilters = []
 
         effects.forEach(effect => {
@@ -54,8 +55,8 @@ const appInit = async (node, effects = [], params = {}, maxFPS = 0, onViewChange
         isInView = isIntersecting
         if (isIntersecting) app.ticker.start()
         else app.ticker.stop()
-        if (typeof onViewChange === 'function') {
-            onViewChange(isIntersecting)
+        if (typeof settings.observerFn === 'function') {
+            settings.observerFn(isIntersecting)
         }
     })
 
@@ -79,7 +80,6 @@ const appendText = async (app) => {
     const fontSize2 = width / 1440 * 40
     const fontSize3 = width / 1440 * 58
     const fontSize4 = width / 1440 * 120
-    console.log(width);
     const rgb = new filters.RGBSplitFilter()
     const textes = [
         new PIXI.Container(),
@@ -284,9 +284,9 @@ const glitchImagesInit = async () => {
                 </svg>
             `
         }
-        for (let i = 0; i < countStars; i++) {
-            // el.innerHTML += getStar()
-        }
+        // for (let i = 0; i < countStars; i++) {
+        //     el.innerHTML += getStar()
+        // }
 
         const stopFunc = () => {
             if (!isInView) return
@@ -300,7 +300,12 @@ const glitchImagesInit = async () => {
             if (isInView) stopFunc()
             else clearTimeout(timeout)
         }
-        const app = await appInit(el, [], params, 12, obsHandler)
+        const app = await appInit({
+            node: el,
+            params,
+            maxFPS: 12,
+            observerFn: obsHandler
+        })
         apps.push(app)
         const rgb = new filters.RGBSplitFilter()
         const glitch = new filters.GlitchFilter()
@@ -369,7 +374,12 @@ const mainSecInit = async () => {
     if (!main) return
     const mainNode = main.eq(0)
     const params = { background: '#040214', width: innerWidth, height: innerHeight }
-    const app = await appInit(mainNode, ['glitch'], params, 1)
+    const app = await appInit({
+        node: mainNode,
+        effects: ['glitch'],
+        params,
+        maxFPS: 1
+    })
     const circle = appendRect(app)
     const textes = await appendText(app)
     const aStates = getSettings()
@@ -426,7 +436,12 @@ const btnsInit = () => {
         btn.style.height = height
         btn.style.backgroundColor = 'transparent'
         btn.innerHTML = ''
-        const app = await appInit(btn, ['glitch'], params, 40)
+        const app = await appInit({
+            node: btn,
+            effects: ['glitch'],
+            params,
+            masFPS: 40
+        })
         app.stage.filters[0].fillMode = 0
 
         const rect = new PIXI.Graphics()
@@ -517,7 +532,10 @@ const hiddenSecInit = async () => {
     const width = node.clientWidth
     const height = node.clientHeight
     const params = { background: '#040214', width, height }
-    const app = await appInit(node, [], params)
+    const app = await appInit({
+        node: node,
+        params
+    })
     const backgroundImage = await PIXI.Assets.load(src)
     const background = new PIXI.Sprite(backgroundImage)
     const blurSize = 32
@@ -527,31 +545,33 @@ const hiddenSecInit = async () => {
     let posY = 0
 
     app.stage.addChild(background)
-    background.width = width
-    background.height = height
-    console.log(background);
+    background.width = width * ratio
+    background.height = height * ratio
 
-    const circle = new PIXI.Graphics().circle(radius + blurSize, radius + blurSize, radius).fill({ color: 0xff0000 });
+    const circle = new PIXI.Graphics().circle(radius + blurSize, radius + blurSize, radius).fill({ color: 0xff0000 })
     // { strength, quality, resolution, kernelSize }
-    circle.filters = [new PIXI.BlurFilter({ strength: blurSize + 20, quality: 10 })];
-    const bounds = new PIXI.Rectangle(0, 0, (radius + blurSize) * 2, (radius + blurSize) * 2);
+    circle.filters = [new PIXI.BlurFilter({ strength: blurSize + 20, quality: 10 })]
+    const bounds = new PIXI.Rectangle(0, 0, (radius + blurSize) * 2, (radius + blurSize) * 2)
     const texture = app.renderer.generateTexture({
         target: circle,
         resolution: 1,
         frame: bounds,
-    });
-    const focus = new PIXI.Sprite(texture);
-    app.stage.addChild(focus);
-    background.mask = focus;
+    })
+    const focus = new PIXI.Sprite(texture)
+    app.stage.addChild(focus)
+    background.mask = focus
 
-    app.stage.eventMode = 'static';
-    app.stage.hitArea = app.screen;
+    app.stage.eventMode = 'static'
+    app.stage.hitArea = app.screen
     app.stage.on('pointermove', (event) => {
         posX = event.global.x
         posY = event.global.y
         focus.position.x = Math.max(posX - focus.width / 2, 0)
         focus.position.y = Math.max(posY - focus.height / 2, 0)
-    });
+    })
+
+    focus.width = 1
+    focus.height = 1
 
     section.on('mouseleave', () => {
         // focus.width = 0
@@ -591,26 +611,111 @@ const hiddenSecInit = async () => {
 }
 
 const nominationSecInint = async () => {
+    // return
     const section = $('js-nomination-sec')
     if (!section) return
     const src = section.attr('data-image')
     const text = section.attr('data-text')
     const params = { background: '#040214' }
-    const iWidth = innerWidth / 1440 * 657
-    const iHeight = innerWidth / 1440 * 788
-    const app = await appInit(section.eq(0), [], params)
+    const isMobile = detectMobile()
+    const iWidth = isMobile ? innerWidth / 375 * 416 : Math.min(innerWidth / 1440 * 657, 657)
+    const iHeight = isMobile ? innerWidth / 375 * 500 : Math.min(innerWidth / 1440 * 788, 788)
     const rgb = new filters.RGBSplitFilter()
     const glitch = new filters.GlitchFilter()
+    const shadow = new filters.DropShadowFilter()
+
+    let isStopped = false
+    let timeout = null
+    let isInView = false
+    let x = 0
+    let direction = false
+
+    const stopFunc = () => {
+        if (!isInView) return
+        isStopped = !isStopped
+        clearTimeout(timeout)
+        timeout = setTimeout(stopFunc, randomIntFromInterval(400, 1600))
+    }
+
+    const obsHandler = (entry) => {
+        isInView = entry
+        if (isInView) stopFunc()
+        else clearTimeout(timeout)
+    }
+
+    const app = await appInit({
+        node: section.eq(0),
+        params,
+        // maxFPS: 20,
+        observerFn: obsHandler
+    })
+
     await PIXI.Assets.load(src)
     const sprite = PIXI.Sprite.from(src)
     sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-    sprite.y = innerHeight - iHeight
-    console.log(iWidth);
-    // sprite.filters = [rgb, glitch]
-    sprite.width = iWidth  * ratio
+    sprite.y = isMobile ? (innerHeight - iHeight - 200) * ratio : (innerHeight - iHeight) * ratio
+    sprite.filters = [rgb, glitch, shadow]
+    sprite.width = iWidth * ratio
     sprite.height = iHeight * ratio
+    sprite.zIndex = 2
+    sprite.filters[2].color = '#FF00FF'
+    sprite.filters[2].blur = 50
+    sprite.filters[2].quality = 10
     app.stage.addChild(sprite)
-    // app.ticker.stop()
+    console.log(ratio);
+
+    const fontSize = isMobile ? innerWidth / 375 * 500 : innerWidth / 1440 * 250
+    const style = {
+        fontFamily: 'Bender black',
+        fill: params.background,
+        stroke: { color: '#fff', width: 3 * ratio },
+        textTransform: 'uppercase',
+        align: 'center',
+        lineHeight: fontSize,
+        fontSize,
+    }
+    const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
+    const staticX = innerWidth - textP.width
+    textP.x = 0
+    console.log(isMobile);
+    textP.y = isMobile ? (innerHeight / 2 - textP.height / 2 + 100) * ratio : (innerHeight / 2 - textP.height / 2) * ratio
+    textP.zIndex = 1
+    app.stage.addChild(textP)
+
+    const co = 15
+    const so = 20
+
+    app.ticker.add(() => {
+        x += direction ? -3 : 3
+        if (x > 0 && !direction) {
+            direction = true
+        } else if (x < staticX && direction) {
+            direction = false
+        }
+
+        textP.x = x
+        if (isStopped) {
+            sprite.filters[0].green.x = 0
+            sprite.filters[0].green.y = 0
+            sprite.filters[0].red.x = 0
+            sprite.filters[0].red.y = 0
+            sprite.filters[0].blue.x = 0
+            sprite.filters[0].blue.y = 0
+            sprite.filters[1].offset = 0
+            sprite.filters[1].slices = 0
+
+            return
+        }
+        sprite.filters[0].red.x = randomIntFromInterval(-co, co)
+        sprite.filters[0].red.y = randomIntFromInterval(-co, co)
+        sprite.filters[0].green.x = randomIntFromInterval(-co, co)
+        sprite.filters[0].green.y = randomIntFromInterval(-co, co)
+        sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
+        sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
+        sprite.filters[1].offset = randomIntFromInterval(-so, so)
+        sprite.filters[1].slices = randomIntFromInterval(1, 6)
+    })
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {

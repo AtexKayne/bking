@@ -22,6 +22,11 @@ body {
     // overflow-x: hidden;
     // overflow-y: hidden;
     background-color: var(--c-dark);
+
+    @media @phone {
+        overflow: auto;
+        height: 100dvh;
+    }
 }
 
 .container {
@@ -166,14 +171,25 @@ body {
     text-decoration: none;
     align-items: center;
 
-    &--lg .icon-text__text {
-        .t-m(20px, 1.4em);
-        .t-d(20px, 1.4em);
+    &--lg {
+        @media @phone {
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .icon-text__text {
+            .t-m(16px, 1.4em);
+            .t-d(20px, 1.4em);
+        }
     }
 
-    &--md .icon-text__text {
-        .t-m(14px, 1.4em);
-        .t-d(16px, 1.4em);
+    &--md {
+        .icon-text__text {
+            .t-m(14px, 1.4em);
+            .t-d(16px, 1.4em);
+        }
     }
 
     &__text {
@@ -344,26 +360,26 @@ body {
     }
 
     &-5 {
-        font-size: 20px;
-        line-height: 30px;
-    }
-
-    &-6 {
         font-size: 30px;
         line-height: 1.4em;
         letter-spacing: 2px;
     }
 
-    &-7 {
-        font-size: 16px;
-        line-height: 1.4em;
-        letter-spacing: 0.4px;
+    &-6 {
+        font-size: 20px;
+        line-height: 30px;
     }
 
-    &-8 {
+    &-7 {
         font-size: 18px;
         line-height: 1.5em;
         letter-spacing: 2px;
+    }
+
+    &-8 {
+        font-size: 16px;
+        line-height: 1.4em;
+        letter-spacing: 0.4px;
     }
 
     &-9 {
@@ -408,26 +424,26 @@ body {
         }
 
         &-5\:d {
-            font-size: 20px;
-            line-height: 30px;
-        }
-
-        &-6\:d {
             font-size: 30px;
             line-height: 1.4em;
             letter-spacing: 2px;
         }
 
-        &-7\:d {
-            font-size: 16px;
-            line-height: 1.4em;
-            letter-spacing: 0.4px;
+        &-6\:d {
+            font-size: 20px;
+            line-height: 30px;
         }
 
-        &-8\:d {
+        &-7\:d {
             font-size: 18px;
             line-height: 1.5em;
             letter-spacing: 2px;
+        }
+
+        &-8\:d {
+            font-size: 16px;
+            line-height: 1.4em;
+            letter-spacing: 0.4px;
         }
 
         &-9\:d {
@@ -474,6 +490,10 @@ body {
 
     &-u {
         text-transform: uppercase;
+    }
+
+    &-center {
+        text-align: center;
     }
 }
 

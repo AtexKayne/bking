@@ -38,6 +38,7 @@
     "locomotive-scroll": "^4.1.4",
     "normalize.css": "^8.0.1",
     "pixi-filters": "^6.0.4",
-    "pixi.js": "^8.2.2"
+    "pixi.js": "^8.2.2",
+    "swiper": "^11.1.5"
   }
 }

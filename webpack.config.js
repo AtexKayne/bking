@@ -10,7 +10,7 @@ const config = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         main: './index.js',
-        oldschool: './index.js',
+        nominations: './index.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -27,9 +27,9 @@ const config = {
             chunks: ['main']
         }),
         new HtmlWebpackPlugin({
-            filename: 'oldschool.html',
-            template: 'nominations/oldschool.html',
-            chunks: ['oldschool']
+            filename: 'nominations.html',
+            template: 'nominations/index.html',
+            chunks: ['nominations']
         }),
         new CopyPlugin({
             patterns: [
