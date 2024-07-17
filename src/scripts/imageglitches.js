@@ -654,7 +654,7 @@ const nominationSecInint = async () => {
     await PIXI.Assets.load(src)
     const sprite = PIXI.Sprite.from(src)
     sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-    sprite.y = isMobile ? 300 : (innerHeight - iHeight) * ratio
+    sprite.y = isMobile ? (innerHeight - iHeight - 200) * ratio : (innerHeight - iHeight) * ratio
     sprite.filters = [rgb, glitch, shadow]
     sprite.width = iWidth * ratio
     sprite.height = iHeight * ratio
@@ -664,7 +664,8 @@ const nominationSecInint = async () => {
     sprite.filters[2].quality = 10
     app.stage.addChild(sprite)
 
-    const fontSize = isMobile ? (innerWidth / 375 * 150) * ratio : (innerWidth / 1440 * 250) * ratio
+    const fontSize = isMobile ? (innerWidth / 375 * 100) * ratio : (innerWidth / 1440 * 250) * ratio
+    console.log(fontSize);
     const style = {
         fontFamily: 'Bender black',
         fill: params.background,
