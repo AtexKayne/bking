@@ -664,7 +664,7 @@ const nominationSecInint = async () => {
     sprite.filters[2].quality = 10
     app.stage.addChild(sprite)
 
-    const fontSize = isMobile ? innerWidth / 375 * 100 : (innerWidth / 1440 * 250) * ratio
+    const fontSize = isMobile ? (innerWidth / 375 * 150) * ratio : (innerWidth / 1440 * 250) * ratio
     const style = {
         fontFamily: 'Bender black',
         fill: params.background,
