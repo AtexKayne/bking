@@ -676,10 +676,10 @@ const nominationSecInint = async () => {
     }
     const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
     const staticX = (innerWidth - textP.width)
-    const centerY = innerHeight / 2 - textP.height / 2
-    console.log(textP.width, textP.height, centerY * ratio);
+    const centerY = (innerHeight / 2) * ratio - (textP.height / 2) 
+    console.log(innerHeight, textP.height, centerY * ratio);
     textP.x = 0
-    textP.y = isMobile ? (centerY + 100) * ratio : centerY * ratio
+    textP.y = isMobile ? centerY - 100 * ratio : centerY
     textP.zIndex = 1
     app.stage.addChild(textP)
 
