@@ -34,6 +34,7 @@
         left: calc(50% - 15px);
         bottom: 60px;
         cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
         position: absolute;
         z-index: 3;
         animation: scrolldrag 2s ease-in-out 0s infinite;
@@ -50,6 +51,58 @@
 
         @media @desktop {
             background: linear-gradient(0deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 50%, rgba(4, 2, 20, 0) 100%);
+        }
+    }
+
+    &__desc {
+        z-index: 4;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px;
+        position: absolute;
+        
+        @media @desktop {
+            padding: 0 0 60px;
+        }
+    }
+
+    &__desc-btn {
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 100%;
+        margin-top: 40px;
+
+        @media @desktop {
+            width: 350px;
+            margin-top: 0;
+        }
+    }
+    
+    &__desc-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        @media @desktop {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    &__desc-text {
+        text-align: center;
+
+        @media @desktop {
+            text-align: left;
+        }
+    }
+
+    &__desc-partner {
+        width: 150px;
+
+        img {
+            width: 100%;
         }
     }
 }
@@ -721,7 +774,8 @@
 
     &__nav {
         user-select: none;
-
+        -webkit-tap-highlight-color: transparent;
+        
         &-next,
         &-prev {
             cursor: pointer;
@@ -881,6 +935,7 @@
 
     &__item-recursive {
         cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
         position: absolute;
         left: 0;
         top: 0;
@@ -1081,6 +1136,7 @@
 
     &__nav {
         user-select: none;
+        -webkit-tap-highlight-color: transparent;
 
         &-next,
         &-prev {
@@ -1484,6 +1540,7 @@
         position: absolute;
         bottom: 0px;
         left: 20px;
+        -webkit-tap-highlight-color: transparent;
 
         span {
             display: none

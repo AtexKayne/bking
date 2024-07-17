@@ -1,5 +1,5 @@
 import locomotiveScroll from 'locomotive-scroll'
-import { $ } from './helper'
+import { $, detectMobile } from './helper'
 
 window.locscroll = new locomotiveScroll({
     el: document.querySelector('.scroll'),
@@ -18,9 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     scrollLinks.on('click', function () {
         const sectionTo = $(this.dataset.scroll).eq(0)
-        locscroll.scrollTo(sectionTo, {
-            offset: -100,
-            duration: 400
-        })
+        if (detectMobile()) {
+            const scroll = document.querySelector('.scroll')
+            scroll.scrollTo({
+                top: sectionTo.offsetTop,
+                behavior: 'smooth',
+            })
+        } else {
+            locscroll.scrollTo(sectionTo, {
+                offset: -100,
+                duration: 400
+            })
+        }
     })
 })
