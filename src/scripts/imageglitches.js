@@ -646,7 +646,7 @@ const nominationSecInint = async () => {
     const app = await appInit({
         node: section.eq(0),
         params,
-        // maxFPS: 20,
+        maxFPS: 20,
         observerFn: obsHandler
     })
 
