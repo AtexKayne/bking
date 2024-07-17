@@ -662,7 +662,6 @@ const nominationSecInint = async () => {
     sprite.filters[2].blur = 50
     sprite.filters[2].quality = 10
     app.stage.addChild(sprite)
-    console.log(ratio);
 
     const fontSize = isMobile ? innerWidth / 375 * 500 : innerWidth / 1440 * 250
     const style = {
@@ -677,7 +676,6 @@ const nominationSecInint = async () => {
     const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
     const staticX = innerWidth - textP.width
     textP.x = 0
-    console.log(isMobile);
     textP.y = isMobile ? (innerHeight / 2 - textP.height / 2 + 100) * ratio : (innerHeight / 2 - textP.height / 2) * ratio
     textP.zIndex = 1
     app.stage.addChild(textP)

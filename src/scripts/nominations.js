@@ -161,4 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     rulesSecInit()
     judgesSecInit()
     referencesSecInit()
+
+    $('js-const').eq(0).innerHTML = devicePixelRatio
 })
