@@ -654,7 +654,7 @@ const nominationSecInint = async () => {
     await PIXI.Assets.load(src)
     const sprite = PIXI.Sprite.from(src)
     sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-    sprite.y = isMobile ? (innerHeight - iHeight - 200) * ratio : (innerHeight - iHeight) * ratio
+    sprite.y = isMobile ? 300 : (innerHeight - iHeight) * ratio
     sprite.filters = [rgb, glitch, shadow]
     sprite.width = iWidth * ratio
     sprite.height = iHeight * ratio
@@ -677,7 +677,6 @@ const nominationSecInint = async () => {
     const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
     const staticX = (innerWidth - textP.width)
     const centerY = (innerHeight / 2) * ratio - (textP.height / 2) 
-    console.log(innerHeight, textP.height, centerY * ratio);
     textP.x = 0
     textP.y = isMobile ? centerY - 100 * ratio : centerY
     textP.zIndex = 1
