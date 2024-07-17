@@ -3,6 +3,7 @@ import * as filters from 'pixi-filters'
 import { $, createObserver, detectMobile, randomIntFromInterval } from './helper'
 
 const ratio = window.devicePixelRatio
+// const ratio = 2.75
 
 const appInit = async (settings) => {
     const { node, effects, params, maxFPS } = settings
@@ -674,9 +675,11 @@ const nominationSecInint = async () => {
         fontSize,
     }
     const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
-    const staticX = innerWidth - textP.width
+    const staticX = (innerWidth - textP.width)
+    const centerY = innerHeight / 2 - textP.height / 2
+    console.log(textP.width, textP.height, centerY * ratio);
     textP.x = 0
-    textP.y = isMobile ? (innerHeight / 2 - textP.height / 2 + 100) * ratio : (innerHeight / 2 - textP.height / 2) * ratio
+    textP.y = isMobile ? (centerY + 100) * ratio : centerY
     textP.zIndex = 1
     app.stage.addChild(textP)
 
