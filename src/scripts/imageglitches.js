@@ -16,7 +16,7 @@ const appInit = async (settings) => {
     params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
 
     await app.init(params)
-
+    app.ticker.stop()
     const canvas = app.canvas
     canvas.style.width = params.width / ratio + 'px';
     canvas.style.height = params.height / ratio + 'px';
