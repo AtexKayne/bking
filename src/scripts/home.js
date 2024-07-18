@@ -17,6 +17,7 @@ const linesInit = () => {
     }
 
     const observerHandler = (entries) => {
+        console.log(entries);
         const { isIntersecting } = entries[0]
         if (isIntersecting) {
             locscroll.on('scroll', scrollHandler)

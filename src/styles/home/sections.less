@@ -13,6 +13,7 @@
         z-index: 1;
         position: absolute;
         pointer-events: none;
+        overflow: hidden;
     }
 
     &__line {
@@ -61,7 +62,7 @@
         width: 100%;
         padding: 30px;
         position: absolute;
-        
+
         @media @desktop {
             padding: 0 0 60px;
         }
@@ -78,7 +79,7 @@
             margin-top: 0;
         }
     }
-    
+
     &__desc-container {
         display: flex;
         align-items: center;
@@ -333,9 +334,12 @@
         flex-direction: column;
 
         @media @desktop {
-            gap: 100px;
             padding-top: 60px;
             flex-direction: row;
+        }
+
+        @media @large {
+            gap: 100px;
         }
     }
 
@@ -652,6 +656,7 @@
 }
 
 .criteria-sec {
+    position: relative;
     padding: 140px 0 0;
 
     @media @desktop {
@@ -683,6 +688,7 @@
         display: flex;
         align-items: flex-end;
         letter-spacing: 2px;
+        background-color: var(--c-dark);
         border: 1px solid var(--c-white);
 
         .t-m(16px, 1.4em);
@@ -720,6 +726,7 @@
         position: absolute;
         top: -1px;
         display: block;
+        border-radius: 16px;
         width: 98px;
         height: 85px;
         background-color: var(--c-dark);
@@ -775,7 +782,7 @@
     &__nav {
         user-select: none;
         -webkit-tap-highlight-color: transparent;
-        
+
         &-next,
         &-prev {
             cursor: pointer;
@@ -1102,7 +1109,7 @@
 
 .judges-sec {
     padding-top: 140px;
-    
+
     @media @desktop {
         padding-top: 200px;
         padding-bottom: 140px;
@@ -1557,9 +1564,9 @@
         @media @desktop {
             border-radius: 90px;
             padding: 8px 8px 8px 34px;
-            bottom: 20px;
+            bottom: 5px;
+            left: -255px;
             z-index: 3;
-            left: -235px;
             cursor: pointer;
             text-transform: uppercase;
             display: flex;
@@ -1573,11 +1580,11 @@
             max-width: 321px;
             transition: .3s;
             letter-spacing: 2px;
-            
+
             &[data-next='true'] {
                 max-width: 489px;
-                bottom: 0;
-                left: -376px;
+                bottom: -13px;
+                left: -392px;
                 height: 88px;
                 mask-image: url('../../images/masks/mask-btn-2.png');
 
@@ -1605,6 +1612,16 @@
                 }
             }
         }
+
+        @media @large {
+            bottom: 20px;
+            left: -235px;
+
+            &[data-next='true'] {
+                bottom: 0;
+                left: -376px;
+            }
+        }
     }
 
     @keyframes starlightning {
@@ -1628,7 +1645,7 @@
     &__inner {
         margin-top: 40px;
         display: flex;
-        
+
         @media @desktop {
             flex-wrap: wrap;
             gap: 20px;
@@ -1646,6 +1663,71 @@
             border-radius: 20px;
         }
     }
+}
+
+.more-sec {
+    padding-top: 140px;
+
+    @media @desktop {
+        padding-top: 200px;
+    }
+
+    &__inner {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+
+        h2+& {
+            margin-top: 40px;
+        }
+
+        @media @desktop {
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 40px;
+            margin-right: -40px;
+
+            h2+& {
+                margin-top: 60px;
+            }
+        }
+    }
+
+    &__item {
+        --color: var(--c-light-green);
+        padding: 20px 16px;
+        border-radius: 20px;
+        flex: calc(50% - 40px) 0 0;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--color);
+
+        &[data-color='purple'] {
+            --color: var(--c-light-pink);
+        }
+
+        &:last-child {
+            flex-basis: calc(100% - 40px);
+        }
+
+        &:nth-child(even) {
+            color: var(--color);
+            flex-basis: calc(50% - 40px);
+        }
+
+        @media @desktop {
+            padding: 20px 40px;
+        }
+    }
+
+    &__item-text {
+        color: var(--c-white);
+        margin-top: 20px;
+        letter-spacing: 2px;
+
+        .t-m(20px, 1.5em);
+        .t-d(30px, 1.5em);
+    }
+
 }
 
 .lines {

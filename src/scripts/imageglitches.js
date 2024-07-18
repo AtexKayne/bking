@@ -9,6 +9,8 @@ const appInit = async (settings) => {
     const { node, effects, params, maxFPS } = settings
     const app = new PIXI.Application()
     let isInView = false
+    let resizeTimeout = null
+    let nodeWidth = node.clientWidth
 
     params.width = !params.width ? node.clientWidth * ratio : params.width * ratio
     params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
@@ -68,6 +70,28 @@ const appInit = async (settings) => {
     window.addEventListener('focus', () => {
         if (isInView) app.ticker.start()
     })
+
+    if (!detectMobile() && settings.resize) {
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout)
+            resizeTimeout = setTimeout(() => {
+                if (nodeWidth !== node.clientWidth) {
+                    const ref = node.clientWidth / nodeWidth
+                    nodeWidth = node.clientWidth
+                    // app.canvas.width = app.canvas.width * ref
+                    // app.canvas.height = app.canvas.height * ref
+    
+                    app.stage.width = app.stage.width * ref
+                    app.stage.height = app.stage.height * ref
+                    // console.log(app.canvas.width, params.width, node.clientWidth);
+                    // children.forEach(child => {
+                    //     child.width = child.width * ref
+                    //     child.height = child.height * ref
+                    // })
+                }
+            }, 1000)
+        })
+    }
 
     return app
 }
@@ -305,6 +329,7 @@ const glitchImagesInit = async () => {
             node: el,
             params,
             maxFPS: 12,
+            resize: true,
             observerFn: obsHandler
         })
         apps.push(app)
@@ -612,7 +637,6 @@ const hiddenSecInit = async () => {
 }
 
 const nominationSecInint = async () => {
-    // return
     const section = $('js-nomination-sec')
     if (!section) return
     const src = section.attr('data-image')
@@ -665,7 +689,6 @@ const nominationSecInint = async () => {
     app.stage.addChild(sprite)
 
     const fontSize = isMobile ? 250 : (innerWidth / 1440 * 250) * ratio
-    console.log(fontSize);
     const style = {
         fontFamily: 'Bender black',
         fill: params.background,
@@ -677,7 +700,7 @@ const nominationSecInint = async () => {
     }
     const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
     const staticX = (innerWidth - textP.width)
-    const centerY = (innerHeight / 2) * ratio - (textP.height / 2) 
+    const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
     textP.x = 0
     textP.y = isMobile ? centerY - 100 * ratio : centerY
     textP.zIndex = 1
