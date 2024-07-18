@@ -541,6 +541,7 @@
     }
 
     &__desc {
+        letter-spacing: 2px;
         margin-top: 6px;
 
         .t-m(14px, 1.5em);
@@ -846,9 +847,10 @@
         width: 260px;
         height: 260px;
         flex-grow: 0;
+        overflow: hidden;
         flex-shrink: 0;
         transition: .3s;
-        border-radius: 40px;
+        border-radius: 40px 0 40px 40px;
         position: relative;
         background-color: #1D1B2B;
 
@@ -868,6 +870,7 @@
             .participant-sec__item-recursive {
                 background-color: var(--c-white);
                 color: var(--c-dark);
+                transform: rotate(180deg);
 
                 svg {
                     transform: scale(-1, 1);
@@ -904,6 +907,14 @@
             .participant-sec__item-recursive {
                 left: auto;
                 right: 0;
+            }
+        }
+
+        @media @desktop {
+            &:hover {
+                .participant-sec__item-light {
+                    filter: blur(20px);
+                }
             }
         }
     }
@@ -943,6 +954,7 @@
         position: absolute;
         left: 0;
         top: 0;
+        transition: .3s;
         z-index: 1;
         border-radius: 50%;
         filter: blur(10px);
@@ -1023,14 +1035,22 @@
     &__item-text {
         text-transform: uppercase;
         margin-bottom: 6px;
+        font-size: 14px;
+        line-height: 1.2em;
+        letter-spacing: 2px;
+    }
 
-        .t-d(14px, 1.2em);
+    &__item-work {
+        font-size: 16px;
+        line-height: 1.2em;
+        letter-spacing: 2px;
     }
 
     &__item-desc {
+        letter-spacing: 2px;
         font-family: 'Bender black';
-
-        .t-d(16px, 1.5em);
+        font-size: 16px;
+        line-height: 1.5em;
     }
 
     &__pagination {
@@ -1235,11 +1255,13 @@
 
         @media @phone {
             opacity: 0.5;
+            transform: scale(0.9);
 
             &.js-judges-item-active {
                 opacity: 1;
                 box-shadow: 0px 0px 80px rgba(140, 11, 140, 0.6);
                 z-index: 4;
+                transform: scale(1);
             }
         }
     }
@@ -1259,13 +1281,15 @@
         position: absolute;
         bottom: 4px;
         left: 0;
-        height: 59px;
+        // height: 59px;
+        padding-bottom: 16px;
         display: inline-flex;
         border-radius: 0px 30px 0px 0px;
         background-color: #1D1B2B;
 
         @media @desktop {
-            height: 64px;
+            // height: 64px;
+            padding-bottom: 16px;
         }
 
         svg {
@@ -1329,7 +1353,7 @@
         position: relative;
         z-index: 4;
         transition: .1s;
-        letter-spacing: 0.4px;
+        letter-spacing: 2px;
         margin-top: 8px;
         font-size: 16px;
         padding-bottom: 10px;

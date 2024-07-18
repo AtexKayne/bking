@@ -353,10 +353,9 @@ const glitchImagesInit = async () => {
         if (isMobile) overlay.style.opacity = 0
 
         app.ticker.add((ticker) => {
-            const { top, height } = el.getBoundingClientRect()
-            if (-top > height) return
-
             if (!isMobile) {
+                const { top, height } = el.getBoundingClientRect()
+                if (-top > height) return
                 const wc = innerHeight / 2
                 const ic = height / 2
                 const p = Math.abs(top + ic - wc)
@@ -389,9 +388,8 @@ const mainSecInit = async () => {
         params,
         // resizeTo: window,
         maxFPS: 1,
-        observerFn: (isInView) => {
-            console.log(isInView);
-            console.log(app.ticker);
+        observerFn: () => {
+            console.log(app);
         }
     })
     const circle = appendRect(app)

@@ -128,8 +128,9 @@ const judgesSecInit = () => {
         slidePrevClass: 'js-judges-item-prev',
         slideNextClass: 'js-judges-item-next',
         slideActiveClass: 'js-judges-item-active',
+        centeredSlides: true,
         spaceBetween: 10,
-        slidesPerView: 1,
+        slidesPerView: 1.2,
         breakpoints: {
             1024: {
                 spaceBetween: 40,
