@@ -273,6 +273,7 @@ const glitchImagesInit = async () => {
         const iWidth = el.clientWidth
         const iHeight = el.clientHeight
         const overlay = el.previousElementSibling
+        const src = el.dataset.src
         const params = {
             width: iWidth,
             height: iHeight,
@@ -285,6 +286,9 @@ const glitchImagesInit = async () => {
         const image = document.createElement('img')
         image.setAttribute('src', src)
         el.append(image)
+
+        const asset = await PIXI.Assets.load(src)
+        if (!asset) return
 
         const stopFunc = () => {
             if (!isInView) return
@@ -317,12 +321,7 @@ const glitchImagesInit = async () => {
         const rgb = new filters.RGBSplitFilter()
         const glitch = new filters.GlitchFilter()
         const shadow = new filters.DropShadowFilter()
-        const src = el.dataset.src
 
-        const asset = await PIXI.Assets.load(src)
-        if (!asset) {
-            return app.canvas.style.opacity = 0
-        }
         const sprite = PIXI.Sprite.from(src)
         sprite.x = 0
         sprite.y = 50 * 0.996 * ratio
