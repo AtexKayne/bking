@@ -17,6 +17,7 @@ const appInit = async (settings) => {
 
     await app.init(params)
     app.ticker.stop()
+    app.stage.renderable = false
     const canvas = app.canvas
     canvas.style.width = params.width / ratio + 'px';
     canvas.style.height = params.height / ratio + 'px';
@@ -58,9 +59,12 @@ const appInit = async (settings) => {
         const { isIntersecting } = entries[0]
         isInView = isIntersecting
         if (isIntersecting) {
+            if (!app.stage.renderable) app.stage.renderable = true
             if (!app.ticker.started) app.ticker.start()
+        } else {
+            app.stage.renderable = false
+            app.ticker.stop()
         }
-        else app.ticker.stop()
         if (typeof settings.observerFn === 'function') {
             settings.observerFn(isIntersecting)
         }
@@ -287,21 +291,21 @@ const glitchImagesInit = async () => {
             let isInView = false
             let isStopped = false
             let timeout = null
-    
+
             const image = document.createElement('img')
             image.setAttribute('src', src)
             el.append(image)
-    
+
             const asset = await PIXI.Assets.load(src)
             if (!asset) return
-    
+
             const stopFunc = () => {
                 if (!isInView) return
                 isStopped = !isStopped
                 clearTimeout(timeout)
                 timeout = setTimeout(stopFunc, randomIntFromInterval(100, 1200))
             }
-    
+
             const obsHandler = (entry) => {
                 isInView = entry
                 if (isInView) {
@@ -314,7 +318,7 @@ const glitchImagesInit = async () => {
                     clearTimeout(timeout)
                 }
             }
-    
+
             const app = await appInit({
                 node: el,
                 params,
@@ -322,11 +326,11 @@ const glitchImagesInit = async () => {
                 resize: true,
                 observerFn: obsHandler
             })
-    
+
             const rgb = new filters.RGBSplitFilter()
             const glitch = new filters.GlitchFilter()
             const shadow = new filters.DropShadowFilter()
-    
+
             const sprite = PIXI.Sprite.from(src)
             sprite.x = 0
             sprite.y = 50 * 0.996 * ratio
@@ -334,11 +338,11 @@ const glitchImagesInit = async () => {
             sprite.width = iWidth * 0.996 * ratio
             sprite.height = iHeight * 0.996 * ratio
             app.stage.addChild(sprite)
-    
+
             sprite.filters[2].color = '#CC00FF'
             sprite.filters[2].blur = 30
             sprite.filters[2].quality = 10
-    
+
             const setFilters = (co, so, bo) => {
                 sprite.filters[0].red.x = randomIntFromInterval(-co, co)
                 sprite.filters[0].red.y = randomIntFromInterval(-co, co)
@@ -350,9 +354,9 @@ const glitchImagesInit = async () => {
                 sprite.filters[1].slices = randomIntFromInterval(1, 6)
                 sprite.filters[2].blur = bo
             }
-    
+
             if (isMobile) overlay.style.opacity = 0
-    
+
             app.ticker.add((ticker) => {
                 if (!isMobile) {
                     const { top, height } = el.getBoundingClientRect()
@@ -388,11 +392,7 @@ const mainSecInit = async () => {
         node: mainNode,
         effects: ['glitch'],
         params,
-        // resizeTo: window,
         maxFPS: 1,
-        observerFn: () => {
-            console.log(app);
-        }
     })
     const circle = appendRect(app)
     const textes = await appendText(app)
@@ -510,46 +510,44 @@ const btnsInit = () => {
             app.stage.filters[0].slices = 150
         })
 
-        if (!detectMobile()) {
-            btn.addEventListener('mouseenter', () => {
-                isHovered = true
-                app.ticker.start()
-                force = 1
-                if (type === 'secondary') {
-                    rect.filters[0].color = cLight
-                    btnText.style.fill = cDark
+        btn.addEventListener('mouseenter', () => {
+            isHovered = true
+            app.ticker.start()
+            force = 1
+            if (type === 'secondary') {
+                rect.filters[0].color = cLight
+                btnText.style.fill = cDark
+            }
+            forceInterval = setInterval(() => {
+                if (force > 0) {
+                    force -= 0.05
+                } else if (!forceTimeout) {
+                    forceTimeout = setTimeout(() => {
+                        force = 1
+                        clearTimeout(forceTimeout)
+                        forceTimeout = null
+                    }, 1000)
                 }
-                forceInterval = setInterval(() => {
-                    if (force > 0) {
-                        force -= 0.05
-                    } else if (!forceTimeout) {
-                        forceTimeout = setTimeout(() => {
-                            force = 1
-                            clearTimeout(forceTimeout)
-                            forceTimeout = null
-                        }, 1000)
-                    }
-                }, 50)
-            })
+            }, 50)
+        })
 
-            btn.addEventListener('mouseleave', () => {
-                isHovered = false
-                force = 0
-                if (forceTimeout) clearTimeout(forceTimeout)
-                if (forceInterval) clearInterval(forceInterval)
-                forceTimeout = null
-                forceInterval = null
+        btn.addEventListener('mouseleave', () => {
+            isHovered = false
+            force = 0
+            if (forceTimeout) clearTimeout(forceTimeout)
+            if (forceInterval) clearInterval(forceInterval)
+            forceTimeout = null
+            forceInterval = null
 
-                if (type === 'secondary') {
-                    rect.filters[0].color = cDark
-                    btnText.style.fill = cLight
-                }
+            if (type === 'secondary') {
+                rect.filters[0].color = cDark
+                btnText.style.fill = cLight
+            }
 
-                setTimeout(() => {
-                    if (!isHovered) app.ticker.stop()
-                }, 1000);
-            })
-        }
+            setTimeout(() => {
+                if (!isHovered) app.ticker.stop()
+            }, 1000);
+        })
     })
 }
 
