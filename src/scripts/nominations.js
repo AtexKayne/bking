@@ -81,11 +81,9 @@ const rulesSecInit = () => {
     if (detectMobile()) {
         const imageNode = image.eq(0).querySelector('img')
         let imageHeight = imageNode.getBoundingClientRect().height + 20
-        console.log(imageHeight, imageNode, imageNode.complete);
         if (!imageNode.complete) {
             imageNode.addEventListener('load', () => {
                 imageHeight = imageNode.getBoundingClientRect().height + 20
-                console.log(imageHeight);
             })
         }
         items.items.forEach((item) => {

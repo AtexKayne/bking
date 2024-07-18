@@ -267,6 +267,7 @@ const setAnimationState = (app, index, textes) => {
 
 const glitchImagesInit = async () => {
     const images = $('js-glitch-image')
+    const isMobile = detectMobile()
     if (!images) return
     images.items.forEach(async (el, index) => {
         const iWidth = el.clientWidth
@@ -303,7 +304,7 @@ const glitchImagesInit = async () => {
         const app = await appInit({
             node: el,
             params,
-            maxFPS: 12,
+            maxFPS: isMobile ? 6 : 12,
             resize: true,
             observerFn: obsHandler
         })
@@ -329,37 +330,7 @@ const glitchImagesInit = async () => {
         image.setAttribute('src', src)
         el.append(image)
 
-        app.ticker.add((ticker) => {
-            const { top, height } = el.getBoundingClientRect()
-            if (-top > height) return
-
-            const wc = innerHeight / 2
-            const ic = height / 2
-            const p = Math.abs(top + ic - wc)
-            const l = innerHeight - (wc - ic)
-            const m = p / l
-
-            overlay.style.opacity = m + 0.1
-
-            if (isStopped) {
-                sprite.filters[0].green.x = 0
-                sprite.filters[0].green.y = 0
-                sprite.filters[0].red.x = 0
-                sprite.filters[0].red.y = 0
-                sprite.filters[0].blue.x = 0
-                sprite.filters[0].blue.y = 0
-                sprite.filters[1].offset = 0
-                sprite.filters[1].slices = 0
-
-                return
-            }
-
-            const i = m < 0.25 ? 0 : m
-            const s = Math.max(1 - i, 0)
-            const co = s * 10
-            const so = s * 20
-            const bo = s * 30
-
+        const setFilters = (co, so, bo) => {
             sprite.filters[0].red.x = randomIntFromInterval(-co, co)
             sprite.filters[0].red.y = randomIntFromInterval(-co, co)
             sprite.filters[0].green.x = randomIntFromInterval(-co, co)
@@ -369,6 +340,32 @@ const glitchImagesInit = async () => {
             sprite.filters[1].offset = randomIntFromInterval(-so, so)
             sprite.filters[1].slices = randomIntFromInterval(1, 6)
             sprite.filters[2].blur = bo
+        }
+
+        if (isMobile) overlay.style.opacity = 0
+
+        app.ticker.add((ticker) => {
+            const { top, height } = el.getBoundingClientRect()
+            if (-top > height) return
+
+            if (!isMobile) {
+                const wc = innerHeight / 2
+                const ic = height / 2
+                const p = Math.abs(top + ic - wc)
+                const l = innerHeight - (wc - ic)
+                const m = p / l
+                overlay.style.opacity = m + 0.1
+                if (isStopped) return setFilters(0, 0, 30)
+                const i = m < 0.25 ? 0 : m
+                const s = Math.max(1 - i, 0)
+                const co = s * 10
+                const so = s * 20
+                const bo = s * 30
+                setFilters(co, so, bo)
+            } else {
+                if (isStopped) return setFilters(0, 0, 30)
+                setFilters(10, 20, 30)
+            }
         })
     })
 }
@@ -744,17 +741,16 @@ const nominationSecInint = async () => {
         sprite.filters[1].slices = randomIntFromInterval(1, 6)
     })
 
-    const debounceResize = debounce(() => {
-        const { iWidth, iHeight } = getSizes()
-        sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-        sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
-        sprite.width = iWidth * ratio
-        sprite.height = iHeight * ratio
+    window.appMainSection = app
 
-        const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
-        textP.x = 0
-        textP.y = isMobile ? centerY - 50 * ratio : centerY
-    }, 1000)
+    const debounceResize = debounce(() => {
+        window.appMainSection.canvas.remove()
+        window.appMainSection.destroy()
+
+        setTimeout(nominationSecInint, 500)
+
+        window.removeEventListener('resize', debounceResize)
+    }, 2000)
 
     if (!detectMobile()) {
         window.addEventListener('resize', debounceResize)
