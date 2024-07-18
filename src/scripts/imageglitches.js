@@ -272,15 +272,19 @@ const glitchImagesInit = async () => {
     images.items.forEach(async (el, index) => {
         const iWidth = el.clientWidth
         const iHeight = el.clientHeight
+        const overlay = el.previousElementSibling
         const params = {
             width: iWidth,
             height: iHeight,
             background: '#040214'
         }
-        const overlay = el.previousElementSibling
         let isInView = false
         let isStopped = false
         let timeout = null
+
+        const image = document.createElement('img')
+        image.setAttribute('src', src)
+        el.append(image)
 
         const stopFunc = () => {
             if (!isInView) return
@@ -301,6 +305,7 @@ const glitchImagesInit = async () => {
                 clearTimeout(timeout)
             }
         }
+
         const app = await appInit({
             node: el,
             params,
@@ -308,12 +313,16 @@ const glitchImagesInit = async () => {
             resize: true,
             observerFn: obsHandler
         })
+
         const rgb = new filters.RGBSplitFilter()
         const glitch = new filters.GlitchFilter()
         const shadow = new filters.DropShadowFilter()
         const src = el.dataset.src
 
-        await PIXI.Assets.load(src)
+        const asset = await PIXI.Assets.load(src)
+        if (!asset) {
+            return app.canvas.style.opacity = 0
+        }
         const sprite = PIXI.Sprite.from(src)
         sprite.x = 0
         sprite.y = 50 * 0.996 * ratio
@@ -325,10 +334,6 @@ const glitchImagesInit = async () => {
         sprite.filters[2].color = '#CC00FF'
         sprite.filters[2].blur = 30
         sprite.filters[2].quality = 10
-
-        const image = document.createElement('img')
-        image.setAttribute('src', src)
-        el.append(image)
 
         const setFilters = (co, so, bo) => {
             sprite.filters[0].red.x = randomIntFromInterval(-co, co)
