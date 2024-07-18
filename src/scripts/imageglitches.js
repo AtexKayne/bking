@@ -429,6 +429,7 @@ const mainSecInit = async () => {
 }
 
 const btnsInit = () => {
+    if (detectMobile()) return
     const btns = $('js-btn')
     if (!btns) return
 
