@@ -34,6 +34,7 @@ const headerInit = () => {
     if (isMobile) {
         scroll.addEventListener('scroll', () => {
             const y = scroll.scrollTop
+            if (y < 200) return node.dataset.hidden = false
             if (y === scrollTo) return
             node.dataset.hidden = y > scrollTo
             scrollTo = y
@@ -41,6 +42,7 @@ const headerInit = () => {
     } else {
         locscroll.on('scroll', event => {
             const y = event.delta.y
+            if (y < 200) return node.dataset.hidden = false
             if (y === scrollTo) return
             node.dataset.hidden = y > scrollTo
             scrollTo = y

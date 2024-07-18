@@ -79,7 +79,15 @@ const rulesSecInit = () => {
     if (!image || !items) return
 
     if (detectMobile()) {
-        const imageHeight = image.eq(0).getBoundingClientRect().height + 20
+        const imageNode = image.eq(0).querySelector('img')
+        let imageHeight = imageNode.getBoundingClientRect().height + 20
+        console.log(imageHeight, imageNode, imageNode.complete);
+        if (!imageNode.complete) {
+            imageNode.addEventListener('load', () => {
+                imageHeight = imageNode.getBoundingClientRect().height + 20
+                console.log(imageHeight);
+            })
+        }
         items.items.forEach((item) => {
             let isOpen = false
             const container = item.querySelector('.js-rules-item-container')
@@ -91,6 +99,8 @@ const rulesSecInit = () => {
                 container.style.height = `${height}px`
             })
         })
+
+        
         return
     }
 

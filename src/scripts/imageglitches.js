@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import * as filters from 'pixi-filters'
-import { $, createObserver, detectMobile, randomIntFromInterval } from './helper'
+import { $, createObserver, debounce, detectMobile, randomIntFromInterval } from './helper'
 
 const ratio = window.devicePixelRatio
 // const ratio = 2.75
@@ -9,8 +9,8 @@ const appInit = async (settings) => {
     const { node, effects, params, maxFPS } = settings
     const app = new PIXI.Application()
     let isInView = false
-    let resizeTimeout = null
-    let nodeWidth = node.clientWidth
+    // let resizeTimeout = null
+    // let nodeWidth = node.clientWidth
 
     params.width = !params.width ? node.clientWidth * ratio : params.width * ratio
     params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
@@ -53,7 +53,8 @@ const appInit = async (settings) => {
     app.ticker.maxFPS = maxFPS
     app.ticker.minFPS = 0
 
-    createObserver(node, (entries) => {
+    const observer = createObserver(node, (entries) => {
+        if (!app || !app.ticker) return observer.disconnect()
         const { isIntersecting } = entries[0]
         isInView = isIntersecting
         if (isIntersecting) app.ticker.start()
@@ -63,35 +64,18 @@ const appInit = async (settings) => {
         }
     })
 
-    window.addEventListener('blur', () => {
+    const blurHandler = () => {
+        if (!app || !app.ticker) return window.removeEventListener('blur', blurHandler)
         if (isInView) app.ticker.stop()
-    })
-
-    window.addEventListener('focus', () => {
-        if (isInView) app.ticker.start()
-    })
-
-    if (!detectMobile() && settings.resize) {
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout)
-            resizeTimeout = setTimeout(() => {
-                if (nodeWidth !== node.clientWidth) {
-                    const ref = node.clientWidth / nodeWidth
-                    nodeWidth = node.clientWidth
-                    // app.canvas.width = app.canvas.width * ref
-                    // app.canvas.height = app.canvas.height * ref
-    
-                    app.stage.width = app.stage.width * ref
-                    app.stage.height = app.stage.height * ref
-                    // console.log(app.canvas.width, params.width, node.clientWidth);
-                    // children.forEach(child => {
-                    //     child.width = child.width * ref
-                    //     child.height = child.height * ref
-                    // })
-                }
-            }, 1000)
-        })
     }
+
+    const focusHandler = () => {
+        if (!app || !app.ticker) return window.removeEventListener('focus', focusHandler)
+        if (isInView) app.ticker.start()
+    }
+
+    window.addEventListener('blur', blurHandler)
+    window.addEventListener('focus', focusHandler)
 
     return app
 }
@@ -131,9 +115,9 @@ const appendText = async (app) => {
     ] : [
         { text: 'barber king\n2o24', fontSize: fontSize1 * 2, container: 1, x: width / 2, y: height / 2 - 75 },
         { text: '21 - 22\nоkтября', fontSize: fontSize1 * 2, container: 2, x: width / 2, y: height / 2 - 75 },
-        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + 125 },
+        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + fontSize1 * 2 },
         { text: 'МТС\nLive Холл', fontSize: fontSize1 * 2, container: 3, x: width / 2, y: height / 2 - 75 },
-        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + 125 },
+        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + fontSize1 * 2 },
         { text: 'barber king', fontSize: fontSize3 * 2.5, container: 4, x: width / 3, y: height / 3 },
         { text: '2o24', fontSize: fontSize4 * 2, container: 4, x: width / 1.3, y: height / 1.5 },
     ]
@@ -284,7 +268,6 @@ const setAnimationState = (app, index, textes) => {
 const glitchImagesInit = async () => {
     const images = $('js-glitch-image')
     if (!images) return
-    const apps = []
     images.items.forEach(async (el, index) => {
         const iWidth = el.clientWidth
         const iHeight = el.clientHeight
@@ -298,21 +281,6 @@ const glitchImagesInit = async () => {
         let isStopped = false
         let timeout = null
 
-        const countStars = randomIntFromInterval(2, 5)
-        const getStar = () => {
-            const color = randomIntFromInterval(1, 2) === 1 ? '#00FF00' : '#FF00FF'
-            const left = randomIntFromInterval(20, iWidth - 20)
-            const top = randomIntFromInterval(20, iHeight - 20)
-            return `
-                <svg class="image-star" style="left: ${left}px;top: ${top}px;" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.3812 0.495117L17.793 8.57128L25.8691 12.9831L17.793 17.419L13.3812 25.4951L8.94532 17.419L0.869141 12.9831L8.94532 8.57128L13.3812 0.495117Z" fill="${color}"/>
-                </svg>
-            `
-        }
-        // for (let i = 0; i < countStars; i++) {
-        //     el.innerHTML += getStar()
-        // }
-
         const stopFunc = () => {
             if (!isInView) return
             isStopped = !isStopped
@@ -322,8 +290,15 @@ const glitchImagesInit = async () => {
 
         const obsHandler = (entry) => {
             isInView = entry
-            if (isInView) stopFunc()
-            else clearTimeout(timeout)
+            if (isInView) {
+                setTimeout(() => {
+                    app.canvas.style.opacity = 1
+                }, 1000)
+                stopFunc()
+            } else {
+                app.canvas.style.opacity = 0
+                clearTimeout(timeout)
+            }
         }
         const app = await appInit({
             node: el,
@@ -332,7 +307,6 @@ const glitchImagesInit = async () => {
             resize: true,
             observerFn: obsHandler
         })
-        apps.push(app)
         const rgb = new filters.RGBSplitFilter()
         const glitch = new filters.GlitchFilter()
         const shadow = new filters.DropShadowFilter()
@@ -350,6 +324,10 @@ const glitchImagesInit = async () => {
         sprite.filters[2].color = '#CC00FF'
         sprite.filters[2].blur = 30
         sprite.filters[2].quality = 10
+
+        const image = document.createElement('img')
+        image.setAttribute('src', src)
+        el.append(image)
 
         app.ticker.add((ticker) => {
             const { top, height } = el.getBoundingClientRect()
@@ -404,6 +382,7 @@ const mainSecInit = async () => {
         node: mainNode,
         effects: ['glitch'],
         params,
+        // resizeTo: window,
         maxFPS: 1
     })
     const circle = appendRect(app)
@@ -426,6 +405,21 @@ const mainSecInit = async () => {
 
         tickerHandler(app, text, effect)
     })
+
+    window.appMainSection = app
+
+    const debounceResize = debounce(() => {
+        window.appMainSection.canvas.remove()
+        window.appMainSection.destroy()
+
+        setTimeout(mainSecInit, 500)
+
+        window.removeEventListener('resize', debounceResize)
+    }, 2000)
+
+    if (!detectMobile()) {
+        window.addEventListener('resize', debounceResize)
+    }
 }
 
 const btnsInit = () => {
@@ -644,8 +638,20 @@ const nominationSecInint = async () => {
     const text = section.attr('data-text')
     const params = { background: '#040214' }
     const isMobile = detectMobile()
-    const iWidth = isMobile ? innerWidth / 375 * 375 : innerWidth / 1440 * 657
-    const iHeight = isMobile ? innerWidth / 375 * 450 : innerWidth / 1440 * 788
+
+    const getSizes = () => {
+        const widthMobile = innerWidth
+        const heightMobile = innerWidth / 375 * 450
+        const widthDesktop = Math.min(innerWidth / 1440 * 657, innerHeight / 700 * 657)
+        const heightDesktop = Math.min(innerWidth / 1440 * 788, innerHeight / 700 * 788)
+
+        const iWidth = isMobile ? widthMobile : widthDesktop
+        const iHeight = isMobile ? heightMobile : heightDesktop
+
+        return { iWidth, iHeight }
+    }
+
+    const { iWidth, iHeight } = getSizes()
     const rgb = new filters.RGBSplitFilter()
     const glitch = new filters.GlitchFilter()
     const shadow = new filters.DropShadowFilter()
@@ -654,7 +660,6 @@ const nominationSecInint = async () => {
     let timeout = null
     let isInView = false
     let x = 0
-    let direction = false
 
     const stopFunc = () => {
         if (!isInView) return
@@ -673,6 +678,7 @@ const nominationSecInint = async () => {
         node: section.eq(0),
         params,
         maxFPS: 20,
+        resizeTo: window,
         observerFn: obsHandler
     })
 
@@ -738,6 +744,21 @@ const nominationSecInint = async () => {
         sprite.filters[1].slices = randomIntFromInterval(1, 6)
     })
 
+    const debounceResize = debounce(() => {
+        const { iWidth, iHeight } = getSizes()
+        sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
+        sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
+        sprite.width = iWidth * ratio
+        sprite.height = iHeight * ratio
+
+        const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
+        textP.x = 0
+        textP.y = isMobile ? centerY - 50 * ratio : centerY
+    }, 1000)
+
+    if (!detectMobile()) {
+        window.addEventListener('resize', debounceResize)
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
