@@ -644,8 +644,8 @@ const nominationSecInint = async () => {
     const text = section.attr('data-text')
     const params = { background: '#040214' }
     const isMobile = detectMobile()
-    const iWidth = isMobile ? innerWidth / 375 * 375 : Math.min(innerWidth / 1440 * 550, 550)
-    const iHeight = isMobile ? innerWidth / 375 * 450 : Math.min(innerWidth / 1440 * 661, 661)
+    const iWidth = isMobile ? innerWidth / 375 * 375 : Math.min(innerWidth / 1440 * 657, 657)
+    const iHeight = isMobile ? innerWidth / 375 * 450 : Math.min(innerWidth / 1440 * 788, 788)
     const rgb = new filters.RGBSplitFilter()
     const glitch = new filters.GlitchFilter()
     const shadow = new filters.DropShadowFilter()
