@@ -68,8 +68,8 @@ export const randomFromInterval = (min, max) => {
     return Math.random() * (max - min + 1) + min
 }
 
-export const createObserver = (element, fn) => {
-    const observer = new IntersectionObserver(fn, {})
+export const createObserver = (element, fn, threshold) => {
+    const observer = new IntersectionObserver(fn, { threshold })
     observer.observe(element)
     return observer
 }
@@ -82,7 +82,7 @@ Number.prototype.isBetween = function (a, b) {
 
 export const debounce = (func, wait) => {
     let timeout
-    return function executedFunction (...args) {
+    return function executedFunction(...args) {
         const later = () => {
             clearTimeout(timeout)
             func(...args)
