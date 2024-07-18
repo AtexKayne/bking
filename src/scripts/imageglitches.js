@@ -761,11 +761,11 @@ const nominationSecInint = async () => {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    glitchImagesInit()
-    btnsInit()
-    mainSecInit()
-    hiddenSecInit()
-    nominationSecInint()
+document.addEventListener('DOMContentLoaded', async () => {
+    setTimeout(mainSecInit, 100)
+    setTimeout(nominationSecInint, 100)
+    setTimeout(btnsInit, 200)
+    setTimeout(glitchImagesInit, 300)
+    setTimeout(hiddenSecInit, 400)
 })
 
