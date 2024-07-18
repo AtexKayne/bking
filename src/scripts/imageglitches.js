@@ -57,7 +57,9 @@ const appInit = async (settings) => {
         if (!app || !app.ticker) return observer.disconnect()
         const { isIntersecting } = entries[0]
         isInView = isIntersecting
-        if (isIntersecting) app.ticker.start()
+        if (isIntersecting) {
+            if (!app.ticker.started) app.ticker.start()
+        }
         else app.ticker.stop()
         if (typeof settings.observerFn === 'function') {
             settings.observerFn(isIntersecting)
@@ -74,8 +76,10 @@ const appInit = async (settings) => {
         if (isInView) app.ticker.start()
     }
 
-    window.addEventListener('blur', blurHandler)
-    window.addEventListener('focus', focusHandler)
+    if (!detectMobile()) {
+        window.addEventListener('blur', blurHandler)
+        window.addEventListener('focus', focusHandler)
+    }
 
     return app
 }
@@ -384,7 +388,11 @@ const mainSecInit = async () => {
         effects: ['glitch'],
         params,
         // resizeTo: window,
-        maxFPS: 1
+        maxFPS: 1,
+        observerFn: (isInView) => {
+            console.log(isInView);
+            console.log(app.ticker);
+        }
     })
     const circle = appendRect(app)
     const textes = await appendText(app)
