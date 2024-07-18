@@ -101,6 +101,7 @@
 
     &__desc-partner {
         width: 150px;
+        text-align: center;
 
         img {
             width: 100%;
@@ -349,6 +350,10 @@
         @media @desktop {
             flex: 50% 0 0;
         }
+
+        @media @large {
+            flex: calc(50% - 50px) 0 0;
+        }
     }
 
     &__text {
@@ -402,8 +407,12 @@
             }
         }
 
-        &[data-active='true'] svg {
+        svg {
             transform: rotate(180deg);
+        }
+
+        &[data-active='true'] svg {
+            transform: rotate(0);
         }
 
         &:first-child {
@@ -532,7 +541,7 @@
     }
 
     &__desc {
-        margin-top: 2px;
+        margin-top: 6px;
 
         .t-m(14px, 1.5em);
         .t-d(16px, 1.5em);
@@ -672,7 +681,7 @@
 
         @media @desktop {
             gap: 30px;
-            margin-top: 100px;
+            margin-top: 60px;
             margin-right: -30px;
         }
     }
@@ -950,12 +959,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #1D1B2B;
+        background-color: rgba(255, 255, 255, 0.1);
         width: 50px;
         height: 50px;
         color: var(--c-white);
         border-radius: 50%;
         transition: .3s;
+
+        @media @desktop {
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+        }
 
         svg {
             transition: .3s;
@@ -1176,7 +1191,7 @@
         display: flex;
 
         @media @desktop {
-            margin-top: 100px;
+            margin-top: 60px;
         }
     }
 
@@ -1383,6 +1398,15 @@
             display: none;
             position: relative;
             padding-bottom: 16px;
+        }
+
+        &-next-inner {
+            @media @phone {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
         }
 
         &-mobile {
@@ -1667,6 +1691,7 @@
 
 .more-sec {
     padding-top: 140px;
+    position: relative;
 
     @media @desktop {
         padding-top: 200px;
@@ -1675,6 +1700,8 @@
     &__inner {
         display: flex;
         gap: 20px;
+        position: relative;
+        z-index: 2;
         flex-direction: column;
 
         h2+& {
@@ -1697,6 +1724,8 @@
         --color: var(--c-light-green);
         padding: 20px 16px;
         border-radius: 20px;
+        position: relative;
+        z-index: 2;
         flex: calc(50% - 40px) 0 0;
         background-color: rgba(255, 255, 255, 0.1);
         color: var(--color);
@@ -1719,15 +1748,72 @@
         }
     }
 
+    &__item-star {
+        @media @phone {
+            width: 15px;
+            height: 15px;
+        }
+    }
+
     &__item-text {
         color: var(--c-white);
-        margin-top: 20px;
+        margin-top: 12px;
         letter-spacing: 2px;
 
         .t-m(20px, 1.5em);
         .t-d(30px, 1.5em);
+
+        @media @desktop {
+            margin-top: 20px;
+        }
     }
 
+    &__light {
+        width: 50vw;
+        height: 50vw;
+        border-radius: 50%;
+        background-color: var(--c-green);
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        z-index: 0;
+        filter: blur(100px);
+        pointer-events: none;
+        transform: translate(-50%);
+
+        @media @desktop {
+            width: calc(100vw / 1440 * 300);
+            height: calc(100vw / 1440 * 300);
+            filter: blur(300px);
+            top: 40%;
+            left: 50%;
+            bottom: auto;
+        }
+    }
+
+    &__desc {
+        margin-top: 40px;
+        letter-spacing: 2px;
+        position: relative;
+        z-index: 2;
+
+        .t-m(16px, 1.4em);
+        .t-d(30px, 1.4em);
+
+        @media @desktop {
+            max-width: 900px;
+            margin-top: 60px;
+        }
+    }
+}
+
+.offset-sec {
+    padding-top: 140px;
+    position: relative;
+
+    @media @desktop {
+        padding-top: 200px;
+    }
 }
 
 .lines {

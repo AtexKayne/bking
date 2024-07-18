@@ -77,5 +77,17 @@ export const createObserver = (element, fn) => {
 export const detectMobile = () => window.innerWidth < 1024
 
 Number.prototype.isBetween = function (a, b) {
-    return a <= this && this <= b;
-};
+    return a <= this && this <= b
+}
+
+export const debounce = (func, wait) => {
+    let timeout
+    return function executedFunction (...args) {
+        const later = () => {
+            clearTimeout(timeout)
+            func(...args)
+        }
+        clearTimeout(timeout)
+        timeout = setTimeout(later, wait)
+    }
+}

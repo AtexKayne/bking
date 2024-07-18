@@ -44,11 +44,31 @@
 
         <section class="section">
             <div class="container">
+                <div class="offset-sec">
+                    <!-- Этот блок можно импользовать в любой секции. -->
+                    <!-- offset-sec - вспомогательный класс для создания отступов -->
+                    <div class="info-block">
+                        <div class="info-block__subtitle">
+                            оффлайн–баттл
+                        </div>
+                        <div class="info-block__title static-glitch">
+                            22 октября
+                        </div>
+                        <div class="info-block__text">
+                            У участника будет 60 минут на создание стрижки и укладки, можно использовать любые инструменты
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
                 <div class="awards-sec">
                     <h2 class="t-5 t-2:d t-s5 t-center t-u">Награды победителям</h2>
                     <div class="awards-sec__inner">
                         <div class="awards-sec__item">
-                            <div class="awards-sec__title">
+                            <div class="awards-sec__title static-glitch">
                                 <span>1</span>
                                 <span>место</span>
                             </div>
@@ -56,14 +76,14 @@
                             <div class="awards-sec__desc">+ место в финале за звание Barber King 2024 и возможность побороться за полмиллиона рублей</div>
                         </div>
                         <div class="awards-sec__item">
-                            <div class="awards-sec__title">
+                            <div class="awards-sec__title static-glitch">
                                 <span>2</span>
                                 <span>место</span>
                             </div>
                             <div class="awards-sec__summ">5О ООО рублей</div>
                         </div>
                         <div class="awards-sec__item">
-                            <div class="awards-sec__title">
+                            <div class="awards-sec__title static-glitch">
                                 <span>3</span>
                                 <span>место</span>
                             </div>
@@ -155,7 +175,18 @@
                                 В данном конкурсе нет<br>отборочных этапов
                             </div>
                         </div>
+                        <!-- В конце нужен блик. -->
+                        <div class="more-sec__light"></div>
                     </div>
+                    <div class="t-5 more-sec__desc">
+                        И на отборочном этапе и в финальных баттлах за каждый критерий судьи будут начислять от 1 до 10 баллов.
+                    </div>
+                    <a href="#" class="icon-text icon-text--lg mt-2 mt-3:d">
+                        <svg class="icon-text__icon" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.25 2.5V9.25L15.25 9.30441V9.30442V9.30443V9.30444C15.2499 9.7285 15.2498 10.1406 15.2955 10.4805C15.347 10.8637 15.4726 11.301 15.8358 11.6642C16.199 12.0274 16.6363 12.153 17.0195 12.2045C17.3594 12.2502 17.7715 12.2501 18.1956 12.25H18.1956H18.1956H18.1956L18.25 12.25H25V20C25 23.5355 25 25.3033 23.9017 26.4017C22.8033 27.5 21.0355 27.5 17.5 27.5H12.5C8.96447 27.5 7.1967 27.5 6.09835 26.4017C5 25.3033 5 23.5355 5 20V10C5 6.46447 5 4.6967 6.09835 3.59835C7.1967 2.5 8.96447 2.5 12.5 2.5H15.25ZM17.25 2.50167V9.25C17.25 9.74967 17.2521 10.0238 17.2777 10.214L17.2787 10.2213L17.286 10.2223C17.4762 10.2479 17.7503 10.25 18.25 10.25H24.9983C24.9919 9.59064 24.9608 9.1935 24.8097 8.82883C24.6194 8.3694 24.2581 8.00811 23.5355 7.28555L23.5355 7.28554L20.2145 3.96447C19.4919 3.24189 19.1306 2.8806 18.6712 2.6903C18.3065 2.53925 17.9094 2.50809 17.25 2.50167ZM10.25 16.25C10.25 15.6977 10.6977 15.25 11.25 15.25L18.75 15.25C19.3023 15.25 19.75 15.6977 19.75 16.25C19.75 16.8023 19.3023 17.25 18.75 17.25L11.25 17.25C10.6977 17.25 10.25 16.8023 10.25 16.25ZM11.25 20.25C10.6977 20.25 10.25 20.6977 10.25 21.25C10.25 21.8023 10.6977 22.25 11.25 22.25H16.25C16.8023 22.25 17.25 21.8023 17.25 21.25C17.25 20.6977 16.8023 20.25 16.25 20.25H11.25Z" fill="white" />
+                        </svg>
+                        <span class="icon-text__text">Правила конкурса</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1068,7 +1099,7 @@
                     </div>
                     <div class="participant-sec__btn">
                         <div class="btn btn--lg btn--primary js-btn">
-                            ПОДАТЬ ЗАЯВКУ
+                            ПОДАТЬ ЗАЯВКУ НА ОЛДСКУЛ
                         </div>
                     </div>
                 </div>
@@ -1080,8 +1111,8 @@
                 <div class="text-sec">
                     <div class="text-sec__light"></div>
                     <div class="text-sec__text">
-                        <span class="t-5 t-4:d t-s3">Участник, занявший 1 место, пройдет в финальный баттл за звание</span>
-                        <strong class="t-5 t-4:d t-s3">Barber King 2024</strong>
+                        <span class="t-5 t-4:d t-s3">Участник, занявший 1 место, пройдет в финальный баттл за звание </span>
+                        <strong class="t-5 t-4:d t-s3"> Barber King 2O24</strong>
                     </div>
                 </div>
             </div>
@@ -1311,9 +1342,12 @@
                 <div class="nominations-sec js-nominations">
                     <div class="nominations-sec__item">
                         <div class="nominations-sec__info">
-                            <div class="nominations-sec__info-inner">
-                                <div class="nominations-sec__text">
+                            <div class="nominations-sec__info-next-inner">
+                                <div class="nominations-sec__text is-hidden-mobile">
                                     Баттл
+                                </div>
+                                <div class="nominations-sec__text is-hidden-desktop">
+                                    к следующему Баттлу
                                 </div>
                                 <a href="#" class="nominations-sec__title">
                                     ABC

@@ -43,6 +43,14 @@ body {
     }
 }
 
+.static-glitch {
+    text-shadow: 1px 1px #FF00FF, -1px -1px rgb(0, 255, 0);
+
+    @media @desktop {
+        text-shadow: 2px 2px #FF00FF, -2px -2px rgb(0, 255, 0);
+    }
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -578,5 +586,41 @@ a.mailto {
         @media @desktop {
             display: none;
         }
+    }
+}
+
+.info-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    
+    &__subtitle {
+        max-width: 900px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+
+        .t-m(22px, 32px);
+        .t-d(40px, 64px);
+    }
+
+    &__title {
+        font-family: 'Bender black';
+        margin-top: 1px;
+        max-width: 900px;
+        letter-spacing: 1px;
+
+        .t-m(45px, 1em);
+        .t-d(140px, 1em);
+    }
+
+    &__text {
+        margin-top: 30px;
+        max-width: 900px;
+        letter-spacing: 2px;
+
+        .t-m(16px, 1.4em);
+        .t-d(30px, 43px);
     }
 }

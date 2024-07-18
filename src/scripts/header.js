@@ -6,7 +6,9 @@ const headerInit = () => {
     const header = $('js-header')
     const inner = $('js-menu-inner')
     const isMobile = detectMobile()
-
+    const node = header.eq(0)
+    const scroll = document.querySelector('.scroll')
+    let scrollTo = 0
     let isOpen = false
 
     const menuToggle = () => {
@@ -28,6 +30,22 @@ const headerInit = () => {
     }
 
     menuBtn.on('click', menuToggle)
+
+    if (isMobile) {
+        scroll.addEventListener('scroll', () => {
+            const y = scroll.scrollTop
+            if (y === scrollTo) return
+            node.dataset.hidden = y > scrollTo
+            scrollTo = y
+        })
+    } else {
+        locscroll.on('scroll', event => {
+            const y = event.delta.y
+            if (y === scrollTo) return
+            node.dataset.hidden = y > scrollTo
+            scrollTo = y
+        })
+    }
 }
 
 document.addEventListener('DOMContentLoaded', headerInit)

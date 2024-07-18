@@ -9,6 +9,10 @@
     background: rgb(4, 2, 20);
     background: linear-gradient(180deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 58%, rgba(4, 2, 20, 0) 100%);
 
+    &[data-hidden='true'] {
+        transform: translateY(calc(var(--h-header) * -1 - 10px));
+    }
+
     &[data-open='true'] {
         .header__menu-btn {
             span:nth-child(1) {

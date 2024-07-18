@@ -643,8 +643,8 @@ const nominationSecInint = async () => {
     const text = section.attr('data-text')
     const params = { background: '#040214' }
     const isMobile = detectMobile()
-    const iWidth = isMobile ? innerWidth / 375 * 416 : Math.min(innerWidth / 1440 * 657, 657)
-    const iHeight = isMobile ? innerWidth / 375 * 500 : Math.min(innerWidth / 1440 * 788, 788)
+    const iWidth = isMobile ? innerWidth / 375 * 375 : Math.min(innerWidth / 1440 * 550, 550)
+    const iHeight = isMobile ? innerWidth / 375 * 450 : Math.min(innerWidth / 1440 * 661, 661)
     const rgb = new filters.RGBSplitFilter()
     const glitch = new filters.GlitchFilter()
     const shadow = new filters.DropShadowFilter()
@@ -678,7 +678,7 @@ const nominationSecInint = async () => {
     await PIXI.Assets.load(src)
     const sprite = PIXI.Sprite.from(src)
     sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-    sprite.y = isMobile ? (innerHeight - iHeight - 200) * ratio : (innerHeight - iHeight) * ratio
+    sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
     sprite.filters = [rgb, glitch, shadow]
     sprite.width = iWidth * ratio
     sprite.height = iHeight * ratio
@@ -696,13 +696,14 @@ const nominationSecInint = async () => {
         textTransform: 'uppercase',
         align: 'center',
         lineHeight: fontSize,
+        letterSpacing: 20,
         fontSize,
     }
     const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
-    const staticX = (innerWidth - textP.width)
+    const staticX = innerWidth - textP.width - 300
     const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
     textP.x = 0
-    textP.y = isMobile ? centerY - 100 * ratio : centerY
+    textP.y = isMobile ? centerY - 50 * ratio : centerY
     textP.zIndex = 1
     app.stage.addChild(textP)
 
@@ -710,12 +711,8 @@ const nominationSecInint = async () => {
     const so = 20
 
     app.ticker.add(() => {
-        x += direction ? -3 : 3
-        if (x > 0 && !direction) {
-            direction = true
-        } else if (x < staticX && direction) {
-            direction = false
-        }
+        x += -3
+        if (x < staticX) x = 0
 
         textP.x = x
         if (isStopped) {
