@@ -478,11 +478,13 @@ const btnsInit = () => {
         app.stage.addChild(rect)
 
         await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
+        const fz = +fontSize.replace('px', '') * ratio
 
         const style = new PIXI.TextStyle({
-            fontSize: +fontSize.replace('px', '') * ratio,
+            fontSize: fz,
             fontFamily,
             fontWeight,
+            lineHeight: fz * 1.4,
             fill: color,
             align: 'center',
             letterSpacing: +letterSpacing.replace('px', ''),

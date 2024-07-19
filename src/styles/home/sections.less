@@ -765,6 +765,37 @@
         color: #29222A;
         font-family: 'Bender black';
     }
+
+    &__desc {
+        padding-top: 40px;
+        text-align: center;
+        letter-spacing: 2px;
+
+        .t-m(16px, 1.4em);
+        .t-d(30px, 1.4em);
+
+        @media @desktop {
+            padding-top: 100px;
+        }
+    }
+
+    &__btn {
+        padding-top: 40px;
+        justify-content: center;
+        display: flex;
+
+        >* {
+            width: 100%;
+        }
+
+        @media @desktop {
+            padding-top: 60px;
+
+            >* {
+                width: 444px;
+            }
+        }
+    }
 }
 
 .criteria-sec {
