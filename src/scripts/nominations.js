@@ -133,6 +133,7 @@ const judgesSecInit = () => {
         slidesPerView: 1.2,
         breakpoints: {
             1024: {
+                centeredSlides: false,
                 spaceBetween: 40,
                 slidesPerView: 3,
             }

@@ -54,7 +54,6 @@ const appInit = async (settings) => {
     app.ticker.maxFPS = maxFPS
     app.ticker.minFPS = 0
     const threshold = settings.observer ? settings.observer.threshold ?? 0 : 0
-    console.log(threshold);
 
     const observer = createObserver(node, (entries) => {
         if (!app || !app.ticker) return observer.disconnect()
@@ -280,7 +279,6 @@ const glitchImagesInit_ = async () => {
     const isMobile = detectMobile()
     if (!images) return
     images.items.forEach(async (el, index) => {
-        // if (index === 6) return console.log(6);
         const iWidth = el.clientWidth
         const iHeight = el.clientHeight
         const overlay = el.previousElementSibling
@@ -408,7 +406,7 @@ const glitchImagesInit = async () => {
     const app = await appInit(params)
 
     let isStopped = false
-    let currentRender = 0
+    let currentRender = -1
     let timeout = null
     let timeout1 = null
     let timeout2 = null
@@ -430,8 +428,7 @@ const glitchImagesInit = async () => {
         image.setAttribute('src', src)
         el.append(image)
 
-        await PIXI.Assets.load(src)
-
+        const p = await PIXI.Assets.load(src)
         const sprite = PIXI.Sprite.from(src)
         sprite.x = 0
         sprite.y = 50 * 0.996 * ratio
@@ -448,14 +445,17 @@ const glitchImagesInit = async () => {
         const obsHandler = (entries) => {
             const isInView = entries[0].isIntersecting
             if (!isInView) return
-            
+            if (currentRender === index) return
+
             app.canvas.style.transition = '0.2s'
             app.canvas.style.opacity = 0
             clearTimeout(timeout1)
             clearTimeout(timeout2)
             timeout1 = setTimeout(() => {
                 app.canvas.style.transition = '1.4s'
-                pixiImages[currentRender].renderable = false
+                if (currentRender !== -1) {
+                    pixiImages[currentRender].renderable = false
+                }
                 currentRender = index
                 pixiImages[currentRender].renderable = true
                 el.append(app.canvas)
@@ -554,9 +554,8 @@ const btnsInit = () => {
         let isHovered = false
         const cDark = '#040214'
         const cLight = '#ffffff'
-        const text = btn.innerHTML.trim().toUpperCase()
+        const text = btn.innerHTML.trim().toUpperCase().replaceAll('<BR>', '\n')
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
-        const wrapWidth = btn.dataset.wrapwidth
 
         const {
             fontSize,
@@ -604,9 +603,7 @@ const btnsInit = () => {
             fontWeight,
             fill: color,
             align: 'center',
-            wordWrap: !!wrapWidth,
             letterSpacing: +letterSpacing.replace('px', ''),
-            wordWrapWidth: !wrapWidth ? 0 : +wrapWidth * ratio,
         })
 
         const btnText = new PIXI.Text({ text, style })
@@ -760,8 +757,8 @@ const nominationSecInint = async () => {
     const getSizes = () => {
         const widthMobile = innerWidth
         const heightMobile = innerWidth / 375 * 450
-        const widthDesktop = Math.min(innerWidth / 1440 * 657, innerHeight / 700 * 657)
-        const heightDesktop = Math.min(innerWidth / 1440 * 788, innerHeight / 700 * 788)
+        const widthDesktop = Math.min(Math.max(innerWidth / 1440 * 657, innerHeight / 700 * 657), (innerHeight - 50) * 0.83)
+        const heightDesktop = Math.min(Math.max(innerWidth / 1440 * 788, innerHeight / 700 * 788), innerHeight - 50)
 
         const iWidth = isMobile ? widthMobile : widthDesktop
         const iHeight = isMobile ? heightMobile : heightDesktop

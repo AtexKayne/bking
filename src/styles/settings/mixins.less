@@ -1,33 +1,9 @@
-.mobile-t(@fz, @lh) {
-    @media @phone {
-        font-size: @fz;
-        line-height: @lh;
-    }
-    @media @tablet {
-        font-size: @fz;
-        line-height: @lh;
-    }
-}
-
-.tablet-t(@fz, @lh) {
-    @media @tablet {
-        font-size: @fz;
-        line-height: @lh;
-    }
-}
-
-.desktop-t(@fz, @lh) {
-    @media @desktop {
-        font-size: @fz;
-        line-height: @lh;
-    }
-}
-
 .t-m(@fz, @lh) {
     @media @phone {
         font-size: @fz;
         line-height: @lh;
     }
+
     @media @tablet {
         font-size: @fz;
         line-height: @lh;
@@ -52,5 +28,143 @@
     @media @large {
         font-size: @fz;
         line-height: @lh;
+    }
+}
+
+@t1: {
+    font-size: 40px;
+    line-height: 1.2em;
+    letter-spacing: 2px;
+}
+
+@t2: {
+    font-size: 30px;
+    line-height: 1.4em;
+    letter-spacing: 2px;
+}
+
+@t1: {
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: 5px;
+}
+
+@t2: {
+    font-size: 60px;
+    line-height: 80px;
+    letter-spacing: 3px;
+}
+
+@t3: {
+    font-size: 42px;
+    line-height: 1.3em;
+    // letter-spacing: 3px;
+}
+
+@t4: {
+    font-size: 40px;
+    line-height: 1.4em;
+}
+
+@t5: {
+    font-size: 30px;
+    line-height: 1.4em;
+    letter-spacing: 2px;
+}
+
+@t6: {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+@t7: {
+    font-size: 18px;
+    line-height: 1.5em;
+    letter-spacing: 2px;
+}
+
+@t8: {
+    font-size: 16px;
+    line-height: 1.4em;
+    letter-spacing: 0.4px;
+}
+
+@t9: {
+    font-size: 16px;
+    letter-spacing: 2px;
+    line-height: 1.4em;
+}
+
+@t10: {
+    font-size: 14px;
+    line-height: 1.5em;
+    letter-spacing: 0.4px;
+}
+
+@t11: {
+    font-size: 12px;
+    line-height: 1.5em;
+    letter-spacing: 0.4px;
+}
+
+@arr: @t1, @t2, @t3, @t4, @t5, @t6, @t7, @t8, @t9, @t10, @t11;
+
+each(@arr, {
+    .t-@{index} {
+        each(@value, {
+            @{key}: @value;
+        })
+}
+
+@media @desktop {
+    .t-@{index}\:d {
+        each(@value, {
+            @{key}: @value;
+        })
+}
+}
+});
+
+@m1: calc(var(--space) * 1);
+@m2: calc(var(--space) * 2);
+@m3: calc(var(--space) * 3);
+@m4: calc(var(--space) * 4);
+@m5: calc(var(--space) * 5);
+@m6: calc(var(--space) * 6);
+@m7: calc(var(--space) * 7);
+@m8: calc(var(--space) * 8);
+@m9: calc(var(--space) * 9);
+@m10: calc(var(--space) * 10);
+@marr: @m1, @m2, @m3, @m4, @m5, @m6, @m7, @m8, @m9, @m10;
+
+each(@marr, {
+    .mt-@{index} {
+        margin-top: @value;
+    }
+
+    @media @desktop {
+        .mt-@{index}\:d {
+            margin-top: @value;
+        }
+    }
+});
+
+.mt {
+    &-0 {
+        margin-top: 0;
+    }
+
+    &-0\.5 {
+        margin-top: calc(var(--space) * 0.5);
+    }
+
+    @media @desktop {
+        &-0\:d {
+            margin-top: 0;
+        }
+    
+        &-0\.5\:d {
+            margin-top: calc(var(--space) * 0.5);
+        }
     }
 }
