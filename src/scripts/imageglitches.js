@@ -331,7 +331,7 @@ const glitchImagesInit = async () => {
             const isInView = entries[0].isIntersecting
             if (!isInView) return
             if (currentRender === index) return
-
+            isStopped = false
             app.canvas.style.transition = '0.2s'
             app.canvas.style.opacity = 0
             clearTimeout(timeout1)
