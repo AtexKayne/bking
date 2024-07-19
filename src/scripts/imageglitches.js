@@ -4,6 +4,7 @@ import { $, createObserver, debounce, detectMobile, randomIntFromInterval } from
 
 const ratio = window.devicePixelRatio
 
+// Инициализация канвас контейнера.
 const appInit = async (settings) => {
     const { node, effects, params, maxFPS } = settings
     const app = new PIXI.Application()
@@ -84,6 +85,7 @@ const appInit = async (settings) => {
     return app
 }
 
+// Функционал для первой секции главной страницы
 const appendText = async (app) => {
     await PIXI.Assets.load('/src/fonts/bf2d136f158c0796316e.woff')
     const isMobile = detectMobile()
@@ -102,11 +104,8 @@ const appendText = async (app) => {
     ]
     const standartStyle = {
         fontFamily: 'Bender black',
-        // fontWeight: 'black',
         fill: '#fff',
-        // wordWrap: isMobile,
         align: 'center',
-        // wordWrapWidth: width - 40,
     }
     const textList = !isMobile ? [
         { text: 'barber king\n2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
@@ -147,17 +146,17 @@ const appendText = async (app) => {
     })
 
     textList.forEach(el => {
-        const fontSize = el.fontSize
+        const { fontSize, text, container } = el
         const style = {
             ...standartStyle,
             lineHeight: fontSize,
             fontSize,
         }
-        const text = new PIXI.Text({ text: el.text, style })
-        text.x = el.x - (text.width / 2)
-        text.y = el.y - (text.height / 2)
-        text.zIndex = 3
-        textes[el.container - 1].addChild(text)
+        const pixiText = new PIXI.Text({ text, style })
+        pixiText.x = el.x - (pixiText.width / 2)
+        pixiText.y = el.y - (pixiText.height / 2)
+        pixiText.zIndex = 3
+        textes[container - 1].addChild(pixiText)
     })
 
     textes.forEach((text) => {
@@ -269,6 +268,58 @@ const setAnimationState = (app, index, textes) => {
     }
 }
 
+const mainSecInit = async () => {
+    const main = $('js-main-sec')
+    if (!main) return
+    const mainNode = main.eq(0)
+    const app = await appInit({
+        node: mainNode,
+        effects: ['glitch'],
+        maxFPS: 1,
+        params: {
+            background: '#040214',
+            width: innerWidth,
+            height: innerHeight
+        },
+    })
+    const rect = appendRect(app)
+    const textes = await appendText(app)
+    const states = getSettings()
+    const text = textes[0]
+    let current = -1
+
+    let time = 0
+    app.ticker.add((ticker) => {
+        time += Math.floor(ticker.deltaMS)
+        const currensState = states.find(el => time.isBetween(el.from, el.to))
+        if (!currensState) return time = 0
+
+        const { effect, state } = currensState
+        if (state !== current) {
+            current = state
+            setAnimationState(app, current, textes)
+        }
+
+        tickerHandler(app, text, effect)
+    })
+
+    window.appMainSection = app
+
+    const debounceResize = debounce(() => {
+        window.appMainSection.canvas.remove()
+        window.appMainSection.destroy()
+
+        setTimeout(mainSecInit, 500)
+
+        window.removeEventListener('resize', debounceResize)
+    }, 2000)
+
+    if (!detectMobile()) {
+        window.addEventListener('resize', debounceResize)
+    }
+}
+
+// Номинации
 const glitchImagesInit = async () => {
     const images = $('js-glitch-image')
     if (!images) return
@@ -372,61 +423,7 @@ const glitchImagesInit = async () => {
     })
 }
 
-const mainSecInit = async () => {
-    const main = $('js-main-sec')
-    if (!main) return
-    const mainNode = main.eq(0)
-    const params = { background: '#040214', width: innerWidth, height: innerHeight }
-    const app = await appInit({
-        node: mainNode,
-        effects: ['glitch'],
-        params,
-        maxFPS: 1,
-    })
-    const circle = appendRect(app)
-    const textes = await appendText(app)
-    const aStates = getSettings()
-    const text = textes[0]
-    let current = -1
-
-    let time = 0
-    app.ticker.add((ticker) => {
-        time += Math.floor(ticker.deltaMS)
-        const currensState = aStates.find(el => time.isBetween(el.from, el.to))
-        if (!currensState) return time = 0
-
-        const { effect, state } = currensState
-        if (state !== current) {
-            current = state
-            setAnimationState(app, current, textes)
-        }
-
-        tickerHandler(app, text, effect)
-    })
-
-    window.appMainSection = app
-
-    const debounceResize = debounce(() => {
-        window.appMainSection.canvas.remove()
-        window.appMainSection.destroy()
-
-        setTimeout(mainSecInit, 500)
-
-        window.removeEventListener('resize', debounceResize)
-    }, 2000)
-
-    if (!detectMobile()) {
-        window.addEventListener('resize', debounceResize)
-    } else {
-        // setTimeout(() => {
-        //     window.appMainSection.canvas.remove()
-        //     window.appMainSection.destroy()
-
-        //     setTimeout(mainSecInit, 500)
-        // }, 5000);
-    }
-}
-
+// Кнопки
 const btnsInit = () => {
     if (detectMobile()) return
     const btns = $('js-btn')
@@ -544,6 +541,7 @@ const btnsInit = () => {
     })
 }
 
+// Секция перед футером
 const hiddenSecInit = async () => {
     if (detectMobile()) return
     const section = $('js-hidden-sec')
@@ -631,11 +629,12 @@ const hiddenSecInit = async () => {
     })
 }
 
+// Первая секция на странице номинации
 const nominationSecInint = async () => {
     const section = $('js-nomination-sec')
     if (!section) return
     const src = section.attr('data-image')
-    const text = section.attr('data-text')
+    const text = section.attr('data-text').trim().toUpperCase()
     const params = { background: '#040214' }
     const isMobile = detectMobile()
 
