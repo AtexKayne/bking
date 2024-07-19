@@ -115,13 +115,15 @@ each(@arr, {
             @{key}: @value;
         })
 }
+});
 
-@media @desktop {
-    .t-@{index}\:d {
-        each(@value, {
-            @{key}: @value;
-        })
-}
+each(@arr, {
+    @media @desktop {
+        .t-@{index}\:d {
+            each(@value, {
+                @{key}: @value;
+            })
+    }
 }
 });
 
@@ -141,7 +143,9 @@ each(@marr, {
     .mt-@{index} {
         margin-top: @value;
     }
+});
 
+each(@marr, {
     @media @desktop {
         .mt-@{index}\:d {
             margin-top: @value;
@@ -162,7 +166,7 @@ each(@marr, {
         &-0\:d {
             margin-top: 0;
         }
-    
+
         &-0\.5\:d {
             margin-top: calc(var(--space) * 0.5);
         }

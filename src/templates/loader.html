@@ -130,41 +130,46 @@
 
 <script>
     const loader = document.querySelector('.js-loader')
-    const loaderSVG = document.querySelector('.js-loader-svg')
-    const pathes = Array.from(loaderSVG.querySelectorAll('path'))
-    window.isLoaderHide = false
-
-    const interval = setInterval(() => {
-        if (!pathes.length) {
-            window.isLoaderHide = true
-            return clearInterval(interval)
-        }
-        const randomIndex = Math.floor(Math.random() * pathes.length)
-        const path = pathes[randomIndex]
-        path.dataset.active = true
-        pathes.splice(randomIndex, 1)
-        const isTroubled = Math.floor(Math.random() * 5)
-        if (!isTroubled) {
-            setTimeout(() => {
-                path.dataset.trouble = true
-            }, 1000)
-            setTimeout(() => {
-                path.dataset.trouble = false
-            }, 3100)
-        }
-    }, 686)
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const checkAnimation = () => {
-            setTimeout(() => {
-                if (window.isLoaderHide) {
-                    loader.dataset.hidden = true
-                } else {
-                    checkAnimation()
-                }
-            }, 1000)
-        }
-
-        checkAnimation()
-    })
+    if (!window.location.href.includes('localhost')) {
+        const loaderSVG = document.querySelector('.js-loader-svg')
+        const pathes = Array.from(loaderSVG.querySelectorAll('path'))
+        window.isLoaderHide = false
+    
+        const interval = setInterval(() => {
+            if (!pathes.length) {
+                window.isLoaderHide = true
+                return clearInterval(interval)
+            }
+            const randomIndex = Math.floor(Math.random() * pathes.length)
+            const path = pathes[randomIndex]
+            path.dataset.active = true
+            pathes.splice(randomIndex, 1)
+            const isTroubled = Math.floor(Math.random() * 5)
+            if (!isTroubled) {
+                setTimeout(() => {
+                    path.dataset.trouble = true
+                }, 1000)
+                setTimeout(() => {
+                    path.dataset.trouble = false
+                }, 3100)
+            }
+        }, 686)
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkAnimation = () => {
+                setTimeout(() => {
+                    if (window.isLoaderHide) {
+                        loader.dataset.hidden = true
+                    } else {
+                        checkAnimation()
+                    }
+                }, 1000)
+            }
+    
+            checkAnimation()
+        })
+    } else {
+        window.isLoaderHide = true
+        loader.dataset.hidden = true
+    }
 </script>

@@ -2,20 +2,27 @@ import Swiper from 'swiper'
 import { Navigation, Pagination } from 'swiper/modules'
 import { $, detectMobile } from './helper'
 
-const timelineSliderInit = () => {
+const timelineSecInit = () => {
     const swiper = new Swiper('.js-timeline', {
         slidesPerView: 'auto',
         spaceBetween: 40,
         slideClass: 'js-timeline-item',
-        // slidesOffsetBefore: 60,
         wrapperClass: 'js-timeline-inner',
         slidePrevClass: 'js-timeline-item-prev',
         slideNextClass: 'js-timeline-item-next',
         slideActiveClass: 'js-timeline-item-active',
-        // pagination: {
-        //     el: '.swiper-pagination',
-        //     clickable: true,
-        // },
+    })
+}
+
+const priceSecInit = () => {
+    const swiper = new Swiper('.js-price', {
+        slidesPerView: 'auto',
+        spaceBetween: 40,
+        slideClass: 'js-price-item',
+        wrapperClass: 'js-price-inner',
+        slidePrevClass: 'js-price-item-prev',
+        slideNextClass: 'js-price-item-next',
+        slideActiveClass: 'js-price-item-active',
     })
 }
 
@@ -166,11 +173,10 @@ const referencesSecInit = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    timelineSliderInit()
+    priceSecInit()
+    timelineSecInit()
     participantSecInit()
     rulesSecInit()
     judgesSecInit()
     referencesSecInit()
-
-    // $('js-const').eq(0).innerHTML = devicePixelRatio
 })
