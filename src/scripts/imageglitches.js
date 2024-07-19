@@ -3,14 +3,11 @@ import * as filters from 'pixi-filters'
 import { $, createObserver, debounce, detectMobile, randomIntFromInterval } from './helper'
 
 const ratio = window.devicePixelRatio
-// const ratio = 2.75
 
 const appInit = async (settings) => {
     const { node, effects, params, maxFPS } = settings
     const app = new PIXI.Application()
     let isInView = false
-    // let resizeTimeout = null
-    // let nodeWidth = node.clientWidth
 
     params.width = !params.width ? node.clientWidth * ratio : params.width * ratio
     params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
@@ -81,10 +78,8 @@ const appInit = async (settings) => {
         if (isInView) app.ticker.start()
     }
 
-    if (!detectMobile()) {
-        window.addEventListener('blur', blurHandler)
-        window.addEventListener('focus', focusHandler)
-    }
+    window.addEventListener('blur', blurHandler)
+    window.addEventListener('focus', focusHandler)
 
     return app
 }
@@ -272,116 +267,6 @@ const setAnimationState = (app, index, textes) => {
         const randomImage = images[randomIntFromInterval(0, 3)]
         randomImage.renderable = true
     }
-}
-
-const glitchImagesInit_ = async () => {
-    const images = $('js-glitch-image')
-    const isMobile = detectMobile()
-    if (!images) return
-    images.items.forEach(async (el, index) => {
-        const iWidth = el.clientWidth
-        const iHeight = el.clientHeight
-        const overlay = el.previousElementSibling
-        const src = el.dataset.src
-        const params = {
-            width: iWidth,
-            height: iHeight,
-            background: '#040214'
-        }
-        let isInView = false
-        let isStopped = false
-        let timeout = null
-
-        const image = document.createElement('img')
-        image.setAttribute('src', src)
-        el.append(image)
-
-        const asset = await PIXI.Assets.load(src)
-        if (!asset) return
-
-        const stopFunc = () => {
-            if (!isInView) return
-            isStopped = !isStopped
-            clearTimeout(timeout)
-            timeout = setTimeout(stopFunc, randomIntFromInterval(100, 1200))
-        }
-
-        const obsHandler = (entry) => {
-            isInView = entry
-            if (isInView) {
-                setTimeout(() => {
-                    app.canvas.style.opacity = 1
-                }, 1000)
-                stopFunc()
-            } else {
-                app.canvas.style.opacity = 0
-                clearTimeout(timeout)
-            }
-        }
-
-        const app = await appInit({
-            node: el,
-            params,
-            maxFPS: isMobile ? 6 : 12,
-            resize: true,
-            observer: {
-                handler: obsHandler
-            }
-        })
-
-        const rgb = new filters.RGBSplitFilter()
-        const glitch = new filters.GlitchFilter()
-        const shadow = new filters.DropShadowFilter()
-
-        const sprite = PIXI.Sprite.from(src)
-        sprite.x = 0
-        sprite.y = 50 * 0.996 * ratio
-        sprite.filters = [rgb, glitch, shadow]
-        sprite.width = iWidth * 0.996 * ratio
-        sprite.height = iHeight * 0.996 * ratio
-        app.stage.addChild(sprite)
-
-        sprite.filters[2].color = '#CC00FF'
-        sprite.filters[2].blur = 30
-        sprite.filters[2].quality = 10
-
-        const setFilters = (co, so, bo) => {
-            sprite.filters[0].red.x = randomIntFromInterval(-co, co)
-            sprite.filters[0].red.y = randomIntFromInterval(-co, co)
-            sprite.filters[0].green.x = randomIntFromInterval(-co, co)
-            sprite.filters[0].green.y = randomIntFromInterval(-co, co)
-            sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
-            sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
-            sprite.filters[1].offset = randomIntFromInterval(-so, so)
-            sprite.filters[1].slices = randomIntFromInterval(1, 6)
-            sprite.filters[2].blur = bo
-        }
-
-        if (isMobile) overlay.style.opacity = 0
-
-        app.ticker.add((ticker) => {
-            if (!isMobile) {
-                const { top, height } = el.getBoundingClientRect()
-                if (-top > height) return
-                const wc = innerHeight / 2
-                const ic = height / 2
-                const p = Math.abs(top + ic - wc)
-                const l = innerHeight - (wc - ic)
-                const m = p / l
-                overlay.style.opacity = m + 0.1
-                if (isStopped) return setFilters(0, 0, 30)
-                const i = m < 0.25 ? 0 : m
-                const s = Math.max(1 - i, 0)
-                const co = s * 10
-                const so = s * 20
-                const bo = s * 30
-                setFilters(co, so, bo)
-            } else {
-                if (isStopped) return setFilters(0, 0, 30)
-                setFilters(10, 20, 30)
-            }
-        })
-    })
 }
 
 const glitchImagesInit = async () => {
@@ -878,10 +763,10 @@ const nominationSecInint = async () => {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    setTimeout(mainSecInit, 100)
-    setTimeout(nominationSecInint, 100)
-    setTimeout(btnsInit, 200)
-    setTimeout(glitchImagesInit, 300)
-    setTimeout(hiddenSecInit, 400)
+    mainSecInit()
+    nominationSecInint()
+    btnsInit()
+    glitchImagesInit()
+    hiddenSecInit()
 })
 

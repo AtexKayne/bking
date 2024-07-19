@@ -11,6 +11,7 @@ const config = {
     entry: {
         main: './index.js',
         nominations: './index.js',
+        rules: './index.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -30,6 +31,11 @@ const config = {
             filename: 'nominations.html',
             template: 'nominations/index.html',
             chunks: ['nominations']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'rules.html',
+            template: 'documents/rules.html',
+            chunks: ['rules']
         }),
         new CopyPlugin({
             patterns: [
