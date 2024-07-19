@@ -466,7 +466,7 @@ const glitchImagesInit = async () => {
             }, 600)
         }
 
-        createObserver(el, obsHandler, 1)
+        createObserver(el, obsHandler, 0.9)
     })
 
     const setFilters = (sprite, co, so, bo) => {
