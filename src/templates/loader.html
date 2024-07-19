@@ -1,0 +1,170 @@
+<style>
+    .loader {
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #040214;
+        position: fixed;
+        display: flex;
+        transition: .3s .2s;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader[data-hidden='true'] {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loader[data-hidden='true'] .loader__svg {
+        filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, .8))
+    }
+
+    .loader[data-hidden='true'] .loader__svg path {
+        fill: #fff;
+        filter: none;
+        animation: none;
+    }
+
+    .loader__svg {
+        transition: .2s;
+        overflow: visible;
+    }
+
+    .loader__svg path {
+        transition: 1.5s;
+        fill: #040214;
+    }
+
+    .loader__svg path[data-active='true'] {
+        fill: #fff;
+        animation: neonHighlight 1s ease-in-out 0s 1 normal;
+    }
+
+    .loader__svg path[data-trouble='true'] {
+        animation: neonTrouble 1s ease-in-out 0s infinite normal;
+    }
+
+    .loader__svg path[data-trouble='false'] {
+        animation: none;
+    }
+
+    @keyframes neonHighlight {
+        0% {
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+
+        50% {
+            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, .7));
+        }
+
+        100% {
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+    }
+
+    @keyframes neonTrouble {
+        0% {
+            fill: #040214;
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+
+        2% {
+            fill: #fff;
+            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, .7));
+        }
+
+        5% {
+            fill: #040214;
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+
+        50% {
+            fill: #040214;
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+
+        52% {
+            fill: #fff;
+            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, .7));
+        }
+
+        55% {
+            fill: #040214;
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+
+        70% {
+            fill: #040214;
+            filter: drop-shadow(0px 0px 0px rgba(255, 255, 255, .7));
+        }
+
+        98% {
+            fill: #fff;
+            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, .7));
+        }
+
+        100% {
+            fill: #fff;
+            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, .7));
+        }
+    }
+</style>
+
+<div class="loader js-loader">
+
+    <svg class="loader__svg js-loader-svg" width="111" height="133" viewBox="0 0 111 133" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M36.376 125.448L36.5941 125.659H36.8976H37.3055H37.6154L37.8349 125.441L44.072 119.225H50.6127L57.0791 125.473L52.8382 129.734L48.1222 125.172L47.9042 124.961H47.6008H47.1987H46.8879L46.6682 125.181L40.4255 131.427H33.8952L27.4238 125.148L31.663 120.887L36.376 125.448Z" stroke="white" stroke-width="1.5" />
+        <path d="M108.977 51.7203L100.779 59.6729L100.229 60.2068L100.775 60.7452L109.782 69.63L105.345 74.0065L96.1293 64.916L95.6138 64.4076L95.0875 64.9047L93.7193 66.1973L93.4843 66.4193V66.7425V73.1714H87.1768V64.2373V63.4873H86.4268H54.9046H54.1546V64.2373V77.0729L48.0464 82.9754H29.5166L26.8836 80.3704L26.3612 79.8535L25.8338 80.3653L23.1998 82.9212H12.1445L6.0498 77.0026V57.1663H86.4297H87.1797V56.4163V46.735V46.6149L87.1422 46.5008L85.412 41.2374L91.3956 39.0979L93.5132 45.8175V56.442V58.2167L94.7859 56.9798L104.673 47.3714L108.977 51.7203ZM23.2206 74.404L23.4439 74.1838V73.8701V64.2373V63.4873H22.6939H12.6532H11.9032V64.2373V73.8701V74.1841L12.1269 74.4044L14.2067 76.4531L14.4257 76.6688H14.733H20.6169H20.9245L21.1436 76.4527L23.2206 74.404ZM48.0963 74.4572L48.0983 74.4553L48.1012 74.4524L48.3244 74.2322V73.9186V64.2344V63.4844H47.5744H30.0762H29.3282L29.3262 64.2324L29.3001 73.8823L29.2993 74.1957L29.5216 74.4165L31.5928 76.4737L31.8116 76.6911L32.12 76.6916L45.4845 76.7144L45.7914 76.7149L46.0106 76.5002L48.0963 74.4572Z" stroke="white" stroke-width="1.5" />
+        <path d="M109.912 28.6327L103.448 34.9122L96.9078 34.8809L90.6663 28.6666L90.449 28.4503L90.1424 28.4481L89.7374 28.4452L89.4305 28.4431L89.2101 28.6568L77.0516 40.4449L70.5144 40.4163L64.273 34.1993L64.0535 33.9807H63.7437H63.3358H63.0321L62.8139 34.1921L50.6525 45.9775L44.1179 45.9488L37.8765 39.7374L37.6592 39.5211L37.3527 39.519L36.9477 39.5161L36.6413 39.514L36.421 39.727L31.705 44.289L27.463 40.0272L33.9329 33.75L40.4642 33.7787L46.7055 39.9957L46.9229 40.2121L47.2296 40.2143L47.6375 40.2172L47.9443 40.2193L48.1646 40.0058L60.3289 28.2174L66.8634 28.2461L73.1048 34.4604L73.3243 34.6789H73.634H74.039H74.3427L74.5609 34.4675L86.7252 22.682L93.2597 22.7107L99.5011 28.9249L99.7206 29.1434H100.03H100.435H100.739L100.957 28.9324L105.67 24.3707L109.912 28.6327Z" stroke="white" stroke-width="1.5" />
+        <path d="M83.5165 14.9019L77.0521 21.1761L70.5122 21.1474L64.2708 14.9332L64.0513 14.7147H63.7416H63.3366H63.0328L62.8146 14.9261L50.6533 26.7143L44.1189 26.683L37.8774 20.4686L37.6601 20.2523L37.3535 20.2501L36.9456 20.2473L36.6387 20.2451L36.4183 20.4587L24.2569 32.247L17.7225 32.2183L11.4811 26.0041L11.2638 25.7877L10.9572 25.7856L10.5493 25.7827L10.2426 25.7806L10.0223 25.9939L5.30919 30.5582L1.06736 26.2965L7.53737 20.0168L14.0687 20.048L20.3132 26.2625L20.5326 26.4809H20.8422H21.2472H21.5509L21.7691 26.2696L33.9333 14.4842L40.4651 14.5155L46.7096 20.7272L46.9268 20.9433L47.2332 20.9455L47.6382 20.9483L47.9451 20.9505L48.1654 20.7369L60.3297 8.9486L66.8642 8.97729L73.1056 15.1915L73.3229 15.4079L73.6295 15.41L74.0345 15.4129L74.3411 15.415L74.5614 15.2018L79.2745 10.6401L83.5165 14.9019Z" stroke="white" stroke-width="1.5" />
+        <path d="M1.06736 7.02838L7.53461 0.751336L14.0716 0.780028L20.3129 6.99699L20.5324 7.21562H20.8422H21.2501H21.5536L21.7717 7.00454L26.4847 2.44298L30.7239 6.7044L24.2538 12.9817L17.7225 12.953L11.4782 6.73592L11.2587 6.51741H10.949H10.5441H10.2405L10.0224 6.72849L5.30933 11.2902L1.06736 7.02838Z" stroke="white" stroke-width="1.5" />
+        <path d="M70.1982 81.2932V78.3767L71.8991 76.7171L74.6474 76.7241L76.5578 78.418V81.3141L74.8561 82.9745H71.8844L70.1982 81.2932Z" stroke="white" stroke-width="1.5" />
+        <path d="M26.3763 88.4712L30.1456 92.1936L21.9417 100.286L18.1679 96.5678L26.3763 88.4712Z" stroke="white" stroke-width="1.5" />
+        <path d="M83.4768 111.651L79.2347 115.916L74.5217 111.352L74.3014 111.138L73.9947 111.14L73.5868 111.143L73.2792 111.145L73.0617 111.363L66.8219 117.603H60.2883L48.1226 105.819L47.9044 105.608H47.6008H47.1958H46.885L46.6653 105.828L40.4255 112.071H33.8924L27.4238 105.792L31.6658 101.53L36.3789 106.092L36.597 106.303H36.9005H37.3084H37.6182L37.8377 106.084L44.0761 99.8704L50.6134 99.8417L62.7748 111.63L62.9951 111.844L63.302 111.841L63.7099 111.839L64.0177 111.836L64.2352 111.619L70.475 105.373H77.008L83.4768 111.651Z" stroke="white" stroke-width="1.5" />
+    </svg>
+
+</div>
+
+<script>
+    const loader = document.querySelector('.js-loader')
+    const loaderSVG = document.querySelector('.js-loader-svg')
+    const pathes = Array.from(loaderSVG.querySelectorAll('path'))
+    window.isLoaderHide = false
+
+    const interval = setInterval(() => {
+        if (!pathes.length) {
+            window.isLoaderHide = true
+            return clearInterval(interval)
+        }
+        const randomIndex = Math.floor(Math.random() * pathes.length)
+        const path = pathes[randomIndex]
+        path.dataset.active = true
+        pathes.splice(randomIndex, 1)
+        const isTroubled = Math.floor(Math.random() * 5)
+        if (!isTroubled) {
+            setTimeout(() => {
+                path.dataset.trouble = true
+            }, 1000)
+            setTimeout(() => {
+                path.dataset.trouble = false
+            }, 3100)
+        }
+    }, 686)
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkAnimation = () => {
+            setTimeout(() => {
+                if (window.isLoaderHide) {
+                    loader.dataset.hidden = true
+                } else {
+                    checkAnimation()
+                }
+            }, 1000)
+        }
+
+        checkAnimation()
+    })
+</script>
