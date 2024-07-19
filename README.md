@@ -1,15 +1,25 @@
-# 🚀 Welcome to your new awesome project!
+Версия NODE 20+
+Версия npm 8+
 
-This project has been created using **webpack-cli**, you can now run
+# Для запуска
 
+
+```
+npm i
+```
+
+# --watch (localhost:8080)
+```
+npm run serve
+```
+
+# --dev
+```
+npm run dev
+```
+
+# --build
 ```
 npm run build
 ```
 
-or
-
-```
-yarn build
-```
-
-to bundle your application
