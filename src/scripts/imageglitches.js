@@ -410,11 +410,11 @@ const glitchImagesInit = async () => {
                 currentRender = index
                 pixiImages[currentRender].renderable = true
                 el.append(app.canvas)
-            }, 300)
+            }, 500)
             timeout2 = setTimeout(() => {
                 app.canvas.style.opacity = 1
                 app.ticker.start()
-            }, 600)
+            }, 900)
         }
 
         createObserver(el, obsHandler, 0.9)
