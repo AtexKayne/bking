@@ -53,21 +53,23 @@ const appInit = async (settings) => {
     app.ticker.minFPS = 0
     const threshold = settings.observer ? settings.observer.threshold ?? 0 : 0
 
-    const observer = createObserver(node, (entries) => {
-        if (!app || !app.ticker) return observer.disconnect()
-        const { isIntersecting } = entries[0]
-        isInView = isIntersecting
-        if (isIntersecting) {
-            if (!app.stage.renderable) app.stage.renderable = true
-            if (!app.ticker.started) app.ticker.start()
-        } else {
-            app.stage.renderable = false
-            app.ticker.stop()
-        }
-        if (settings.observer && typeof settings.observer.handler === 'function') {
-            settings.observer.handler(isIntersecting, entries[0])
-        }
-    }, threshold)
+    if (settings.observer !== false) {
+        const observer = createObserver(node, (entries) => {
+            if (!app || !app.ticker) return observer.disconnect()
+            const { isIntersecting } = entries[0]
+            isInView = isIntersecting
+            if (isIntersecting) {
+                if (!app.stage.renderable) app.stage.renderable = true
+                if (!app.ticker.started) app.ticker.start()
+            } else {
+                app.stage.renderable = false
+                app.ticker.stop()
+            }
+            if (settings.observer && typeof settings.observer.handler === 'function') {
+                settings.observer.handler(isIntersecting, entries[0])
+            }
+        }, threshold)
+    }
 
     const blurHandler = () => {
         if (!app || !app.ticker) return window.removeEventListener('blur', blurHandler)
@@ -348,6 +350,7 @@ const glitchImagesInit = async () => {
     const params = {
         node: image,
         maxFPS: 6,
+        observer: false,
         params: {
             width,
             height,
@@ -403,6 +406,7 @@ const glitchImagesInit = async () => {
             clearTimeout(timeout1)
             clearTimeout(timeout2)
             timeout1 = setTimeout(() => {
+                isStopped = false
                 app.canvas.style.transition = '1.4s'
                 if (currentRender !== -1) {
                     pixiImages[currentRender].renderable = false
@@ -410,11 +414,11 @@ const glitchImagesInit = async () => {
                 currentRender = index
                 pixiImages[currentRender].renderable = true
                 el.append(app.canvas)
-            }, 500)
+            }, 50)
             timeout2 = setTimeout(() => {
                 app.canvas.style.opacity = 1
                 app.ticker.start()
-            }, 900)
+            }, 200)
         }
 
         createObserver(el, obsHandler, 0.9)
