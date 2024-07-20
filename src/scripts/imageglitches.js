@@ -86,8 +86,22 @@ const appInit = async (settings) => {
 }
 
 // Функционал для первой секции главной страницы
+if (PIXI.isMobile.phone) {
+    const main = $('js-main-sec')
+    if (main) {
+        const video = document.createElement('video')
+        video.setAttribute('src', 'src/images/main/slider/BBKING.mp4')
+        video.setAttribute('autoplay', true)
+        video.setAttribute('autobuffer', true)
+        // video.setAttribute('controls', false)
+        video.setAttribute('loop', true)
+        video.setAttribute('muted', true)
+        video.setAttribute('preload', 'auto')
+        main.append(video)
+    }
+}
+
 const appendText = async (app) => {
-    await PIXI.Assets.load('/src/fonts/bf2d136f158c0796316e.woff')
     const isMobile = detectMobile()
     const width = app.canvas.width
     const height = app.canvas.height
@@ -271,6 +285,8 @@ const setAnimationState = (app, index, textes) => {
 const mainSecInit = async () => {
     const main = $('js-main-sec')
     if (!main) return
+    if (PIXI.isMobile.phone) return 
+    
     const mainNode = main.eq(0)
     const app = await appInit({
         node: mainNode,
@@ -476,8 +492,6 @@ const btnsInit = () => {
         }
 
         app.stage.addChild(rect)
-
-        await PIXI.Assets.load('/src/fonts/d59df5a538d671a54c79.woff2')
         const fz = +fontSize.replace('px', '') * ratio
 
         const style = new PIXI.TextStyle({

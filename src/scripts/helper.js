@@ -52,6 +52,12 @@ export const $ = (q) => {
             find: function (query) {
                 const elems = this.items[0].querySelectorAll(query)
                 return !!elems.length ? Array.from(elems) : null
+            },
+            append: function (node) {
+                this.items.forEach(item => {
+                    item.append(node)
+                })
+                return this
             }
         }
         return obj
