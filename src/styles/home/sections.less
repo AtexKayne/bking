@@ -176,11 +176,14 @@
         bottom: 0%;
         position: absolute;
         z-index: 0;
-        filter: blur(100px);
+        opacity: 0;
+        display: none;
         pointer-events: none;
         transform: translate(-50%);
 
         @media @desktop {
+            display: block;
+            opacity: 1;
             width: calc(100vw / 1440 * 300);
             height: calc(100vw / 1440 * 300);
             filter: blur(300px);
