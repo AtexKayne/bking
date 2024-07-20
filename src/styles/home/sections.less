@@ -1681,11 +1681,17 @@
         width: auto;
         height: auto;
         pointer-events: none;
-        transform: translate3d(-50%, -50%, 0) scale(0.5);
+        transform: translate3d(-50%, -50%, 0);
         top: 50%;
         left: 50%;
+        display: none;
+        opacity: 0;
+        visibility: hidden;
 
         @media @desktop {
+            visibility: visible;
+            opacity: 1;
+            display: block;
             transform: translate3d(-50%, -50%, 0);
         }
     }
