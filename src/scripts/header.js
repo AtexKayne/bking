@@ -1,4 +1,4 @@
-import { $, detectMobile } from './helper'
+import { $, debounce, detectMobile } from './helper'
 
 const headerInit = () => {
     const menuBtn = $('js-menu-btn')
@@ -32,13 +32,14 @@ const headerInit = () => {
     menuBtn.on('click', menuToggle)
 
     if (isMobile) {
-        scroll.addEventListener('scroll', () => {
+        const debounceScroll = debounce(() => {
             const y = scroll.scrollTop
             if (y < 200) return node.dataset.hidden = false
             if (y === scrollTo) return
             node.dataset.hidden = y > scrollTo
             scrollTo = y
-        })
+        }, 30)
+        scroll.addEventListener('scroll', debounceScroll)
     } else {
         locscroll.on('scroll', event => {
             const y = event.delta.y
