@@ -86,19 +86,18 @@ const appInit = async (settings) => {
 }
 
 // Функционал для первой секции главной страницы
-if (PIXI.isMobile.phone) {
+const checkIsNeedVideo = () => {
     const main = $('js-main-sec')
-    if (main) {
-        const video = document.createElement('video')
-        video.setAttribute('src', 'src/images/main/slider/BBKING.mp4')
-        video.setAttribute('autoplay', true)
-        video.setAttribute('autobuffer', true)
-        // video.setAttribute('controls', false)
-        video.setAttribute('loop', true)
-        video.setAttribute('muted', true)
-        video.setAttribute('preload', 'auto')
-        main.append(video)
-    }
+    if (!main) return
+    const video = main.find('.js-video')[0]
+    if (!PIXI.isMobile.phone) return video.remove()
+
+    video.setAttribute('src', '/src/images/main/slider/BBKING.mp4')
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (video.readyState >= 3) return video.play()
+        video.addEventListener('loadeddata', () => video.play())
+    })
 }
 
 const appendText = async (app) => {
@@ -285,8 +284,8 @@ const setAnimationState = (app, index, textes) => {
 const mainSecInit = async () => {
     const main = $('js-main-sec')
     if (!main) return
-    if (PIXI.isMobile.phone) return 
-    
+    if (PIXI.isMobile.phone) return
+
     const mainNode = main.eq(0)
     const app = await appInit({
         node: mainNode,
@@ -776,6 +775,8 @@ const nominationSecInint = async () => {
         window.addEventListener('resize', debounceResize)
     }
 }
+
+checkIsNeedVideo()
 
 document.addEventListener('DOMContentLoaded', async () => {
     mainSecInit()
