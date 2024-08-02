@@ -124,6 +124,15 @@
             width: 100%;
         }
     }
+    &__desc-partner-ff {
+        width: 210px;
+        text-align: center;
+
+        img {
+            width: auto;
+            max-width: 100%;
+        }
+    }
 
     @keyframes scrolldrag {
         0% {
@@ -417,8 +426,11 @@
                     animation: glitch 725ms infinite;
 
                     &+.rules-sec__item-container {
-                        opacity: 1;
+                        /*opacity: 1;*/
                     }
+                }
+                &+.rules-sec__item-container.active{
+                    opacity: 1;
                 }
 
                 svg {
@@ -452,6 +464,10 @@
         img {
             width: 100%;
         }
+        img.w-auto {
+            width: auto;
+            max-width: 100%;
+        }
 
         @media @desktop {
             position: relative;
@@ -464,6 +480,11 @@
 
         img {
             width: 100%;
+        }
+
+        img.w-auto {
+            width: auto;
+            max-width: 100%;
         }
 
         @media @phone {
@@ -720,6 +741,10 @@
                 color: #fff;
             }
 
+            svg{
+                transition: 0.3s;
+            }
+
             .price-sec__item-light {
                 border-radius: 40px;
                 filter: blur(50px);
@@ -736,6 +761,9 @@
             .price-sec__item-text {
                 color: var(--c-light-green);
             }
+        }
+        &[data-active='true']:hover .price-sec__item-icon svg{
+            transform: rotate(45deg);
         }
     }
 
@@ -827,6 +855,14 @@
     @media @desktop {
         padding: 200px 0 0;
     }
+    &__offset {
+        @media @desktop {
+            padding: 40px 0 0;
+        }
+        @media @phone {
+            padding: 40px 0 0;
+        }
+    }
 
     &__inner {
         margin-top: 40px;
@@ -862,6 +898,9 @@
         &:nth-child(7) {
             width: calc(100% - 16px);
         }
+        @media @phone {
+            padding: 100px 14px 20px;
+        }
 
         @media @desktop {
             height: 237px;
@@ -870,6 +909,19 @@
             &:nth-child(7) {
                 width: calc(50% - 30px);
             }
+        }
+    }
+    &__item-m-line {
+        .t-m(16px, 1.3em);
+    }
+    &__item-w-all {
+        @media @phone {
+            width: calc(100% - 16px);
+        }
+    }
+    &__item-m-height-up{
+        @media @phone {
+            height: 217px;
         }
     }
 
@@ -1256,6 +1308,12 @@
         padding-top: 200px;
         // padding-bottom: 50px;
     }
+    &__criteria {
+        @media @desktop {
+            padding-top: 80px;
+            // padding-bottom: 50px;
+        }
+    }
 
     &__light {
         width: 50vw;
@@ -1620,6 +1678,11 @@
         .t-d(96px, 1em);
         .t-l(120px, 1em);
     }
+    &__title-m-center {
+        @media @phone {
+            text-align: center;
+        }
+    }
 
     &__text {
         letter-spacing: 5px;
@@ -1822,6 +1885,20 @@
     @media @desktop {
         padding-top: 200px;
     }
+    &__abc {
+        @media @desktop {
+            padding-top: 140px;
+        }
+    }
+
+    &__ff {
+        @media @desktop {
+            padding-top: 100px;
+        }
+        @media @phone {
+            padding-top: 40px;
+        }
+    }
 
     &__inner {
         display: flex;
@@ -1860,7 +1937,7 @@
             --color: var(--c-light-pink);
         }
 
-        &:last-child {
+        &:last-child, &.one {
             flex-basis: calc(100% - 40px);
         }
 
@@ -1931,6 +2008,11 @@
             margin-top: 60px;
         }
     }
+    &__desc-w-all {
+        @media @desktop {
+            max-width: 100%;
+        }
+    }
 }
 
 .offset-sec {
@@ -1944,6 +2026,9 @@
 
 .document-sec {
     padding-top: 140px;
+    @media @phone {
+        padding-bottom: 140px;
+    }
 
     @media @desktop {
         padding-top: 200px;
@@ -1956,6 +2041,11 @@
         text-transform: uppercase;
         text-align: center;
         margin: 100px 0 60px;
+        @media @phone {
+            font-size: 30px;
+            line-height: 40px;
+            margin: 40px 0 40px;
+        }
     }
 
     p {

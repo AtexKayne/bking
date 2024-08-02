@@ -73,6 +73,7 @@ body {
         letter-spacing: 2px;
     }
 
+
     &--primary {
         background-color: var(--c-white);
         color: var(--c-dark);
@@ -116,6 +117,11 @@ body {
             }
         }
     }
+    &--m-w-all{
+        @media @phone {
+            width: 100%;
+        }
+    }
 
     canvas {
         left: 0;
@@ -131,6 +137,9 @@ body {
         &--lg {
             padding: 25px;
             font-size: 20px;
+        }
+        &--bb {
+            padding: 25px 120px;
         }
     }
 }
@@ -209,6 +218,9 @@ body {
         text-underline-offset: 5px;
         letter-spacing: 2px;
         color: inherit;
+    }
+    &--center {
+        justify-content: center;
     }
 
     @media @desktop {
@@ -374,6 +386,13 @@ a.mailto {
         @media @desktop {
             display: none;
         }
+    }
+}
+
+.position-z{
+    @media @phone {
+        position: relative;
+        z-index: 1;
     }
 }
 

@@ -13,7 +13,6 @@ const timelineSecInit = () => {
         slideActiveClass: 'js-timeline-item-active',
     })
 }
-
 const priceSecInit = () => {
     const swiper = new Swiper('.js-price', {
         slidesPerView: 'auto',
@@ -103,12 +102,18 @@ const rulesSecInit = () => {
                 const height = isOpen ? imageHeight : 0
                 container.style.height = `${height}px`
             })
-        })
 
+        })
         
         return
     }
-
+    items.items.forEach(item => {
+        item.querySelector('.rules-sec__item-text').addEventListener('mouseenter', () => {
+            $('.js-rules-item-container').rClass('active')
+            const container = item.querySelector('.js-rules-item-container')
+            container.classList.add('active')
+        })
+    })
     const itemImage = items.eq(0).querySelector('.js-rules-item-container')
     const bottomItem = itemImage.getBoundingClientRect().bottom
     const bottomImage = image.eq(0).getBoundingClientRect().bottom
@@ -118,7 +123,10 @@ const rulesSecInit = () => {
     items.items.forEach(item => {
         const container = item.querySelector('.js-rules-item-container')
         container.style.bottom = `${delta}px`
+
     })
+    window.locscroll.update()
+
 }
 
 const judgesSecInit = () => {
@@ -176,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     priceSecInit()
     timelineSecInit()
     participantSecInit()
-    rulesSecInit()
+    setTimeout(rulesSecInit, 2000)
     judgesSecInit()
     referencesSecInit()
 })

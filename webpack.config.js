@@ -11,6 +11,14 @@ const config = {
     entry: {
         main: './index.js',
         nominations: './index.js',
+        oldschool: './index.js',
+        abc: './index.js',
+        future: './index.js',
+        beard: './index.js',
+        fade: './index.js',
+        juniors: './index.js',
+        team: './index.js',
+        fastfade: './index.js',
         rules: './index.js',
     },
     output: {
@@ -31,6 +39,46 @@ const config = {
             filename: 'nominations.html',
             template: 'nominations/index.html',
             chunks: ['nominations']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'oldschool.html',
+            template: 'nominations/oldschool.html',
+            chunks: ['oldschool']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'abc.html',
+            template: 'nominations/abc.html',
+            chunks: ['abc']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'future.html',
+            template: 'nominations/future.html',
+            chunks: ['future']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'beard.html',
+            template: 'nominations/beard.html',
+            chunks: ['beard']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'fade.html',
+            template: 'nominations/fade.html',
+            chunks: ['fade']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'juniors.html',
+            template: 'nominations/juniors.html',
+            chunks: ['juniors']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'team.html',
+            template: 'nominations/team.html',
+            chunks: ['team']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'fastfade.html',
+            template: 'nominations/fastfade.html',
+            chunks: ['fastfade']
         }),
         new HtmlWebpackPlugin({
             filename: 'rules.html',

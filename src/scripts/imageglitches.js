@@ -455,7 +455,7 @@ const btnsInit = () => {
         let isHovered = false
         const cDark = '#040214'
         const cLight = '#ffffff'
-        const text = btn.innerHTML.trim().toUpperCase().replaceAll('<BR>', '\n')
+        const text = btn.innerHTML.trim().toUpperCase().replaceAll('<BR>', '\n').replaceAll('&AMP;', '&')
         const type = btn.classList.contains('btn--primary') ? 'primary' : 'secondary'
 
         const {
@@ -726,7 +726,8 @@ const nominationSecInint = async () => {
         letterSpacing: 20,
         fontSize,
     }
-    const textP = new PIXI.Text({ text: `${text} ${text} ${text}`, style })
+    const textRefract = text.length > 15 ? text : `${text} ${text} ${text}`
+    const textP = new PIXI.Text({ text: textRefract, style })
     const staticX = innerWidth - textP.width - 300
     const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
     textP.x = 0
@@ -778,6 +779,7 @@ const nominationSecInint = async () => {
     if (!detectMobile()) {
         window.addEventListener('resize', debounceResize)
     }
+    window.locscroll.update()
 }
 
 checkIsNeedVideo()
