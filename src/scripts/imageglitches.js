@@ -331,9 +331,7 @@ const mainSecInit = async () => {
         window.removeEventListener('resize', debounceResize)
     }, 2000)
 
-    if (!detectMobile()) {
-        window.addEventListener('resize', debounceResize)
-    }
+    window.addEventListener('resize', debounceResize)
 }
 
 // Номинации
