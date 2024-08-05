@@ -654,10 +654,12 @@
         mask-position: center;
         mask-size: contain;
         position: relative;
+        border-radius: 20px;
 
         @media @desktop {
             width: 504px;
             height: 295px;
+            border-radius: 40px;
             mask-image: url('../../images/masks/mask-timeline.png');
         }
     }
@@ -691,6 +693,7 @@
         bottom: 10px;
         left: 0;
         width: 56px;
+        z-index: 2;
         height: 56px;
         border-radius: 50%;
         display: inline-flex;
@@ -767,6 +770,7 @@
                 color: var(--c-light-green);
             }
         }
+
         &[data-active='true']:hover .price-sec__item-icon svg{
             transform: rotate(45deg);
         }
@@ -782,6 +786,7 @@
         mask-position: center;
         mask-size: contain;
         position: relative;
+        border-radius: 40px;
     }
 
     &__item-text {
@@ -818,6 +823,7 @@
         justify-content: center;
         align-items: center;
         color: #29222A;
+        z-index: 2;
         font-family: 'Bender black';
     }
 
