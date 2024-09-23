@@ -13,6 +13,7 @@ const timelineSecInit = () => {
         slideActiveClass: 'js-timeline-item-active',
     })
 }
+
 const priceSecInit = () => {
     const swiper = new Swiper('.js-price', {
         slidesPerView: 'auto',
@@ -52,7 +53,6 @@ const participantSecInit = () => {
         slidesPerView: 'auto',
         spaceBetween: 40,
         slideClass: 'js-participant-col',
-        // slidesOffsetBefore: 60,
         wrapperClass: 'js-participant-inner',
         slidePrevClass: 'js-participant-col-prev',
         slideNextClass: 'js-participant-col-next',
@@ -104,7 +104,7 @@ const rulesSecInit = () => {
             })
 
         })
-        
+
         return
     }
     items.items.forEach(item => {
@@ -166,6 +166,134 @@ const judgesSecInit = () => {
     prev.on('click', () => swiper.slidePrev())
 }
 
+const workSecInit = () => {
+    const section = $('js-works')
+    if (!section) return
+    const modal = $('js-modal[data-modal="work"]')
+    const modalElem = modal.eq(0)
+    const modalPrev = modalElem.$('js-work-modal-prev')
+    const modalNext = modalElem.$('js-work-modal-next')
+    const modalInfo = modalElem.$('js-work-modal-info')
+    const modalSwiper = modalElem.$('js-work-modal-swiper')
+    const modalSwiperItems = modalElem.$('js-work-modal-swiper-items')
+    let modalSwiperClass
+
+    section.each((el) => {
+        const next = el.$('js-works-next')
+        const prev = el.$('js-works-prev')
+        const turn = el.$('js-works-turn')
+        const info = el.$('js-work-info')
+        const inner = el.$('js-work-inner')
+        const items = el.$('js-works-swiper-item')
+        let currentSide = 'main'
+
+        prev.attr('data-active', 'false')
+
+        const swiper = new Swiper(inner.eq(0), {
+            slidesPerView: 'auto',
+            wrapperClass: 'js-works-swiper-container',
+            slideClass: 'js-works-swiper-item',
+            slidePrevClass: 'js-works-item-prev',
+            slideNextClass: 'js-works-item-next',
+            slideActiveClass: 'js-works-item-active',
+            spaceBetween: 12,
+            breakpoints: {
+                1024: {
+                    spaceBetween: 40,
+                    slidesPerView: 'auto',
+                }
+            }
+        })
+
+        swiper.on('slideChange', () => {
+            const { progress } = swiper
+
+            prev.attr('data-active', progress !== 0)
+            next.attr('data-active', progress <= 0.85)
+        })
+
+        next.on('click', () => swiper.slideNext())
+        prev.on('click', () => swiper.slidePrev())
+        turn.on('click', () => {
+            currentSide = currentSide === 'main' ? 'alter' : 'main'
+            el.dataset.side = currentSide
+        })
+
+        const openModalHandler = ({ target }) => {
+            const index = [...target.parentNode.children].indexOf(target)
+            modalInfo.eq(0).innerHTML = info.eq(0).innerHTML
+            modalSwiperItems.eq(0).innerHTML = ''
+            if (modalSwiperClass) modalSwiperClass.destroy()
+            items.each(item => {
+                const src = item.$('img').attr('data-fullsize')
+                const alt = item.$('img').attr('alt')
+                const node = document.createElement('div')
+                node.classList.add('js-work-modal-swiper-item', 'work-modal__swiper-item')
+                node.innerHTML = `<img src="${src}" alt="${alt}" />`
+                modalSwiperItems.eq(0).append(node)
+            })
+
+            modalSwiperClass = new Swiper(modalSwiper.eq(0), {
+                slidesPerView: 1,
+                wrapperClass: 'js-work-modal-swiper-items',
+                slideClass: 'js-work-modal-swiper-item',
+                slideActiveClass: 'active',
+                centeredSlides: true,
+                spaceBetween: 0,
+                breakpoints: {
+                    1024: { slidesPerView: 3 }
+                },
+                modules: [Pagination],
+                pagination: {
+                    dynamicBullets: true,
+                    renderBullet: (index, className) => {
+                        return '<span class="' + className + '">' + (index + 1) + '</span>';
+                    },
+                    el: '.js-work-modal-swiper-pagination',
+                    clickable: true,
+                },
+
+            })
+
+            modalSwiperClass.slideTo(index)
+
+            setTimeout(() => modal.attr('data-open', true), 200)
+        }
+
+        items.on('click', openModalHandler)
+    })
+
+    // modalSwiperClass.on('slideChange', () => {
+    //     const { progress } = modalSwiperClass
+
+    //     modalPrev.attr('data-active', progress !== 0)
+    //     modalNext.attr('data-active', progress <= 0.85)
+    // })
+
+    modalNext.on('click', () => {
+        if (!modalSwiperClass) return
+        modalSwiperClass.slideNext()
+    })
+
+    modalPrev.on('click', () => {
+        if (!modalSwiperClass) return
+        modalSwiperClass.slidePrev()
+    })
+}
+
+const modalsInit = () => {
+    const modals = $('js-modal')
+    if (!modals) return
+
+    modals.each(modal => {
+        document.body.append(modal)
+        const close = modal.$('js-modal-close')
+        close.on('click', () => {
+            modal.dataset.open = 'false'
+        })
+    })
+}
+
 const referencesSecInit = () => {
     if (!detectMobile()) return
     const swiper = new Swiper('.js-references', {
@@ -181,10 +309,12 @@ const referencesSecInit = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    workSecInit()
+    judgesSecInit()
     priceSecInit()
     timelineSecInit()
     participantSecInit()
     setTimeout(rulesSecInit, 2000)
-    judgesSecInit()
     referencesSecInit()
+    modalsInit()
 })

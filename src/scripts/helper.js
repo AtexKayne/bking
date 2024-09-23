@@ -1,14 +1,15 @@
-export const $ = (q) => {
+export const $ = function (q) {
     let elem
-
+    const node = this || document
     if (q.includes('js') && !q.includes('.')) {
-        elem = document.querySelectorAll(`.${q}`)
+        elem = node.querySelectorAll(`.${q}`)
     } else {
-        elem = document.querySelectorAll(q)
+        elem = node.querySelectorAll(q)
     }
 
     if (elem.length >= 1) {
         const items = Array.from(elem)
+        items.forEach(item => item.$ = $)
         const obj = {
             items,
             on: function (event, fn) {
@@ -53,10 +54,14 @@ export const $ = (q) => {
                 const elems = this.items[0].querySelectorAll(query)
                 return !!elems.length ? Array.from(elems) : null
             },
-            append: function (node) {
+            append: function (elem) {
                 this.items.forEach(item => {
-                    item.append(node)
+                    item.append(elem)
                 })
+                return this
+            },
+            each: function (fn) {
+                this.items.forEach(fn)
                 return this
             }
         }
