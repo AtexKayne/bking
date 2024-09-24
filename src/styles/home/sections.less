@@ -2112,10 +2112,17 @@
 
     &__wrapper {
         position: relative;
+        --back: #340034;
+        --light: #8C0B8C;
+
+        &[data-color="green"] {
+            --back: #002423;
+            --light: #0B7C0B;
+        }
 
         &[data-side='alter'] {
             .work-sec__container {
-                background-color: var(--c-dark-green);
+                background-color: var(--back);
             }
 
             .work-sec__prev,
@@ -2194,7 +2201,7 @@
         pointer-events: none;
         flex-direction: column;
         justify-content: center;
-        
+
         @media @desktop {
             align-items: center;
             left: 260px;
@@ -2207,7 +2214,7 @@
         height: 60px;
         border-radius: 50%;
         overflow: hidden;
-        box-shadow: 0 0 50px var(--c-green);
+        box-shadow: 0 0 50px var(--light);
 
         img {
             width: 100%;
@@ -2386,7 +2393,7 @@
         pointer-events: none;
         justify-content: space-between;
         top: calc(50% - 40px);
-        
+
         @media @desktop {
             display: flex;
         }
