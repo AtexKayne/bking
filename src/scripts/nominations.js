@@ -252,7 +252,17 @@ const workSecInit = () => {
                     el: '.js-work-modal-swiper-pagination',
                     clickable: true,
                 },
+            })
 
+            const { progress } = modalSwiperClass
+            modalPrev.attr('data-active', progress !== 0)
+            modalNext.attr('data-active', progress <= 0.95)
+
+            modalSwiperClass.on('slideChange', () => {
+                const { progress } = modalSwiperClass
+        
+                modalPrev.attr('data-active', progress !== 0)
+                modalNext.attr('data-active', progress <= 0.95)
             })
 
             modalSwiperClass.slideTo(index)
@@ -262,13 +272,6 @@ const workSecInit = () => {
 
         items.on('click', openModalHandler)
     })
-
-    // modalSwiperClass.on('slideChange', () => {
-    //     const { progress } = modalSwiperClass
-
-    //     modalPrev.attr('data-active', progress !== 0)
-    //     modalNext.attr('data-active', progress <= 0.85)
-    // })
 
     modalNext.on('click', () => {
         if (!modalSwiperClass) return
