@@ -68,7 +68,7 @@ const participantSecInit = () => {
         },
     })
 
-    swiper.on('slideChange', () => {
+    swiper.on('transitionEnd', () => {
         const { progress } = swiper
 
         prev.attr('data-active', progress !== 0)
@@ -155,7 +155,7 @@ const judgesSecInit = () => {
         }
     })
 
-    swiper.on('slideChange', () => {
+    swiper.on('transitionEnd', () => {
         const { progress } = swiper
 
         prev.attr('data-active', progress !== 0)
@@ -205,11 +205,16 @@ const workSecInit = () => {
             }
         })
 
-        swiper.on('slideChange', () => {
+        if (items.length < 4) {
+            prev.attr('data-is-hidden', true)
+            next.attr('data-is-hidden', true)
+        }
+
+        swiper.on('transitionEnd', () => {
             const { progress } = swiper
 
             prev.attr('data-active', progress !== 0)
-            next.attr('data-active', progress <= 0.85)
+            next.attr('data-active', progress !== 1)
         })
 
         next.on('click', () => swiper.slideNext())
@@ -256,13 +261,13 @@ const workSecInit = () => {
 
             const { progress } = modalSwiperClass
             modalPrev.attr('data-active', progress !== 0)
-            modalNext.attr('data-active', progress <= 0.95)
+            modalNext.attr('data-active', progress !== 1)
 
-            modalSwiperClass.on('slideChange', () => {
+            modalSwiperClass.on('transitionEnd', () => {
                 const { progress } = modalSwiperClass
-        
+
                 modalPrev.attr('data-active', progress !== 0)
-                modalNext.attr('data-active', progress <= 0.95)
+                modalNext.attr('data-active', progress !== 1)
             })
 
             modalSwiperClass.slideTo(index)

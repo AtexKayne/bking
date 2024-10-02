@@ -12,6 +12,7 @@ export const $ = function (q) {
         items.forEach(item => item.$ = $)
         const obj = {
             items,
+            length: items.length,
             on: function (event, fn) {
                 this.items.forEach(el => el.addEventListener(event, fn))
                 return this
