@@ -3,7 +3,11 @@ import { Navigation, Pagination } from 'swiper/modules'
 import { $, detectMobile } from './helper'
 
 const timelineSecInit = () => {
-    const swiper = new Swiper('.js-timeline', {
+    const timeline = $('js-timeline')
+    const activeSlide = timeline.eq(0).$('[data-active="true"]')
+    const index = [...activeSlide.eq(0).parentElement.children].indexOf(activeSlide.eq(0))
+    
+    const swiper = new Swiper(timeline.eq(0), {
         slidesPerView: 'auto',
         spaceBetween: 40,
         slideClass: 'js-timeline-item',
@@ -12,6 +16,8 @@ const timelineSecInit = () => {
         slideNextClass: 'js-timeline-item-next',
         slideActiveClass: 'js-timeline-item-active',
     })
+
+    swiper.slideTo(index)
 }
 
 const priceSecInit = () => {
