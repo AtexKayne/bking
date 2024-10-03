@@ -1,12 +1,14 @@
 import Swiper from 'swiper'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Pagination } from 'swiper/modules'
 import { $, detectMobile } from './helper'
 
 const timelineSecInit = () => {
     const timeline = $('js-timeline')
+    if (!timeline) return
+
     const activeSlide = timeline.eq(0).$('[data-active="true"]')
     const index = [...activeSlide.eq(0).parentElement.children].indexOf(activeSlide.eq(0))
-    
+
     const swiper = new Swiper(timeline.eq(0), {
         slidesPerView: 'auto',
         spaceBetween: 40,
