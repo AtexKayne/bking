@@ -64,6 +64,14 @@ export const $ = function (q) {
             each: function (fn) {
                 this.items.forEach(fn)
                 return this
+            },
+            rect: function () {
+                return this.items[0].getBoundingClientRect()
+            },
+            parent: function () {
+                const parent = this.items[0].parentNode
+                parent.$ = $
+                return parent
             }
         }
         return obj
@@ -103,3 +111,14 @@ export const debounce = (func, wait) => {
         timeout = setTimeout(later, wait)
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.createElement('div')
+    container.classList.add('container')
+    document.body.append(container)
+    window.containerRect = container.getBoundingClientRect()
+
+    window.addEventListener('resize', () => {
+        window.containerRect = container.getBoundingClientRect()
+    })
+})

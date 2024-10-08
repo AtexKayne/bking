@@ -35,56 +35,62 @@ const priceSecInit = () => {
 }
 
 const participantSecInit = () => {
-    const items = $('js-participant-item')
-    if (!items) return
+    const sections = $('js-participant')
+    if (!sections) return
 
-    const next = $('js-participant-next')
-    const prev = $('js-participant-prev')
-    prev.attr('data-active', 'false')
+    sections.each(el => {
+        const head = el.parentNode.querySelector('.participant-sec__head')
+        head.$ = $
+        const items = el.$('js-participant-item')
+        const next = head.$('js-participant-next')
+        const prev = head.$('js-participant-prev')
 
-    items.items.forEach(item => {
-        const btn = item.querySelector('.js-participant-item-switch')
-        const desc = item.querySelector('.js-participant-item-desc')
-        let isOpen = false
+        prev.attr('data-active', 'false')
 
-        btn.addEventListener('click', () => {
-            isOpen = !isOpen
-            item.dataset.open = isOpen
+        items.items.forEach(item => {
+            const btn = item.querySelector('.js-participant-item-switch')
+            const desc = item.querySelector('.js-participant-item-desc')
+            let isOpen = false
+
+            btn.addEventListener('click', () => {
+                isOpen = !isOpen
+                item.dataset.open = isOpen
+            })
+
+            desc.addEventListener('wheel', event => {
+                event.stopPropagation()
+            })
         })
 
-        desc.addEventListener('wheel', event => {
-            event.stopPropagation()
-        })
-    })
-
-    const swiper = new Swiper('.js-participant', {
-        slidesPerView: 'auto',
-        spaceBetween: 40,
-        slideClass: 'js-participant-col',
-        wrapperClass: 'js-participant-inner',
-        slidePrevClass: 'js-participant-col-prev',
-        slideNextClass: 'js-participant-col-next',
-        slideActiveClass: 'js-participant-col-active',
-        modules: [Pagination],
-        pagination: {
-            dynamicBullets: true,
-            renderBullet: (index, className) => {
-                return '<span class="' + className + '">' + (index + 1) + '</span>';
+        const swiper = new Swiper(el, {
+            slidesPerView: 'auto',
+            spaceBetween: 40,
+            slideClass: 'js-participant-col',
+            wrapperClass: 'js-participant-inner',
+            slidePrevClass: 'js-participant-col-prev',
+            slideNextClass: 'js-participant-col-next',
+            slideActiveClass: 'js-participant-col-active',
+            modules: [Pagination],
+            pagination: {
+                dynamicBullets: true,
+                renderBullet: (index, className) => {
+                    return '<span class="' + className + '">' + (index + 1) + '</span>';
+                },
+                el: '.js-participant-pagination',
+                clickable: true,
             },
-            el: '.js-participant-pagination',
-            clickable: true,
-        },
+        })
+
+        swiper.on('transitionEnd', () => {
+            const { progress } = swiper
+
+            prev.attr('data-active', progress !== 0)
+            next.attr('data-active', progress !== 1)
+        })
+
+        next.on('click', () => swiper.slideNext())
+        prev.on('click', () => swiper.slidePrev())
     })
-
-    swiper.on('transitionEnd', () => {
-        const { progress } = swiper
-
-        prev.attr('data-active', progress !== 0)
-        next.attr('data-active', progress !== 1)
-    })
-
-    next.on('click', () => swiper.slideNext())
-    prev.on('click', () => swiper.slidePrev())
 }
 
 const rulesSecInit = () => {
@@ -193,6 +199,11 @@ const workSecInit = () => {
         const info = el.$('js-work-info')
         const inner = el.$('js-work-inner')
         const items = el.$('js-works-swiper-item')
+        const innerContainer = el.$('js-work-inner-container')
+        const isWinner = typeof el.getAttribute('winner') === 'string'
+        const height = innerContainer.eq(0).clientHeight - 60
+        el.style.setProperty('--height', `${height}px`)
+
         let currentSide = 'main'
 
         prev.attr('data-active', 'false')
@@ -230,6 +241,9 @@ const workSecInit = () => {
         turn.on('click', () => {
             currentSide = currentSide === 'main' ? 'alter' : 'main'
             el.dataset.side = currentSide
+
+            if (!isWinner && !detectMobile()) return
+            setTimeout(() => locscroll.update(), 300)
         })
 
         const openModalHandler = ({ target }) => {

@@ -88,6 +88,18 @@ const appInit = async (settings) => {
 }
 
 // Функционал для первой секции главной страницы
+const getSizes = () => {
+    const widthMobile = innerWidth
+    const heightMobile = innerWidth / 375 * 450
+    const widthDesktop = Math.min(Math.max(innerWidth / 1440 * 657, innerHeight / 700 * 657), (innerHeight - 50) * 0.83)
+    const heightDesktop = Math.min(Math.max(innerWidth / 1440 * 788, innerHeight / 700 * 788), innerHeight - 50)
+
+    const iWidth = detectMobile() ? widthMobile : widthDesktop
+    const iHeight = detectMobile() ? heightMobile : heightDesktop
+
+    return { iWidth, iHeight }
+}
+
 const checkIsNeedVideo = () => {
     const main = $('js-main-sec')
     if (!main) return
@@ -102,7 +114,50 @@ const checkIsNeedVideo = () => {
     })
 }
 
-const appendText = async (app) => {
+const calculateTextWidth = (item, style) => {
+    let x, y
+    const lineContainer = document.createElement('div')
+    lineContainer.innerHTML = item.text.replaceAll('\n', '<br/>')
+    lineContainer.style.zIndex = -1
+    lineContainer.style.position = 'absolute'
+    lineContainer.style.fontSize = `${style.fontSize}px`
+    lineContainer.style.lineHeight = `${style.fontSize}px`
+    lineContainer.style.fontFamily = style.fontFamily
+    document.body.append(lineContainer)
+    const textWidth = lineContainer.clientWidth * ratio
+    const textHeight = lineContainer.clientHeight * ratio
+    lineContainer.remove()
+
+    if (item.x === 'left') x = textWidth / 2 + (containerRect.left + 16) * ratio
+    else if (item.x === 'center') x = (innerWidth / 2) * ratio
+    else if (item.x === 'right') x = (containerRect.right - 16) * ratio - textWidth / 2
+    else x = (innerWidth / 2) * ratio
+
+    if (item.y === 'top') y = textHeight / 2 + 140 * ratio
+    else if (item.y === 'center') y = (innerHeight / 2) * ratio
+    else if (item.y === 'bottom') y = innerHeight * ratio - (textHeight / 2) - 120 * ratio
+    else y = (innerHeight / 2) * ratio
+
+    return { x, y, textWidth, textHeight }
+}
+
+const calculateImagePosition = (pos, params) => {
+    let y, x
+    const bottomOffset = detectMobile() ? 100 : 0
+    if (pos.x === 'left') x = (containerRect.left + 16) * ratio
+    else if (pos.x === 'center') x = (innerWidth / 2 - params.width / 2) * ratio
+    else if (pos.x === 'right') x = (containerRect.right - params.width) * ratio
+    else x = (innerWidth / 2 - params.width / 2) * ratio
+
+    if (pos.y === 'top') y = 0
+    else if (pos.y === 'center') y = (innerHeight / 2) * ratio
+    else if (pos.y === 'bottom') y = (innerHeight - params.height - bottomOffset) * ratio
+    else y = (innerHeight / 2) * ratio
+
+    return { y, x }
+}
+
+const appendText = async (app, input) => {
     const isMobile = detectMobile()
     const width = app.canvas.width
     const height = app.canvas.height
@@ -111,62 +166,93 @@ const appendText = async (app) => {
     const fontSize3 = width / 1440 * 58
     const fontSize4 = width / 1440 * 120
     const rgb = new filters.RGBSplitFilter()
-    const textes = [
-        new PIXI.Container(),
-        new PIXI.Container(),
-        new PIXI.Container(),
-        new PIXI.Container()
-    ]
+    let textList
     const standartStyle = {
         fontFamily: 'Bender black',
         fill: '#fff',
         align: 'center',
     }
-    const textList = !isMobile ? [
-        { text: 'barber king\n2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
-        { text: '21 - 22 оkтября', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
-        { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + fontSize1 },
-        { text: 'МТС Live Холл', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
-        { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + fontSize1 },
-        { text: 'barber king', fontSize: fontSize3, container: 4, x: width / 3.8, y: height / 4 },
-        { text: '2o24', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
-    ] : [
-        { text: 'barber king\n2o24', fontSize: fontSize1 * 2, container: 1, x: width / 2, y: height / 2 - 75 },
-        { text: '21 - 22\nоkтября', fontSize: fontSize1 * 2, container: 2, x: width / 2, y: height / 2 - 75 },
-        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + fontSize1 * 2 },
-        { text: 'МТС\nLive Холл', fontSize: fontSize1 * 2, container: 3, x: width / 2, y: height / 2 - 75 },
-        { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + fontSize1 * 2 },
-        { text: 'barber king', fontSize: fontSize3 * 2.5, container: 4, x: width / 3, y: height / 3 },
-        { text: '2o24', fontSize: fontSize4 * 2, container: 4, x: width / 1.3, y: height / 1.5 },
-    ]
 
-    const sourses = [
-        '/src/images/main/slider/1.jpg',
-        '/src/images/main/slider/2.jpg',
-        '/src/images/main/slider/3.jpg',
-        '/src/images/main/slider/4.jpg'
-    ]
+    const textes = input
+        ? input.map(() => new PIXI.Container())
+        : [
+            new PIXI.Container(),
+            new PIXI.Container(),
+            new PIXI.Container(),
+            new PIXI.Container()
+        ]
 
-    sourses.forEach(async src => {
-        await PIXI.Assets.load(src)
-        const sprite = PIXI.Sprite.from(src)
-        const imageWidth = isMobile ? width / 375 * 278 : width / 1440 * 658
-        const imageHeight = isMobile ? width / 375 * 237 : width / 1440 * 538
-        sprite.width = imageWidth
-        sprite.height = imageHeight
-        sprite.x = (width / 2) - (imageWidth / 2)
-        sprite.y = (height / 2) - (imageHeight / 2)
-        textes[3].addChild(sprite)
-        sprite.renderable = false
-    })
+    if (input) {
+        textList = input.map((item, index) => {
+            const size = isMobile ? item.size || 58 : item.size || 96
+            const delim = isMobile ? innerWidth / 375 : innerWidth / 1440
+            const fontSize = delim * size
+            const { x, y } = calculateTextWidth(item, { fontFamily: standartStyle.fontFamily, fontSize })
 
-    textList.forEach(el => {
+            const map = {
+                x, y,
+                text: item.text,
+                container: index + 1,
+                fontSize: fontSize * ratio,
+            }
+            return map
+        })
+    } else {
+        if (isMobile) {
+            textList = [
+                { text: 'barber king\n2o24', fontSize: fontSize1 * 2, container: 1, x: width / 2, y: height / 2 - 75 },
+                { text: '21 - 22\nоkтября', fontSize: fontSize1 * 2, container: 2, x: width / 2, y: height / 2 - 75 },
+                { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + fontSize1 * 2 },
+                { text: 'МТС\nLive Холл', fontSize: fontSize1 * 2, container: 3, x: width / 2, y: height / 2 - 75 },
+                { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + fontSize1 * 2 },
+                { text: 'barber king', fontSize: fontSize3 * 2.5, container: 4, x: width / 3, y: height / 3 },
+                { text: '2o24', fontSize: fontSize4 * 2, container: 4, x: width / 1.3, y: height / 1.5 },
+            ]
+        } else {
+            textList = [
+                { text: 'barber king\n2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
+                { text: '21 - 22 оkтября', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
+                { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + fontSize1 },
+                { text: 'МТС Live Холл', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
+                { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + fontSize1 },
+                { text: 'barber king', fontSize: fontSize3, container: 4, x: width / 3.8, y: height / 4 },
+                { text: '2o24', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
+            ]
+        }
+    }
+
+    if (!input) {
+        const sourses = [
+            '/src/images/main/slider/1.jpg',
+            '/src/images/main/slider/2.jpg',
+            '/src/images/main/slider/3.jpg',
+            '/src/images/main/slider/4.jpg'
+        ]
+
+        sourses.forEach(async src => {
+            await PIXI.Assets.load(src)
+            const sprite = PIXI.Sprite.from(src)
+            const imageWidth = isMobile ? width / 375 * 278 : width / 1440 * 658
+            const imageHeight = isMobile ? width / 375 * 237 : width / 1440 * 538
+            sprite.width = imageWidth
+            sprite.height = imageHeight
+            sprite.x = (width / 2) - (imageWidth / 2)
+            sprite.y = (height / 2) - (imageHeight / 2)
+            textes[3].addChild(sprite)
+            sprite.renderable = false
+        })
+    }
+
+    textList.forEach((el, index) => {
+        const align = input ? input[index].textAlign || 'left' : standartStyle.align
         const { fontSize, text, container } = el
         const style = {
             ...standartStyle,
             lineHeight: fontSize,
             fontSize,
+            align,
         }
+
         const pixiText = new PIXI.Text({ text, style })
         pixiText.x = el.x - (pixiText.width / 2)
         pixiText.y = el.y - (pixiText.height / 2)
@@ -201,9 +287,8 @@ const appendRect = (app) => {
     return circle
 }
 
-const getSettings = () => {
+const getSettings = (states = 4) => {
     const timePerState = 400
-    const states = 4
     const perFrame = 7
     const aStates = []
     const effects = [
@@ -266,8 +351,8 @@ const tickerHandler = (app, text, effect) => {
     }
 }
 
-const setAnimationState = (app, index, textes) => {
-    const prevIndex = index !== 0 ? index - 1 : 3
+const setAnimationState = (index, textes) => {
+    const prevIndex = index !== 0 ? index - 1 : textes.length - 1
     const prevText = textes[prevIndex]
     const currText = textes[index]
 
@@ -275,6 +360,7 @@ const setAnimationState = (app, index, textes) => {
     currText.renderable = true
     if (index === 3) {
         const images = textes[3].children.filter(el => el.label === 'Sprite')
+        if (!images.length) return
         images.forEach(image => {
             image.renderable = false
         })
@@ -299,7 +385,7 @@ const mainSecInit = async () => {
             height: innerHeight
         },
     })
-    const rect = appendRect(app)
+    const rectes = appendRect(app)
     const textes = await appendText(app)
     const states = getSettings()
     const text = textes[0]
@@ -314,7 +400,7 @@ const mainSecInit = async () => {
         const { effect, state } = currensState
         if (state !== current) {
             current = state
-            setAnimationState(app, current, textes)
+            setAnimationState(current, textes)
         }
 
         tickerHandler(app, text, effect)
@@ -332,6 +418,209 @@ const mainSecInit = async () => {
     }, 2000)
 
     window.addEventListener('resize', debounceResize)
+}
+
+// Первая секция на странице победителей
+const winnerSecInit = async () => {
+    const section = $('js-winner-sec')
+    const settings = window.winnerData
+
+    if (!section || !settings) return
+    const { textInfo, imageInfo } = settings
+    const textOutput = PIXI.isMobile.phone ? textInfo.mobile : textInfo.desktop
+    const mainNode = section.eq(0)
+    const app = await appInit({
+        node: mainNode,
+        effects: ['glitch'],
+        maxFPS: 1,
+        params: {
+            background: '#040214',
+            width: innerWidth,
+            height: innerHeight
+        },
+    })
+
+    await PIXI.Assets.load(imageInfo.src)
+    const rgb = new filters.RGBSplitFilter()
+    const glitch = new filters.GlitchFilter()
+    const sprite = PIXI.Sprite.from(imageInfo.src)
+    const { iWidth, iHeight } = getSizes()
+    sprite.width = iWidth * ratio
+    sprite.height = iHeight * ratio
+    const pos = {
+        y: PIXI.isMobile.phone ? imageInfo.imagePosition.mobyleY : imageInfo.imagePosition.desktopY,
+        x: PIXI.isMobile.phone ? imageInfo.imagePosition.mobyleX : imageInfo.imagePosition.desktopX,
+    }
+    const { y, x } = calculateImagePosition(pos, { width: iWidth, height: iHeight })
+    sprite.x = x
+    sprite.y = y
+    sprite.filters = [rgb]
+    app.stage.addChild(sprite)
+
+    const overlayHeight = PIXI.isMobile.phone ? 300 : 400
+    const overlay = new PIXI.Graphics().rect(0, 0, (innerWidth + 600) * ratio, overlayHeight * ratio).fill('#040214')
+    overlay.x = -300 * ratio
+    overlay.y = (innerHeight - overlayHeight / 1.5) * ratio
+    overlay.filters = [new PIXI.BlurFilter({ strength: overlayHeight, quality: 60 })]
+    app.stage.addChild(overlay)
+
+    const textes = await appendText(app, textOutput)
+    const states = getSettings(textOutput.length)
+    const text = textes[0]
+
+    let current = -1
+    let time = 0
+
+
+
+    app.ticker.add((ticker) => {
+        time += Math.floor(ticker.deltaMS)
+        const currentState = states.find(el => time.isBetween(el.from, el.to))
+        if (!currentState) return time = 0
+
+        const { effect, state } = currentState
+        if (state !== current) {
+            current = state
+            setAnimationState(current, textes)
+        }
+
+        tickerHandler(app, text, effect)
+    })
+
+    window.appMainSection = app
+
+    const debounceResize = debounce(() => {
+        window.appMainSection.canvas.remove()
+        window.appMainSection.destroy()
+
+        setTimeout(winnerSecInit, 500)
+
+        window.removeEventListener('resize', debounceResize)
+    }, 2000)
+
+    window.addEventListener('resize', debounceResize)
+}
+
+// Первая секция на странице номинации
+const nominationSecInint = async () => {
+    const section = $('js-nomination-sec')
+    if (!section) return
+    const src = section.attr('data-image')
+    const text = section.attr('data-text').trim().toUpperCase()
+    const params = { background: '#040214' }
+    const isMobile = detectMobile()
+
+    const { iWidth, iHeight } = getSizes()
+    const rgb = new filters.RGBSplitFilter()
+    const glitch = new filters.GlitchFilter()
+    const shadow = new filters.DropShadowFilter()
+
+    let isStopped = false
+    let timeout = null
+    let isInView = false
+    let x = 0
+
+    const stopFunc = () => {
+        if (!isInView) return
+        isStopped = !isStopped
+        clearTimeout(timeout)
+        timeout = setTimeout(stopFunc, randomIntFromInterval(400, 1600))
+    }
+
+    const obsHandler = (entry) => {
+        isInView = entry
+        if (isInView) stopFunc()
+        else clearTimeout(timeout)
+    }
+
+    const app = await appInit({
+        node: section.eq(0),
+        params,
+        maxFPS: 20,
+        resizeTo: window,
+        observer: {
+            handler: obsHandler
+        }
+    })
+
+    await PIXI.Assets.load(src)
+    const sprite = PIXI.Sprite.from(src)
+    sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
+    sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
+    sprite.filters = [rgb, glitch, shadow]
+    sprite.width = iWidth * ratio
+    sprite.height = iHeight * ratio
+    sprite.zIndex = 2
+    sprite.filters[2].color = '#FF00FF'
+    sprite.filters[2].blur = 50
+    sprite.filters[2].quality = 10
+    app.stage.addChild(sprite)
+
+    const fontSize = isMobile ? 250 : (innerWidth / 1440 * 250) * ratio
+    const style = {
+        fontFamily: 'Bender black',
+        fill: params.background,
+        stroke: { color: '#fff', width: 3 * ratio },
+        textTransform: 'uppercase',
+        align: 'center',
+        lineHeight: fontSize,
+        letterSpacing: 20,
+        fontSize,
+    }
+    const textRefract = text.length > 15 ? text : `${text} ${text} ${text}`
+    const textP = new PIXI.Text({ text: textRefract, style })
+    const staticX = innerWidth - textP.width - 300
+    const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
+    textP.x = 0
+    textP.y = isMobile ? centerY - 50 * ratio : centerY
+    textP.zIndex = 1
+    app.stage.addChild(textP)
+
+    const co = 15
+    const so = 20
+
+    app.ticker.add(() => {
+        x += -3
+        if (x < staticX) x = 0
+
+        textP.x = x
+        if (isStopped) {
+            sprite.filters[0].green.x = 0
+            sprite.filters[0].green.y = 0
+            sprite.filters[0].red.x = 0
+            sprite.filters[0].red.y = 0
+            sprite.filters[0].blue.x = 0
+            sprite.filters[0].blue.y = 0
+            sprite.filters[1].offset = 0
+            sprite.filters[1].slices = 0
+
+            return
+        }
+        sprite.filters[0].red.x = randomIntFromInterval(-co, co)
+        sprite.filters[0].red.y = randomIntFromInterval(-co, co)
+        sprite.filters[0].green.x = randomIntFromInterval(-co, co)
+        sprite.filters[0].green.y = randomIntFromInterval(-co, co)
+        sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
+        sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
+        sprite.filters[1].offset = randomIntFromInterval(-so, so)
+        sprite.filters[1].slices = randomIntFromInterval(1, 6)
+    })
+
+    window.appMainSection = app
+
+    const debounceResize = debounce(() => {
+        window.appMainSection.canvas.remove()
+        window.appMainSection.destroy()
+
+        setTimeout(nominationSecInint, 500)
+
+        window.removeEventListener('resize', debounceResize)
+    }, 2000)
+
+    if (!detectMobile()) {
+        window.addEventListener('resize', debounceResize)
+    }
+    window.locscroll.update()
 }
 
 // Номинации
@@ -646,144 +935,11 @@ const hiddenSecInit = async () => {
     })
 }
 
-// Первая секция на странице номинации
-const nominationSecInint = async () => {
-    const section = $('js-nomination-sec')
-    if (!section) return
-    const src = section.attr('data-image')
-    const text = section.attr('data-text').trim().toUpperCase()
-    const params = { background: '#040214' }
-    const isMobile = detectMobile()
-
-    const getSizes = () => {
-        const widthMobile = innerWidth
-        const heightMobile = innerWidth / 375 * 450
-        const widthDesktop = Math.min(Math.max(innerWidth / 1440 * 657, innerHeight / 700 * 657), (innerHeight - 50) * 0.83)
-        const heightDesktop = Math.min(Math.max(innerWidth / 1440 * 788, innerHeight / 700 * 788), innerHeight - 50)
-
-        const iWidth = isMobile ? widthMobile : widthDesktop
-        const iHeight = isMobile ? heightMobile : heightDesktop
-
-        return { iWidth, iHeight }
-    }
-
-    const { iWidth, iHeight } = getSizes()
-    const rgb = new filters.RGBSplitFilter()
-    const glitch = new filters.GlitchFilter()
-    const shadow = new filters.DropShadowFilter()
-
-    let isStopped = false
-    let timeout = null
-    let isInView = false
-    let x = 0
-
-    const stopFunc = () => {
-        if (!isInView) return
-        isStopped = !isStopped
-        clearTimeout(timeout)
-        timeout = setTimeout(stopFunc, randomIntFromInterval(400, 1600))
-    }
-
-    const obsHandler = (entry) => {
-        isInView = entry
-        if (isInView) stopFunc()
-        else clearTimeout(timeout)
-    }
-
-    const app = await appInit({
-        node: section.eq(0),
-        params,
-        maxFPS: 20,
-        resizeTo: window,
-        observer: {
-            handler: obsHandler
-        }
-    })
-
-    await PIXI.Assets.load(src)
-    const sprite = PIXI.Sprite.from(src)
-    sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-    sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
-    sprite.filters = [rgb, glitch, shadow]
-    sprite.width = iWidth * ratio
-    sprite.height = iHeight * ratio
-    sprite.zIndex = 2
-    sprite.filters[2].color = '#FF00FF'
-    sprite.filters[2].blur = 50
-    sprite.filters[2].quality = 10
-    app.stage.addChild(sprite)
-
-    const fontSize = isMobile ? 250 : (innerWidth / 1440 * 250) * ratio
-    const style = {
-        fontFamily: 'Bender black',
-        fill: params.background,
-        stroke: { color: '#fff', width: 3 * ratio },
-        textTransform: 'uppercase',
-        align: 'center',
-        lineHeight: fontSize,
-        letterSpacing: 20,
-        fontSize,
-    }
-    const textRefract = text.length > 15 ? text : `${text} ${text} ${text}`
-    const textP = new PIXI.Text({ text: textRefract, style })
-    const staticX = innerWidth - textP.width - 300
-    const centerY = (innerHeight / 2) * ratio - (textP.height / 2)
-    textP.x = 0
-    textP.y = isMobile ? centerY - 50 * ratio : centerY
-    textP.zIndex = 1
-    app.stage.addChild(textP)
-
-    const co = 15
-    const so = 20
-
-    app.ticker.add(() => {
-        x += -3
-        if (x < staticX) x = 0
-
-        textP.x = x
-        if (isStopped) {
-            sprite.filters[0].green.x = 0
-            sprite.filters[0].green.y = 0
-            sprite.filters[0].red.x = 0
-            sprite.filters[0].red.y = 0
-            sprite.filters[0].blue.x = 0
-            sprite.filters[0].blue.y = 0
-            sprite.filters[1].offset = 0
-            sprite.filters[1].slices = 0
-
-            return
-        }
-        sprite.filters[0].red.x = randomIntFromInterval(-co, co)
-        sprite.filters[0].red.y = randomIntFromInterval(-co, co)
-        sprite.filters[0].green.x = randomIntFromInterval(-co, co)
-        sprite.filters[0].green.y = randomIntFromInterval(-co, co)
-        sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
-        sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
-        sprite.filters[1].offset = randomIntFromInterval(-so, so)
-        sprite.filters[1].slices = randomIntFromInterval(1, 6)
-    })
-
-    window.appMainSection = app
-
-    const debounceResize = debounce(() => {
-        window.appMainSection.canvas.remove()
-        window.appMainSection.destroy()
-
-        setTimeout(nominationSecInint, 500)
-
-        window.removeEventListener('resize', debounceResize)
-    }, 2000)
-
-    if (!detectMobile()) {
-        window.addEventListener('resize', debounceResize)
-    }
-    window.locscroll.update()
-}
-
 checkIsNeedVideo()
 
 document.addEventListener('DOMContentLoaded', async () => {
     mainSecInit()
+    winnerSecInit()
     nominationSecInint()
     btnsInit()
     glitchImagesInit()

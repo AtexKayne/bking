@@ -565,3 +565,28 @@ a.mailto {
 *[data-is-hidden='true'] {
     display: none!important;
 }
+
+.winner-info {
+    width: 100%;
+    text-transform: uppercase;
+
+    div {
+        letter-spacing: 4px;
+
+        .t-m(20px, 1.2em);
+        .t-d(40px, 1.4em);
+    }
+
+    strong {
+        letter-spacing: 4px;
+        padding-top: 6px;
+        display: block;
+
+        @media @desktop {
+            padding-top: 16px;
+        }
+
+        .t-m(32px, 1.2em);
+        .t-d(60px, 1.4em);
+    }
+}
