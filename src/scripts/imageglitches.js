@@ -538,7 +538,7 @@ const winnerSecInit = async () => {
 
     const debounceResize = debounce(() => {
         window.appMainSection.forEach(el => el.canvas.remove())
-        window.appMainSection.forEach(el => el.canvas.destroy())
+        window.appMainSection.forEach(el => el.destroy())
 
         setTimeout(winnerSecInit, 500)
 
