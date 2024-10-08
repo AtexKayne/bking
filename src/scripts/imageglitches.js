@@ -20,8 +20,13 @@ const appInit = async (settings) => {
     canvas.style.width = params.width / ratio + 'px';
     canvas.style.height = params.height / ratio + 'px';
     node.append(canvas)
-    const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill(params.background)
-    app.stage.addChild(rect)
+    if (params.backgroundAlpha !== 0) {
+        const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill(params.background)
+        app.stage.addChild(rect)
+    } else {
+        const rect = new PIXI.Graphics().rect(0, 0, params.width, params.height).fill('rgba(0,0,0,0)')
+        app.stage.addChild(rect)
+    }
 
     if (effects) {
         const appFilters = []
@@ -143,7 +148,7 @@ const calculateTextWidth = (item, style) => {
 
 const calculateImagePosition = (pos, params) => {
     let y, x
-    const bottomOffset = detectMobile() ? 100 : 0
+    const bottomOffset = detectMobile() ? 200 : 0
     if (pos.x === 'left') x = (containerRect.left + 16) * ratio
     else if (pos.x === 'center') x = (innerWidth / 2 - params.width / 2) * ratio
     else if (pos.x === 'right') x = (containerRect.right - params.width) * ratio
@@ -287,8 +292,7 @@ const appendRect = (app) => {
     return circle
 }
 
-const getSettings = (states = 4) => {
-    const timePerState = 400
+const getSettings = (states = 4, timePerState = 400) => {
     const perFrame = 7
     const aStates = []
     const effects = [
@@ -348,6 +352,36 @@ const tickerHandler = (app, text, effect) => {
         text.filters[0].blue.x = 0
         text.filters[0].blue.y = 0
         app.stage.filters[0].offset = 0
+    }
+}
+
+const tickerHandler2 = (app, effect) => {
+    const co = 4
+    if (effect === 'color') {
+        app.stage.filters[0].red.x = randomIntFromInterval(-co, co)
+        app.stage.filters[0].red.y = randomIntFromInterval(-co, co)
+        app.stage.filters[0].green.x = randomIntFromInterval(-co, co)
+        app.stage.filters[0].green.y = randomIntFromInterval(-co, co)
+        app.stage.filters[0].blue.x = randomIntFromInterval(-co, co)
+        app.stage.filters[0].blue.y = randomIntFromInterval(-co, co)
+        app.stage.filters[1].offset = 0
+    } else if (effect === 'glitch') {
+        app.stage.filters[0].red.x = randomIntFromInterval(-co, co)
+        app.stage.filters[0].red.y = randomIntFromInterval(-co, co)
+        app.stage.filters[0].green.x = randomIntFromInterval(-co, co)
+        app.stage.filters[0].green.y = randomIntFromInterval(-co, co)
+        app.stage.filters[0].blue.x = randomIntFromInterval(-co, co)
+        app.stage.filters[0].blue.y = randomIntFromInterval(-co, co)
+        app.stage.filters[1].offset = randomIntFromInterval(-150, 150)
+        app.stage.filters[1].slices = randomIntFromInterval(40, 80)
+    } else {
+        app.stage.filters[0].red.x = 0
+        app.stage.filters[0].red.y = 0
+        app.stage.filters[0].green.x = 0
+        app.stage.filters[0].green.y = 0
+        app.stage.filters[0].blue.x = 0
+        app.stage.filters[0].blue.y = 0
+        app.stage.filters[1].offset = 0
     }
 }
 
@@ -431,7 +465,7 @@ const winnerSecInit = async () => {
     const mainNode = section.eq(0)
     const app = await appInit({
         node: mainNode,
-        effects: ['glitch'],
+        effects: ['rgb', 'glitch'],
         maxFPS: 1,
         params: {
             background: '#040214',
@@ -439,7 +473,8 @@ const winnerSecInit = async () => {
             height: innerHeight
         },
     })
-
+    
+    const states = getSettings(textOutput.length, 900)
     await PIXI.Assets.load(imageInfo.src)
     const rgb = new filters.RGBSplitFilter()
     const glitch = new filters.GlitchFilter()
@@ -457,23 +492,35 @@ const winnerSecInit = async () => {
     sprite.filters = [rgb]
     app.stage.addChild(sprite)
 
-    const overlayHeight = PIXI.isMobile.phone ? 300 : 400
-    const overlay = new PIXI.Graphics().rect(0, 0, (innerWidth + 600) * ratio, overlayHeight * ratio).fill('#040214')
-    overlay.x = -300 * ratio
-    overlay.y = (innerHeight - overlayHeight / 1.5) * ratio
-    overlay.filters = [new PIXI.BlurFilter({ strength: overlayHeight, quality: 60 })]
-    app.stage.addChild(overlay)
-
-    const textes = await appendText(app, textOutput)
-    const states = getSettings(textOutput.length)
-    const text = textes[0]
-
     let current = -1
     let time = 0
 
+    const app2 = await appInit({
+        node: mainNode,
+        effects: ['rgb', 'glitch'],
+        maxFPS: 1,
+        params: {
+            backgroundAlpha: 0,
+            width: innerWidth,
+            height: innerHeight
+        },
+    })
 
+    app2.canvas.style.zIndex = 5
+    
+    const textes = await appendText(app2, textOutput)
+    const text = textes[0]
 
     app.ticker.add((ticker) => {
+        time += Math.floor(ticker.deltaMS)
+        const currentState = states.find(el => time.isBetween(el.from, el.to))
+        if (!currentState) return time = 0
+
+        const { effect } = currentState
+        tickerHandler2(app, effect)
+    })
+
+    app2.ticker.add((ticker) => {
         time += Math.floor(ticker.deltaMS)
         const currentState = states.find(el => time.isBetween(el.from, el.to))
         if (!currentState) return time = 0
@@ -484,14 +531,14 @@ const winnerSecInit = async () => {
             setAnimationState(current, textes)
         }
 
-        tickerHandler(app, text, effect)
+        tickerHandler2(app2, effect)
     })
 
-    window.appMainSection = app
+    window.appMainSection = [app, app2]
 
     const debounceResize = debounce(() => {
-        window.appMainSection.canvas.remove()
-        window.appMainSection.destroy()
+        window.appMainSection.forEach(el => el.canvas.remove())
+        window.appMainSection.forEach(el => el.canvas.destroy())
 
         setTimeout(winnerSecInit, 500)
 

@@ -16,6 +16,16 @@
         pointer-events: none;
         overflow: hidden;
 
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            
+            &+& {
+                z-index: 4;
+            }
+        }
+
         video {
             height: 100%;
             width: 100%;
@@ -2417,7 +2427,7 @@
 
     &__point {
         margin-bottom: 21px;
-        
+
         .t-m(30px, 1.2em);
         .t-d(50px, 1.4em);
     }
