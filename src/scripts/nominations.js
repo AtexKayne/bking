@@ -193,19 +193,29 @@ const workSecInit = () => {
     let modalSwiperClass
 
     section.each((el) => {
+        const turn = el.$('js-works-turn')
+        const isEmpty = typeof el.getAttribute('empty') === 'string'
+        const isWinner = typeof el.getAttribute('winner') === 'string'
+        let currentSide = 'main'
+
+        turn.on('click', () => {
+            currentSide = currentSide === 'main' ? 'alter' : 'main'
+            el.dataset.side = currentSide
+
+            if (!isWinner && !detectMobile()) return
+            setTimeout(() => locscroll.update(), 300)
+        })
+
+        if (isEmpty) return
+
         const next = el.$('js-works-next')
         const prev = el.$('js-works-prev')
-        const turn = el.$('js-works-turn')
         const info = el.$('js-work-info')
         const inner = el.$('js-work-inner')
         const items = el.$('js-works-swiper-item')
         const innerContainer = el.$('js-work-inner-container')
-        const isWinner = typeof el.getAttribute('winner') === 'string'
         const height = innerContainer.eq(0).clientHeight - 60
         el.style.setProperty('--height', `${height}px`)
-
-        let currentSide = 'main'
-
         prev.attr('data-active', 'false')
 
         const swiper = new Swiper(inner.eq(0), {
@@ -238,13 +248,6 @@ const workSecInit = () => {
 
         next.on('click', () => swiper.slideNext())
         prev.on('click', () => swiper.slidePrev())
-        turn.on('click', () => {
-            currentSide = currentSide === 'main' ? 'alter' : 'main'
-            el.dataset.side = currentSide
-
-            if (!isWinner && !detectMobile()) return
-            setTimeout(() => locscroll.update(), 300)
-        })
 
         const openModalHandler = ({ target }) => {
             const index = [...target.parentNode.children].indexOf(target)
