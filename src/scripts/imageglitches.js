@@ -106,10 +106,12 @@ const getSizes = () => {
 }
 
 const checkIsNeedVideo = () => {
+    return false
     const main = $('js-main-sec')
     if (!main) return
     const video = main.find('.js-video')[0]
-    if (!PIXI.isMobile.phone) return video.remove()
+    if (video) return video.remove()
+    return
 
     video.setAttribute('src', '/src/images/main/slider/BBKING.mp4')
 
@@ -406,7 +408,7 @@ const setAnimationState = (index, textes) => {
 const mainSecInit = async () => {
     const main = $('js-main-sec')
     if (!main) return
-    if (PIXI.isMobile.phone) return
+    // if (PIXI.isMobile.phone) return
 
     const mainNode = main.eq(0)
     const app = await appInit({
@@ -473,7 +475,7 @@ const winnerSecInit = async () => {
             height: innerHeight
         },
     })
-    
+
     const states = getSettings(textOutput.length, 900)
     await PIXI.Assets.load(imageInfo.src)
     const rgb = new filters.RGBSplitFilter()
@@ -507,7 +509,7 @@ const winnerSecInit = async () => {
     })
 
     app2.canvas.style.zIndex = 5
-    
+
     const textes = await appendText(app2, textOutput)
     const text = textes[0]
 
@@ -556,6 +558,7 @@ const nominationSecInint = async () => {
     const text = section.attr('data-text').trim().toUpperCase()
     const params = { background: '#040214' }
     const isMobile = detectMobile()
+    const video = section.eq(0).$('js-nomination-sec-video')
 
     const { iWidth, iHeight } = getSizes()
     const rgb = new filters.RGBSplitFilter()
@@ -563,8 +566,9 @@ const nominationSecInint = async () => {
     const shadow = new filters.DropShadowFilter()
 
     let isStopped = false
-    let timeout = null
     let isInView = false
+    let timeout = null
+    let sprite = null
     let x = 0
 
     const stopFunc = () => {
@@ -590,18 +594,28 @@ const nominationSecInint = async () => {
         }
     })
 
-    await PIXI.Assets.load(src)
-    const sprite = PIXI.Sprite.from(src)
-    sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
-    sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
-    sprite.filters = [rgb, glitch, shadow]
-    sprite.width = iWidth * ratio
-    sprite.height = iHeight * ratio
-    sprite.zIndex = 2
-    sprite.filters[2].color = '#FF00FF'
-    sprite.filters[2].blur = 50
-    sprite.filters[2].quality = 10
-    app.stage.addChild(sprite)
+
+    if (!video) {
+        await PIXI.Assets.load(src)
+        sprite = PIXI.Sprite.from(src)
+        sprite.x = (innerWidth / 2 - iWidth / 2) * ratio
+        sprite.y = isMobile ? (innerHeight - iHeight - 150) * ratio : (innerHeight - iHeight) * ratio
+        sprite.filters = [rgb, glitch, shadow]
+        sprite.width = iWidth * ratio
+        sprite.height = iHeight * ratio
+        sprite.zIndex = 2
+        sprite.filters[2].color = '#FF00FF'
+        sprite.filters[2].blur = 50
+        sprite.filters[2].quality = 10
+        app.stage.addChild(sprite)
+    } else {
+        const videoSrc = video.attr('data-src')
+        video.attr('src', videoSrc)
+        video.on('loadeddata', () => {
+            video.eq(0).parentNode.dataset.load = true
+        })
+    }
+
 
     const fontSize = isMobile ? 250 : (innerWidth / 1440 * 250) * ratio
     const style = {
@@ -631,26 +645,28 @@ const nominationSecInint = async () => {
         if (x < staticX) x = 0
 
         textP.x = x
-        if (isStopped) {
-            sprite.filters[0].green.x = 0
-            sprite.filters[0].green.y = 0
-            sprite.filters[0].red.x = 0
-            sprite.filters[0].red.y = 0
-            sprite.filters[0].blue.x = 0
-            sprite.filters[0].blue.y = 0
-            sprite.filters[1].offset = 0
-            sprite.filters[1].slices = 0
-
-            return
+        if (!video) {
+            if (isStopped) {
+                sprite.filters[0].green.x = 0
+                sprite.filters[0].green.y = 0
+                sprite.filters[0].red.x = 0
+                sprite.filters[0].red.y = 0
+                sprite.filters[0].blue.x = 0
+                sprite.filters[0].blue.y = 0
+                sprite.filters[1].offset = 0
+                sprite.filters[1].slices = 0
+    
+                return
+            }
+            sprite.filters[0].red.x = randomIntFromInterval(-co, co)
+            sprite.filters[0].red.y = randomIntFromInterval(-co, co)
+            sprite.filters[0].green.x = randomIntFromInterval(-co, co)
+            sprite.filters[0].green.y = randomIntFromInterval(-co, co)
+            sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
+            sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
+            sprite.filters[1].offset = randomIntFromInterval(-so, so)
+            sprite.filters[1].slices = randomIntFromInterval(1, 6)
         }
-        sprite.filters[0].red.x = randomIntFromInterval(-co, co)
-        sprite.filters[0].red.y = randomIntFromInterval(-co, co)
-        sprite.filters[0].green.x = randomIntFromInterval(-co, co)
-        sprite.filters[0].green.y = randomIntFromInterval(-co, co)
-        sprite.filters[0].blue.x = randomIntFromInterval(-co, co)
-        sprite.filters[0].blue.y = randomIntFromInterval(-co, co)
-        sprite.filters[1].offset = randomIntFromInterval(-so, so)
-        sprite.filters[1].slices = randomIntFromInterval(1, 6)
     })
 
     window.appMainSection = app
