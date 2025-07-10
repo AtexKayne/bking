@@ -341,13 +341,98 @@ const referencesSecInit = () => {
     })
 }
 
+const sectionLineInit = () => {
+    const lines = $('js-line')
+    if (!lines) return
+
+    lines.each(line => {
+        let isPlayed = false
+        let itWasVisible = false
+        const direction = line.dataset.direction === 'reverse' ? -1 : 1;
+        const tickerItem = line.$('js-line-item').eq(0)
+        const tickerWrapper = line.$('js-line-container').eq(0)
+        const containerWidth = tickerWrapper.offsetWidth
+        const itemWidth = tickerItem.offsetWidth
+        const itemHeight = tickerItem.offsetHeight
+        const copiesNeeded = Math.ceil(containerWidth / itemWidth)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        }
+
+        line.style.setProperty('--height', `${itemHeight}px`)
+
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                isPlayed = entry.isIntersecting
+                if (entry.isIntersecting) animate()
+            })
+        }
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions)
+        observer.observe(line)
+
+        for (let i = 0; i < copiesNeeded; i++) {
+            const clone = tickerItem.cloneNode(true)
+            clone.dataset.index = i
+            tickerWrapper.appendChild(clone)
+        }
+
+        let position = direction === 1 ? 0 : -itemWidth;
+        const speed = 1
+
+        const animate = () => {
+            position -= speed * direction;
+
+            if (direction === 1 && position <= -itemWidth) {
+                position += itemWidth;
+                tickerWrapper.appendChild(tickerWrapper.firstElementChild);
+            } else if (direction === -1 && position >= 0) {
+                position -= itemWidth;
+                tickerWrapper.prepend(tickerWrapper.lastElementChild);
+            }
+
+            tickerWrapper.style.transform = `translateX(${position}px)`;
+            if (isPlayed) requestAnimationFrame(animate)
+        }
+
+        setTimeout(() => line.dataset.active = true, 300)
+
+        // window.addEventListener('blur', () => {
+        //     itWasVisible = isPlayed
+        //     isPlayed = false
+        // })
+
+        // window.addEventListener('focus', () => {
+        //     if (itWasVisible) {
+        //         isPlayed = true
+        //         animate()
+        //     }
+        // })
+    })
+}
+
+const lazyVideosInit = () => {
+    const videos = $('js-lazy-video')
+    if (!videos) return
+    videos.each(video => {
+        const src = video.dataset.src
+        video.src = src
+    })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     workSecInit()
     judgesSecInit()
     priceSecInit()
     timelineSecInit()
     participantSecInit()
-    setTimeout(rulesSecInit, 2000)
     referencesSecInit()
     modalsInit()
+    lazyVideosInit()
+    setTimeout(() => {
+        rulesSecInit()
+        sectionLineInit()
+    }, 2000)
 })
