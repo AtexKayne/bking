@@ -207,23 +207,23 @@ const appendText = async (app, input) => {
     } else {
         if (isMobile) {
             textList = [
-                { text: 'barber king\n2o24', fontSize: fontSize1 * 2, container: 1, x: width / 2, y: height / 2 - 75 },
-                { text: '21 - 22\nоkтября', fontSize: fontSize1 * 2, container: 2, x: width / 2, y: height / 2 - 75 },
-                { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + fontSize1 * 2 },
-                { text: 'МТС\nLive Холл', fontSize: fontSize1 * 2, container: 3, x: width / 2, y: height / 2 - 75 },
-                { text: 'barber king 2o24', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + fontSize1 * 2 },
+                { text: 'barber king\n2o25', fontSize: fontSize1 * 2, container: 1, x: width / 2, y: height / 2 - 75 },
+                { text: '8 - 9\nоkтября', fontSize: fontSize1 * 2, container: 2, x: width / 2, y: height / 2 - 75 },
+                { text: 'barber king 2o25', fontSize: fontSize2 * 2, container: 2, x: width / 2, y: height / 2 + fontSize1 * 2 },
+                { text: 'Академия', fontSize: fontSize1 * 2, container: 3, x: width / 2, y: height / 2 - 75 },
+                { text: 'barber king 2o25', fontSize: fontSize2 * 2, container: 3, x: width / 2, y: height / 2 + fontSize1 * 2 },
                 { text: 'barber king', fontSize: fontSize3 * 2.5, container: 4, x: width / 3, y: height / 3 },
-                { text: '2o24', fontSize: fontSize4 * 2, container: 4, x: width / 1.3, y: height / 1.5 },
+                { text: '2o25', fontSize: fontSize4 * 2, container: 4, x: width / 1.3, y: height / 1.5 },
             ]
         } else {
             textList = [
-                { text: 'barber king\n2o24', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
-                { text: '21 - 22 оkтября', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
-                { text: 'barber king 2o24', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + fontSize1 },
-                { text: 'МТС Live Холл', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
-                { text: 'barber king 2o24', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + fontSize1 },
+                { text: 'barber king\n2o25', fontSize: fontSize1, container: 1, x: width / 2, y: height / 2 },
+                { text: '8 - 9 оkтября', fontSize: fontSize1, container: 2, x: width / 2, y: height / 2 },
+                { text: 'barber king 2o25', fontSize: fontSize2, container: 2, x: width / 2, y: height / 2 + fontSize1 },
+                { text: 'Академия', fontSize: fontSize1, container: 3, x: width / 2, y: height / 2 },
+                { text: 'barber king 2o25', fontSize: fontSize2, container: 3, x: width / 2, y: height / 2 + fontSize1 },
                 { text: 'barber king', fontSize: fontSize3, container: 4, x: width / 3.8, y: height / 4 },
-                { text: '2o24', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
+                { text: '2o25', fontSize: fontSize4, container: 4, x: width / 1.5, y: height / 1.2 },
             ]
         }
     }

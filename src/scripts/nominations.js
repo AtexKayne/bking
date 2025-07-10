@@ -380,7 +380,7 @@ const sectionLineInit = () => {
         }
 
         let position = direction === 1 ? 0 : -itemWidth;
-        const speed = 1
+        const speed = 0.7
 
         const animate = () => {
             position -= speed * direction;

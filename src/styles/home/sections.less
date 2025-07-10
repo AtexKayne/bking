@@ -351,16 +351,19 @@
         left: 0;
         right: 0;
         z-index: 6;
-        font-style: black;
-        font-size: 80px;
-        font-weight: black;
-        text-transform: uppercase;
-        letter-spacing: 10px;
+
+        svg {
+            width: auto;
+            height: 61px;
+        }
 
         @media @desktop {
             top: auto;
             bottom: 200px;
-            font-size: 200px;
+
+            svg {
+                height: 149px;
+            }
         }
     }
 }
@@ -3026,11 +3029,6 @@
 
     &__item {
         padding: 0 25px;
-        white-space: nowrap;
-        color: transparent;
-        -webkit-text-stroke: 1px #ffffff;
-        text-stroke: 1px #ffffff;
-        leading-trim: NONE;
     }
 
     @media @desktop {
