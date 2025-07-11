@@ -229,7 +229,7 @@ const appendText = async (app, input) => {
     }
 
     if (!input) {
-        const sourses = [
+        const sourses = window.mainImages || [
             '/src/images/main/slider/1.jpg',
             '/src/images/main/slider/2.jpg',
             '/src/images/main/slider/3.jpg',
