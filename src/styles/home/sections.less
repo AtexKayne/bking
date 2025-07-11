@@ -223,6 +223,7 @@
     height: 100vh;
     min-width: 100vw;
     max-height: 630px;
+    z-index: 1;
     position: relative;
 
     @media @desktop {
@@ -282,9 +283,9 @@
 
     &__desc-text {
         text-align: center;
-        width: 150px;
-
+        
         @media @desktop {
+            width: 150px;
             text-align: left;
         }
     }
@@ -1384,6 +1385,8 @@
 
     &__item-recursive {
         cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
         -webkit-tap-highlight-color: transparent;
         position: absolute;
         left: 0;
