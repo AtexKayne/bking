@@ -1,6 +1,6 @@
 import Swiper from 'swiper'
 import { Pagination } from 'swiper/modules'
-import { $, detectMobile } from './helper'
+import { $, debounce, detectMobile } from './helper'
 
 const timelineSecInit = () => {
     const timeline = $('js-timeline')
@@ -44,6 +44,7 @@ const participantSecInit = () => {
         const items = el.$('js-participant-item')
         const next = head.$('js-participant-next')
         const prev = head.$('js-participant-prev')
+        const pagi = el.$('js-participant-pagination')
 
         prev.attr('data-active', 'false')
 
@@ -80,6 +81,20 @@ const participantSecInit = () => {
                 clickable: true,
             },
         })
+
+        if (swiper.isLocked) {
+            prev.attr('data-hidden', true)
+            next.attr('data-hidden', true)
+            pagi.attr('data-hidden', true)
+
+            const debounceResize = debounce(() => {
+                prev.attr('data-hidden', swiper.isLocked)
+                next.attr('data-hidden', swiper.isLocked)
+                pagi.attr('data-hidden', swiper.isLocked)
+            }, 2000)
+
+            window.addEventListener('resize', debounceResize)
+        }
 
         swiper.on('transitionEnd', () => {
             const { progress } = swiper
