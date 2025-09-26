@@ -279,15 +279,12 @@ const workSecInit = () => {
             })
 
             modalSwiperClass = new Swiper(modalSwiper.eq(0), {
-                slidesPerView: 1,
+                slidesPerView: 'auto',
                 wrapperClass: 'js-work-modal-swiper-items',
                 slideClass: 'js-work-modal-swiper-item',
                 slideActiveClass: 'active',
                 centeredSlides: true,
                 spaceBetween: 0,
-                breakpoints: {
-                    1024: { slidesPerView: 3 }
-                },
                 modules: [Pagination],
                 pagination: {
                     dynamicBullets: true,
