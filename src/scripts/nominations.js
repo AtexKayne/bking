@@ -269,13 +269,16 @@ const workSecInit = () => {
             modalInfo.eq(0).innerHTML = info.eq(0).innerHTML
             modalSwiperItems.eq(0).innerHTML = ''
             if (modalSwiperClass) modalSwiperClass.destroy()
-            items.each(item => {
+            const images = []
+            let loadedImages = 0
+            items.each((item, i) => {
                 const src = item.$('img').attr('data-fullsize')
                 const alt = item.$('img').attr('alt')
                 const node = document.createElement('div')
                 node.classList.add('js-work-modal-swiper-item', 'work-modal__swiper-item')
                 node.innerHTML = `<img src="${src}" alt="${alt}" />`
                 modalSwiperItems.eq(0).append(node)
+                images.push(node.children[0])
             })
 
             modalSwiperClass = new Swiper(modalSwiper.eq(0), {
@@ -307,8 +310,15 @@ const workSecInit = () => {
                 modalNext.attr('data-active', progress !== 1)
             })
 
-            setTimeout(() => modalSwiperClass.slideTo(index, 0), 100)
-            setTimeout(() => modal.attr('data-open', true), 200)
+            images.forEach(image => {
+                image.addEventListener('load', () => {
+                    loadedImages++
+                    if (loadedImages === images.length) {
+                        setTimeout(() => modalSwiperClass.slideTo(index, 0), 100)
+                        setTimeout(() => modal.attr('data-open', true), 200)
+                    }
+                })
+            })
         }
 
         items.on('click', openModalHandler)
