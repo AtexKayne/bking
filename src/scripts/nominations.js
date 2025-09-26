@@ -307,8 +307,7 @@ const workSecInit = () => {
                 modalNext.attr('data-active', progress !== 1)
             })
 
-            modalSwiperClass.slideTo(index)
-
+            setTimeout(() => modalSwiperClass.slideTo(index, 0), 100)
             setTimeout(() => modal.attr('data-open', true), 200)
         }
 
