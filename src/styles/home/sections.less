@@ -283,7 +283,7 @@
 
     &__desc-text {
         text-align: center;
-        
+
         @media @desktop {
             width: 150px;
             text-align: left;
@@ -346,6 +346,48 @@
         }
     }
 
+    &__video2 {
+        position: absolute;
+        z-index: 1;
+        top: 42px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: calc(100vw / 375 * 320);
+        height: calc(100vw / 375 * 379);
+        border-radius: 300px;
+        overflow: hidden;
+        transition: .6s;
+        background-color: #1D1B2B;
+
+        &[data-load="true"] {
+            // box-shadow: 0 0 80px 20px #8C0B8C;
+        }
+
+        video {
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            margin: -2px;
+            object-fit: cover;
+        }
+
+        @media @tablet {
+            width: 320px;
+            height: 379px;
+        }
+
+        @media @desktop {
+            min-width: 378px;
+            min-height: 452px;
+            width: calc(100vh / 800 * 490);
+            height: calc(100vh / 800 * 586);
+            max-width: 490px;
+            max-height: 586px;
+            top: 50px;
+            border-radius: calc(100vw / 1440 * 330);
+            transform: translateX(-50%);
+        }
+    }
+
     &__text {
         position: absolute;
         top: 312px;
@@ -360,6 +402,34 @@
 
         @media @desktop {
             top: auto;
+            bottom: 200px;
+
+            svg {
+                height: 149px;
+            }
+        }
+    }
+
+    &__text2 {
+        position: absolute;
+        top: calc(100vw / 375 * 379);
+        transform: translateY(-45px);
+        left: 0;
+        right: 0;
+        z-index: 6;
+
+        svg {
+            width: auto;
+            height: 90px;
+        }
+
+        @media @tablet {
+            top: 312px;
+        }
+
+        @media @desktop {
+            top: auto;
+            transform: none;
             bottom: 200px;
 
             svg {
@@ -1192,7 +1262,7 @@
     }
 
     *[data-hidden="true"] {
-        display: none!important;
+        display: none !important;
     }
 
     &__head {
