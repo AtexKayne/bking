@@ -15,7 +15,7 @@
 
     &[data-open='true'] {
         .header__menu-btn {
-            span:nth-child(1) {
+            >span:nth-child(1) {
                 display: none;
             }
         }
@@ -27,7 +27,7 @@
 
     &[data-open='false'] {
         .header__menu-btn {
-            span:nth-child(2) {
+            >span:nth-child(2) {
                 display: none;
             }
         }
@@ -42,28 +42,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }
-
-    &__menu-btn {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 30px;
-        width: 155px;
-        height: 60px;
-        transition: .3s;
-        font-size: 18px;
-        font-family: 'Bender black';
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        border: 1px solid var(--c-white);
-
-        @media @desktop {
-            &:hover {
-                transform: scale(0.96);
-            }
-        }
     }
 
     &__orgs {
@@ -88,15 +66,59 @@
             height: 60px;
         }
 
-        &__menu-btn {
-            width: 112px;
-            height: 42px;
-            font-size: 14px;
-        }
-
         &__dates,
         &__orgs {
             display: none;
+        }
+    }
+
+    &__lk {
+        border: 2px solid var(--c-white);
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        font-family: 'Bender black';
+        font-weight: 900;
+        letter-spacing: 2px;
+        padding: 13px 20px;
+        background-color: var(--c-dark-violet);
+        
+        @media @desktop {
+            width: 155px;
+            padding: 20px 32px;
+
+            &:hover {
+                transform: scale(0.96);
+            }
+        }
+    }
+
+    &__menu-btn {
+        border: 2px solid var(--c-white);
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: 'Bender black';
+        font-weight: 900;
+        letter-spacing: 2px;
+        padding: 13px 20px;
+        
+        @media @desktop {
+            width: 155px;
+            padding: 20px 32px;
+            
+            &:hover {
+                transform: scale(0.96);
+            }
         }
     }
 }

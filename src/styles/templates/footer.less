@@ -1,6 +1,7 @@
 .footer {
     padding: 80px 0;
     z-index: 2;
+    overflow: visible;
     position: relative;
 
     &__container {
@@ -36,32 +37,24 @@
     //     }
     // }
 
-    &__light {
-        width: calc(100vw / 1440 * 700);
-        height: calc(100vw / 1440 * 700);
-        border-radius: 50%;
-        background-color: var(--c-green);
+    &__image {
         position: absolute;
-        z-index: 0;
-        pointer-events: none;
-        top: 35%;
-        left: 65%;
-        display: none;
-        transform: translate(-50%);
+        bottom: -10px;
+        width: 710px;
+        height: 509px;
+        margin: 0 auto;
+        display: block;
+        left: 50%;
+        transform: translateX(-50%);
 
-        @media @desktop {
-            width: calc(100vw / 1440 * 300);
-            height: calc(100vw / 1440 * 300);
-            filter: blur(300px);
-            top: 35%;
-            left: 60%;
-            display: block;
-        }
-
-        .not-blured & {
-            opacity: 0;
-            display: none;
-            visibility: hidden;
+        @media @phone {
+            width: 100vw;
+            left: 0;
+            height: auto;
+            aspect-ratio: 409 / 420;
+            right: 0;
+            bottom: 0;
+            transform: none;
         }
     }
 

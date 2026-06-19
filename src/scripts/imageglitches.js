@@ -821,7 +821,10 @@ const btnsInit = () => {
 
         const cWidth = btn.clientWidth
         const cHeight = btn.clientHeight
-        const params = { background: cDark, width: cWidth, height: cHeight }
+        const bRadius = getComputedStyle(btn).borderRadius
+        console.log(bRadius);
+        
+        const params = { background: cDark, width: cWidth, height: cHeight, borderRadius: 30 }
 
         btn.style.width = width
         btn.style.height = height
@@ -1004,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     mainSecInit()
     winnerSecInit()
     nominationSecInint()
-    btnsInit()
+    // btnsInit()
     glitchImagesInit()
     hiddenSecInit()
 })
