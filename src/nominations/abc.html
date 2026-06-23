@@ -13,24 +13,43 @@
     <div class="scroll">
         <!-- ИНТРО -->
         <section class="section font-bender">
-            <div class="main-sec">
-                <div class="main-sec__line"></div>
-                <div data-text="ABC" data-image="/src/images/main/image-2.png" class="main-sec__container js-nomination-sec">
-                    <div class="main-sec__video">
-                        <video class="js-nomination-sec-video" poster="/src/images/videos/abc-glitch-poster.jpg" data-src="/src/images/videos/abc-glitch.mp4" autoplay="true" autobuffer="true" loop muted preload="auto" playsinline="true"></video>
+            <div class="main-sec2">
+                <div class="main-sec2__video">
+                    <video
+                        loop
+                        muted
+                        preload="auto"
+                        autoplay="true"
+                        autobuffer="true"
+                        playsinline="true"
+                        class="js-lazy-video"
+                        data-src="/src/images/videos/nomination-1.mp4"
+                        poster="/src/images/main/2026/image-1.jpg">
+                    </video>
+                </div>
+
+                <div class="main-sec2__text">
+                    <div class="stroke-line js-line">
+                        <div class="stroke-line__container js-line-container">
+                            <div class="stroke-line__item js-line-item">
+                                <!-- svg ABC -->
+                                <div class="line-text">Олдскул</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="main-sec__gradient"></div>
-                <div class="main-sec__desc">
-                    <div class="main-sec__desc-container container">
-                        <div class="main-sec__desc-text">
+
+                <!-- <div class="main-sec__gradient"></div> -->
+                <div class="main-sec2__desc">
+                    <div class="main-sec2__desc-container container">
+                        <div class="main-sec2__desc-text">
                             <div class="t-8 t-6:d t-u t-s4">Баттл</div>
                             <div class="t-5 t-u mt-0.5 font-bender--b">ABC</div>
                         </div>
-                        <div class="main-sec__desc-btn">
+                        <div class="main-sec2__desc-btn">
                             <div class="btn btn--primary btn--lg btn--fill js-btn">ПОДАТЬ ЗАЯВКУ</div>
                         </div>
-                        <div class="main-sec__desc-partner is-hidden-mobile">
+                        <div class="main-sec2__desc-partner is-hidden-mobile">
                             <div class="t-10 t-s2 t-u">партнер баттла</div>
                             <div class="mt-2">
                                 <img src="/src/images/sections/main/image-1.png" alt="partner">
@@ -41,9 +60,12 @@
             </div>
         </section>
 
-        <section class="section is-hidden-desktop">
-            <div class="t-10 t-s2 t-u t-center mt-4">партнер баттла</div>
-            <div class="mt-2 t-center">
+        <section class="section">
+            <div class="main-sec2__desc-info">
+                Для генерации видео использована работа Евгении Ефимовой, победителя баттла Oldschool в 2025-м году
+            </div>
+            <div class="t-10 t-s2 t-u t-center mt-4 is-hidden-desktop">партнер баттла</div>
+            <div class="mt-2 t-center is-hidden-desktop">
                 <img src="/src/images/sections/main/image-1.png" width="150" alt="partner">
             </div>
         </section>

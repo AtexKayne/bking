@@ -201,7 +201,7 @@ const mainSectionInit = () => {
 
     const startAutoRotate = () => {
         if (slideInterval) return
-        slideInterval = setInterval(nextHandler, 4000)
+        slideInterval = setInterval(nextHandler, 2500)
     }
 
     const scrollToNextSection = () => {

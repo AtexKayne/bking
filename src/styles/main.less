@@ -66,18 +66,31 @@ body {
         width: 100%;
     }
 
+    &--md {
+        padding: 11px 40px 7px;
+        font-weight: 500;
+        line-height: 1.3em;
+        border-radius: 20px;
+        font-size: 16px;
+        letter-spacing: 2px;
+
+        @media @desktop {
+            border-radius: 30px;
+            font-size: 20px;
+        }
+    }
+
     &--lg {
         padding: 20px 10px;
         font-size: 16px;
         font-weight: 500;
-        line-height: 1em;
+        line-height: 1.3em;
         border-radius: 20px;
         letter-spacing: 2px;
-        
+
         @media @desktop {
             border-radius: 30px;
             font-size: 20px;
-            
         }
     }
 
@@ -629,4 +642,35 @@ a.mailto {
         .t-m(32px, 1.2em);
         .t-d(60px, 1.4em);
     }
+}
+
+.line-text {
+    font-family: 'Bender black';
+    font-weight: 900;
+    white-space: nowrap;
+    font-style: Black;
+    font-size: 80px;
+    line-height: 1em;
+    letter-spacing: 10px;
+    vertical-align: bottom;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px white;
+    text-stroke: 1px white;
+
+    @media @desktop {
+        font-size: 200px;
+        letter-spacing: 20px;
+        -webkit-text-stroke: 1.5px white;
+        text-stroke: 1.5px white;
+    }
+}
+
+.top {
+    position: relative;
+    z-index: 2;
+}
+
+.nowrap {
+    white-space: nowrap;
 }

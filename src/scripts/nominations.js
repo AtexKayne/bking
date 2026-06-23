@@ -23,6 +23,12 @@ const timelineSecInit = () => {
 }
 
 const priceSecInit = () => {
+    const price = $('js-price')
+    if (!price) return
+
+    const activeSlide = price.eq(0).$('[data-active="true"]')
+    const index = [...activeSlide.eq(0).parentElement.children].indexOf(activeSlide.eq(0))
+
     const swiper = new Swiper('.js-price', {
         slidesPerView: 'auto',
         spaceBetween: 40,
@@ -32,6 +38,7 @@ const priceSecInit = () => {
         slideNextClass: 'js-price-item-next',
         slideActiveClass: 'js-price-item-active',
     })
+    swiper.slideTo(index)
 }
 
 const participantSecInit = () => {
@@ -48,30 +55,36 @@ const participantSecInit = () => {
 
         prev.attr('data-active', 'false')
 
-        items.items.forEach(item => {
-            const btn = item.querySelector('.js-participant-item-switch')
-            const desc = item.querySelector('.js-participant-item-desc')
-            let isOpen = false
+        // items.items.forEach(item => {
+        //     const btn = item.querySelector('.js-participant-item-switch')
+        //     const desc = item.querySelector('.js-participant-item-desc')
+        //     let isOpen = false
 
-            btn.addEventListener('click', () => {
-                isOpen = !isOpen
-                item.dataset.open = isOpen
-            })
+        //     btn.addEventListener('click', () => {
+        //         isOpen = !isOpen
+        //         item.dataset.open = isOpen
+        //     })
 
-            desc.addEventListener('wheel', event => {
-                event.stopPropagation()
-            })
-        })
+        //     desc.addEventListener('wheel', event => {
+        //         event.stopPropagation()
+        //     })
+        // })
 
         const swiper = new Swiper(el, {
             slidesPerView: 'auto',
-            spaceBetween: 40,
+            spaceBetween: 20,
             slideClass: 'js-participant-col',
             wrapperClass: 'js-participant-inner',
             slidePrevClass: 'js-participant-col-prev',
             slideNextClass: 'js-participant-col-next',
             slideActiveClass: 'js-participant-col-active',
             modules: [Pagination],
+            breakpoints: {
+                1024: {
+                    spaceBetween: 40,
+                    slidesPerView: 'auto',
+                }
+            },
             pagination: {
                 dynamicBullets: true,
                 renderBullet: (index, className) => {
