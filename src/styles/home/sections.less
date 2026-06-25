@@ -1920,6 +1920,25 @@
         }
     }
 
+    &__bg {
+        position: absolute;
+        z-index: 0;
+        transform: translateX(-50%);
+        left: 50%;
+        width: 500px;
+        top: -100px;
+        pointer-events: none;
+        object-fit: contain;
+        
+        @media @desktop {
+            left: -50px;
+            top: -200px;
+            width: 945px;
+            height: 969px;
+            transform: none;
+        }
+    }
+
     &__light {
         width: 50vw;
         height: 50vw;
