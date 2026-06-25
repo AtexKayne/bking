@@ -2550,9 +2550,25 @@
     &__item {
         flex-grow: 0;
         flex-shrink: 0;
+        position: relative;
 
         img {
             border-radius: 20px;
+        }
+
+        &-text {
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+            left: 0;
+            font-family: 'Bender bold';
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 123%;
+            letter-spacing: 0.02em;
+            right: 0;
+            background: linear-gradient(180deg, rgba(94, 12, 94, 0) 0%, rgba(94, 12, 94, 0.6) 39.42%, #330333 100%);
+            padding: 36px 16px 16px;
         }
     }
 }
