@@ -316,7 +316,6 @@
 
         &-info {
             margin-top: 62px;
-            max-width: 232px;
             font-size: 12px;
             margin-left: auto;
             margin-right: auto;
@@ -326,7 +325,6 @@
             color: #A1A1A1;
 
             @media @desktop {
-                max-width: none;
                 margin-top: 42px;
                 font-size: 14px;
             }
@@ -1381,22 +1379,32 @@
 
 .criteria-sec {
     padding: 140px 0 0;
-
-    @media @phone {
-        position: relative;
-    }
+    position: relative;
 
     @media @desktop {
         padding: 200px 0 0;
     }
 
-    &__offset {
-        @media @desktop {
-            padding: 40px 0 0;
+    &--long {
+        .criteria-sec__item {
+            width: 100%;
+
+            @media (min-width: 700px) {
+                width: 300px;
+            }
+
+            @media @desktop {
+                width: 266px;
+                height: 237px;
+            }
         }
 
-        @media @phone {
-            padding: 40px 0 0;
+        .criteria-sec__inner {
+            width: 100%;
+
+            @media (min-width: 1220px) {
+                width: 1154px;
+            }
         }
     }
 
@@ -1407,15 +1415,19 @@
         margin-right: -16px;
         gap: 16px;
         max-width: 100%;
-        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: flex-start;
+        width: 346px;
+
+        @media (min-width: 558px) {
+            width: 512px;
+        }
 
         @media @desktop {
             gap: 30px;
-            padding: 0 100px;
-            max-width: 1066px;
+            width: 858px;
             margin-top: 60px;
-            margin-right: auto;
-            margin-left: auto;
         }
     }
 
@@ -1433,103 +1445,58 @@
         background-image: url(../../images/sections/criteria/background.png);
 
         @media @desktop {
-            width: 100%;
+            width: 100vw;
             left: 50%;
             right: auto;
-            top: 200px;
+            top: -150px;
             height: auto;
             transform: translateX(-50%);
-            bottom: -200px;
+            bottom: -250px;
             max-width: 1476px;
         }
     }
 
-    @criteria-item-mask-mobile: ~'url("data:image/svg+xml,%3Csvg%20viewBox%3D\'0%200%20160%20187\'%20preserveAspectRatio%3D\'none\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Cpath%20fill%3D\'white\'%20d%3D\'M86.5%200.5H140C150.77%200.5%20159.5%209.23045%20159.5%2020V167C159.5%20177.77%20150.77%20186.5%20140%20186.5H20C9.23045%20186.5%200.5%20177.77%200.5%20167V69.25C0.5%2058.4804%209.23045%2049.75%2020%2049.75H46.5C57.8218%2049.75%2067%2040.5718%2067%2029.25V20C67%209.23045%2075.7305%200.5%2086.5%200.5Z\'%2F%3E%3C%2Fsvg%3E")';
-    @criteria-item-mask-desktop: ~'url("data:image/svg+xml,%3Csvg%20viewBox%3D\'0%200%20266%20237\'%20preserveAspectRatio%3D\'none\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Cpath%20fill%3D\'white\'%20d%3D\'M86.5%200.5H246C256.77%200.5%20265.5%209.23045%20265.5%2020V217C265.5%20227.77%20256.77%20236.5%20246%20236.5H20C9.23045%20236.5%200.5%20227.77%200.5%20217V79.25C0.5%2068.4804%209.23045%2059.75%2020%2059.75H46.5C57.8218%2059.75%2067%2050.5718%2067%2039.25V20C67%209.23045%2075.7304%200.5%2086.5%200.5Z\'%2F%3E%3C%2Fsvg%3E")';
-
     &__item {
-        width: 160px;
         flex-grow: 0;
         flex-shrink: 0;
-        height: 187px;
-        border-radius: 20px;
-        position: relative;
-        padding: 100px 20px 30px;
+        padding: 100px 18px 30px;
         display: flex;
         align-items: flex-end;
         z-index: 2;
-        letter-spacing: 2px;
+        border-radius: 0;
+        background: transparent;
+        overflow: visible;
+        position: relative;
+        letter-spacing: 1px;
+        .t-m(16px, 1.4em);
+        .t-d(20px, 1.4em);
+
+        @media (max-width: 367px) {
+            min-width: 100%;
+            height: 187px;
+        }
+
+        @media @phone {
+            width: 160px;
+            height: 187px;
+        }
+
+        @media @desktop {
+            width: 266px;
+            height: 237px;
+        }
 
         &-text {
             position: relative;
             z-index: 1;
         }
 
-        .t-m(16px, 1.4em);
-        .t-d(20px, 1.4em);
-
-        // &:nth-child(7) {
-        //     width: calc(100% - 16px);
-        // }
-
-        @media @phone {
-            min-width: 150px;
-            padding: 100px 14px 20px;
-        }
-
-        @media @desktop {
-            height: 237px;
-            width: calc(33% - 18px);
-
-            // &:nth-child(7) {
-            //     width: calc(50% - 30px);
-            // }
-        }
-
-        &--filler {
-            padding: 0;
-            overflow: hidden;
-            height: 0!important;
-        }
-
-        &--shape {
-            border-radius: 0;
-            background: transparent;
-            overflow: visible;
-
-            &::before,
-            &::after {
-                content: '';
-                position: absolute;
-                z-index: 0;
-                -webkit-mask-image: @criteria-item-mask-mobile;
-                mask-image: @criteria-item-mask-mobile;
-                -webkit-mask-size: 100% 100%;
-                mask-size: 100% 100%;
-                -webkit-mask-repeat: no-repeat;
-                mask-repeat: no-repeat;
-                -webkit-mask-position: 0 0;
-                mask-position: 0 0;
-            }
-
-            &::before {
-                inset: -1px;
-                background: white;
-            }
-
-            &::after {
-                inset: 0;
-                background: var(--c-dark);
-            }
-
-            @media @desktop {
-
-                &::before,
-                &::after {
-                    -webkit-mask-image: @criteria-item-mask-desktop;
-                    mask-image: @criteria-item-mask-desktop;
-                }
-            }
+        &-svg {
+            position: absolute;
+            inset: 0;
+            display: block;
+            pointer-events: none;
+            z-index: 0;
         }
     }
 

@@ -12,11 +12,17 @@ const timelineSecInit = () => {
     const swiper = new Swiper(timeline.eq(0), {
         slidesPerView: 'auto',
         spaceBetween: 40,
+        centeredSlides: true,
         slideClass: 'js-timeline-item',
         wrapperClass: 'js-timeline-inner',
         slidePrevClass: 'js-timeline-item-prev',
         slideNextClass: 'js-timeline-item-next',
         slideActiveClass: 'js-timeline-item-active',
+        breakpoints: {
+            1024: {
+                centeredSlides: false
+            }
+        },
     })
 
     swiper.slideTo(index)
@@ -31,12 +37,18 @@ const priceSecInit = () => {
 
     const swiper = new Swiper('.js-price', {
         slidesPerView: 'auto',
+        centeredSlides: true,
         spaceBetween: 40,
         slideClass: 'js-price-item',
         wrapperClass: 'js-price-inner',
         slidePrevClass: 'js-price-item-prev',
         slideNextClass: 'js-price-item-next',
         slideActiveClass: 'js-price-item-active',
+        breakpoints: {
+            1024: {
+                centeredSlides: false
+            }
+        },
     })
     swiper.slideTo(index)
 }
@@ -447,6 +459,71 @@ const sectionLineInit = () => {
     })
 }
 
+const buildCriteriaShapePath = (width, height) => {
+    const r = (n) => Math.round(n * 10000) / 10000
+    const dy = (height - 187) * 0.2
+    const yNotchInner = r(29.25 + dy)
+    const yNotchStep = r(49.75 + dy)
+    const yNotchBottom = r(69.25 + dy)
+    const yNotchCurve = r(yNotchStep - 9.1782)
+    const radius = 20
+    const topRight = width - radius
+    const bottomY = height - radius
+
+    return [
+        `M86.5 0.5H${topRight}`,
+        `C${r(width - 9.23)} 0.5 ${width - 0.5} 9.23045 ${width - 0.5} ${radius}`,
+        `V${bottomY}`,
+        `C${width - 0.5} ${r(height - 9.23)} ${r(width - 9.23)} ${height - 0.5} ${topRight} ${height - 0.5}`,
+        `H${radius}`,
+        `C9.23045 ${height - 0.5} 0.5 ${r(height - 9.23)} 0.5 ${bottomY}`,
+        `V${yNotchBottom}`,
+        `C0.5 ${r(yNotchBottom - 10.7696)} 9.23045 ${yNotchStep} ${radius} ${yNotchStep}`,
+        `H46.5`,
+        `C57.8218 ${yNotchStep} 67 ${yNotchCurve} 67 ${yNotchInner}`,
+        `V${radius}`,
+        `C67 9.23045 75.7304 0.5 86.5 0.5Z`,
+    ].join('')
+}
+
+const criteriaShapeInit = () => {
+    const items = document.querySelectorAll('.criteria-sec__item')
+    if (!items.length) return
+
+    const updateItemShape = (item) => {
+        const width = Math.round(item.offsetWidth)
+        const height = Math.round(item.offsetHeight)
+        if (!width || !height) return
+
+        let svg = item.querySelector('.criteria-sec__item-svg')
+        if (!svg) {
+            svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+            svg.setAttribute('class', 'criteria-sec__item-svg')
+            svg.setAttribute('fill', 'none')
+            svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+            path.setAttribute('fill', '#040214')
+            path.setAttribute('stroke', 'white')
+            path.setAttribute('stroke-width', '1')
+            svg.appendChild(path)
+            item.insertBefore(svg, item.firstChild)
+        }
+
+        svg.setAttribute('width', String(width))
+        svg.setAttribute('height', String(height))
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
+        svg.querySelector('path').setAttribute('d', buildCriteriaShapePath(width, height))
+    }
+
+    items.forEach(item => {
+        updateItemShape(item)
+
+        const observer = new ResizeObserver(() => updateItemShape(item))
+        observer.observe(item)
+    })
+}
+
 const lazyVideosInit = () => {
     const videos = $('js-lazy-video')
     if (!videos) return
@@ -464,6 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     participantSecInit()
     referencesSecInit()
     modalsInit()
+    criteriaShapeInit()
     lazyVideosInit()
     setTimeout(() => {
         rulesSecInit()
