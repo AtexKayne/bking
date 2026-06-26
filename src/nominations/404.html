@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Barber King</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <%= require('html-loader!../templates/loader.html').default %>
+    <%= require('html-loader!../templates/header.html').default %>
+    <div class="scroll relative">
+        <div class="container">
+            <div class="errors-page">
+                <div class="errors-page__bg"></div>
+                <h1 class="errors-page__title">
+                    Страница не найдена
+                </h1>
+                <div class="errors-page__404 static-glitch">
+                    4o4
+                </div>
+                <div class="errors-page__text">
+                    Мы не смогли найти страницу, которую вы искали. Но вы можете вернуться на главную.
+                </div>
+    
+                <div class="errors-page__btn">
+                    <a href="/" class="btn btn--secondary btn--fill btn--lg">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+
+</html>

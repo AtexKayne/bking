@@ -10,16 +10,6 @@ const config = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         main: './index.js',
-        nominations: './index.js',
-        oldschool: './index.js',
-        abc: './index.js',
-        future: './index.js',
-        beard: './index.js',
-        fade: './index.js',
-        juniors: './index.js',
-        team: './index.js',
-        fastfade: './index.js',
-        rules: './index.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -91,9 +81,14 @@ const config = {
             chunks: ['main']
         }),
         new HtmlWebpackPlugin({
+            filename: '404.html',
+            template: 'nominations/404.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
             filename: 'rules.html',
             template: 'documents/rules.html',
-            chunks: ['rules']
+            chunks: ['main']
         }),
         new CopyPlugin({
             patterns: [

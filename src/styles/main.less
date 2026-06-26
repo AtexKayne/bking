@@ -61,6 +61,7 @@ body {
     position: relative;
     font-family: "HelveticaNeueCyr", sans-serif;
     transition: .3s;
+    text-decoration: none;
 
     &--fill {
         width: 100%;
@@ -677,4 +678,82 @@ a.mailto {
 
 .nowrap {
     white-space: nowrap;
+}
+
+.errors-page {
+    padding-top: 154px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 125px;
+
+    &__bg {
+        background-image: url('../images/main/2026/error-mob.png');
+        width: 845px;
+        height: 867px;
+        position: absolute;
+        pointer-events: none;
+        z-index: 0;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        @media @desktop {
+            background-image: url('../images/main/2026/error-desk.png');
+            width: 1440px;
+            height: 1476px;
+        }
+    }
+
+    &__404 {
+        position: relative;
+        font-size: 160px;
+        font-weight: 700;
+        line-height: 1em;
+
+        @media @desktop {
+            font-size: 220px;
+        }
+    }
+
+    &__title {
+        position: relative;
+        font-weight: 700;
+        font-family: 'Bender bold';
+        letter-spacing: 2px;
+        font-size: 24px;
+
+        @media @desktop {
+            font-size: 32px;
+        }
+    }
+
+    &__text {
+        position: relative;
+        margin-top: 60px;
+        font-size: 16px;
+        letter-spacing: 2px;
+        max-width: 568px;
+        text-align: center;
+
+        @media @desktop {
+            font-size: 20px;
+            margin-top: 32px;
+        }
+    }
+
+    &__btn {
+        position: relative;
+        margin-top: 40px;
+        width: 100%;
+        max-width: 350px;
+
+        @media @desktop {
+            margin-top: 30px;
+            width: 350px;
+        }
+    }
 }

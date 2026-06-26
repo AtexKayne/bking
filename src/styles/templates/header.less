@@ -86,7 +86,31 @@
         font-weight: 900;
         letter-spacing: 2px;
         padding: 13px 20px;
+        position: relative;
         background-color: var(--c-dark-violet);
+
+        &[data-active='false'] {
+            opacity: 0.4;
+            pointer-events: none;
+
+            @media @phone {
+                &::after {
+                    content: 'Скоро!';
+                    padding: 4px 5px 3px 7px;
+                    font-size: 10px;
+                    font-family: 'Bender black';
+                    font-weight: 900;
+                    line-height: 1em;
+                    text-transform: uppercase;
+                    border-radius: 30px;
+                    letter-spacing: 2px;
+                    bottom: -10px;
+                    color: var(--c-light-pink);
+                    background-color: var(--c-white);
+                    position: absolute;
+                }
+            }
+        }
         
         @media @desktop {
             width: 155px;
