@@ -524,6 +524,51 @@ const criteriaShapeInit = () => {
     })
 }
 
+const cinemaSecInit = () => {
+    const sections = $('js-cinema')
+    if (!sections) return
+
+    sections.each(el => {
+        const swiperEl = el.$('js-cinema-swiper')
+        const next = el.$('js-cinema-next')
+        const prev = el.$('js-cinema-prev')
+        const isVertical = swiperEl.eq(0).classList.contains('cinema-sec__wrapper--vertical')
+
+        prev.attr('data-active', 'false')
+
+        const swiper = new Swiper(swiperEl.eq(0), {
+            wrapperClass: 'js-cinema-inner',
+            slideClass: 'js-cinema-item',
+            spaceBetween: 10,
+            slidesPerView: isVertical ? 2.2 : 1.2,
+            breakpoints: {
+                1024: {
+                    spaceBetween: 40,
+                    slidesPerView: isVertical ? 5 : 3,
+                }
+            }
+        })
+
+        const updateNav = () => {
+            const { progress } = swiper
+
+            prev.attr('data-active', progress !== 0)
+            next.attr('data-active', progress !== 1)
+        }
+
+        if (swiper.isLocked) {
+            prev.attr('data-hidden', true)
+            next.attr('data-hidden', true)
+        }
+
+        swiper.on('transitionEnd', updateNav)
+        updateNav()
+
+        next.on('click', () => swiper.slideNext())
+        prev.on('click', () => swiper.slidePrev())
+    })
+}
+
 const lazyVideosInit = () => {
     const videos = $('js-lazy-video')
     if (!videos) return
@@ -536,6 +581,7 @@ const lazyVideosInit = () => {
 document.addEventListener('DOMContentLoaded', () => {
     workSecInit()
     judgesSecInit()
+    cinemaSecInit()
     priceSecInit()
     timelineSecInit()
     participantSecInit()

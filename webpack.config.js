@@ -66,6 +66,11 @@ const config = {
             chunks: ['fade']
         }),
         new HtmlWebpackPlugin({
+            filename: 'cinema.html',
+            template: 'nominations/cinema.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
             filename: 'juniors.html',
             template: 'nominations/juniors.html',
             chunks: ['juniors']
