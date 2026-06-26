@@ -38,32 +38,32 @@ const config = {
         new HtmlWebpackPlugin({
             filename: 'nominations.html',
             template: 'nominations/index.html',
-            chunks: ['nominations']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'oldschool.html',
             template: 'nominations/oldschool.html',
-            chunks: ['oldschool']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'abc.html',
             template: 'nominations/abc.html',
-            chunks: ['abc']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'future.html',
             template: 'nominations/future.html',
-            chunks: ['future']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'beard.html',
             template: 'nominations/beard.html',
-            chunks: ['beard']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'fade.html',
             template: 'nominations/fade.html',
-            chunks: ['fade']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'cinema.html',
@@ -71,19 +71,24 @@ const config = {
             chunks: ['main']
         }),
         new HtmlWebpackPlugin({
+            filename: 'trends.html',
+            template: 'nominations/trends.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
             filename: 'juniors.html',
             template: 'nominations/juniors.html',
-            chunks: ['juniors']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'team.html',
             template: 'nominations/team.html',
-            chunks: ['team']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'fastfade.html',
             template: 'nominations/fastfade.html',
-            chunks: ['fastfade']
+            chunks: ['main']
         }),
         new HtmlWebpackPlugin({
             filename: 'rules.html',
