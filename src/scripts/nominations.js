@@ -161,26 +161,44 @@ const rulesSecInit = () => {
 
         return
     }
-    items.items.forEach(item => {
-        item.querySelector('.rules-sec__item-text').addEventListener('mouseenter', () => {
-            $('.js-rules-item-container').rClass('active')
-            const container = item.querySelector('.js-rules-item-container')
-            container.classList.add('active')
-        })
-    })
-    const itemImage = items.eq(0).querySelector('.js-rules-item-container')
-    const bottomItem = itemImage.getBoundingClientRect().bottom
-    const bottomImage = image.eq(0).getBoundingClientRect().bottom
-    const delta = bottomItem - bottomImage
-    if (delta === 0) return
+    const rulesInner = image.eq(0).closest('.rules-sec__inner')
+    const rulesItems = $('js-rules-items')
+    const containers = []
 
     items.items.forEach(item => {
         const container = item.querySelector('.js-rules-item-container')
-        container.style.bottom = `${delta}px`
-
+        containers.push(container)
+        rulesInner.appendChild(container)
     })
-    window.locscroll.update()
 
+    items.items.forEach((item, index) => {
+        item.querySelector('.rules-sec__item-text').addEventListener('mouseenter', () => {
+            $('.js-rules-item-container').rClass('active')
+            containers[index].classList.add('active')
+        })
+    })
+
+    const bottomItem = containers[0].getBoundingClientRect().bottom
+    const bottomImage = image.eq(0).getBoundingClientRect().bottom
+    const delta = bottomItem - bottomImage
+
+    if (delta !== 0) {
+        containers.forEach(container => {
+            container.style.bottom = `${delta}px`
+        })
+    }
+
+    if (rulesInner && rulesItems) {
+        if (!rulesInner.id) {
+            rulesInner.id = 'js-rules-inner-sticky'
+        }
+
+        rulesItems.eq(0).setAttribute('data-scroll', '')
+        rulesItems.eq(0).setAttribute('data-scroll-sticky', '')
+        rulesItems.eq(0).setAttribute('data-scroll-target', `#${rulesInner.id}`)
+    }
+
+    window.locscroll.update()
 }
 
 const judgesSecInit = () => {
