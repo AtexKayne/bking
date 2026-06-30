@@ -1496,7 +1496,8 @@
     &__item {
         flex-grow: 0;
         flex-shrink: 0;
-        padding: 100px 18px 30px;
+        padding: 20px;
+        padding-right: 12px;
         display: flex;
         align-items: flex-end;
         z-index: 2;
@@ -1505,23 +1506,25 @@
         overflow: visible;
         position: relative;
         letter-spacing: 1px;
+        background-color: var(--c-dark);
+        border-radius: 20px;
+        border: 1px solid var(--c-white);
         .t-m(16px, 1.4em);
         .t-d(20px, 1.4em);
 
-        @media (max-width: 560px) {
-            min-width: 100%;
-        }
-
         @media @phone {
-            width: 200px;
+            width: 100%;
+            padding-top: 57px;
         }
 
         @media @desktop {
             width: 266px;
+            height: 237px;
         }
 
         &-text {
             position: relative;
+            font-weight: 300;
             z-index: 1;
             color: var(--c-white);
         }
@@ -1640,8 +1643,8 @@
     }
 
     &__item-number {
-        left: 15px;
-        top: 18px;
+        left: 20px;
+        top: 20px;
         z-index: 2;
         color: var(--c-light-green);
         font-family: 'Bender black';

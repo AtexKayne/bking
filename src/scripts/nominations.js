@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
     participantSecInit()
     referencesSecInit()
     modalsInit()
-    criteriaShapeInit()
+    // criteriaShapeInit()
     lazyVideosInit()
     setTimeout(() => {
         rulesSecInit()
