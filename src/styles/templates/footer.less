@@ -37,9 +37,31 @@
     //     }
     // }
 
-    &__bottom {
+    &__docs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+
         a {
-            text-decoration: none;
+            text-underline-offset: 4px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.12em;
+            text-decoration: underline;
+            text-decoration-style: solid;
+            text-decoration-offset: 0%;
+            text-decoration-thickness: 0%;
+        }
+
+        @media @desktop {
+            gap: 20px 60px;
+
+            a {
+                font-size: 20px;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
     }
 
