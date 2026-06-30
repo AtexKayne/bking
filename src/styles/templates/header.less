@@ -6,8 +6,15 @@
     top: 0;
     height: var(--h-header);
     transition: .3s;
-    background: rgb(4, 2, 20);
-    background: linear-gradient(180deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 58%, rgba(4, 2, 20, 0) 100%);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        transition: .3s;
+        background: rgb(4, 2, 20);
+        background: linear-gradient(180deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 58%, rgba(4, 2, 20, 0) 100%);
+    }
 
     &[data-hidden='true'] {
         transform: translateY(calc(var(--h-header) * -1 - 10px));
@@ -20,8 +27,9 @@
             }
         }
 
-        @media @desktop {
-            background: transparent;
+        &::before {
+            transition-delay: .2s;
+            opacity: 0;
         }
     }
 
@@ -35,6 +43,7 @@
 
     &__container {
         height: 100%;
+        position: relative;
     }
 
     &__inner {
