@@ -13,7 +13,7 @@ const appInit = async (settings) => {
     params.width = !params.width ? node.clientWidth * ratio : params.width * ratio
     params.height = !params.height ? node.clientHeight * ratio : params.height * ratio
 
-    await app.init(params)
+    await app.init({ ...params, preference: 'webgl' })
     app.ticker.stop()
     app.stage.renderable = false
     const canvas = app.canvas
@@ -913,92 +913,60 @@ const btnsInit = () => {
     })
 }
 
-// Секция перед футером
-const hiddenSecInit = async () => {
+// Секция перед футером (CSS mask — без WebGL/WebGPU)
+const hiddenSecInit = () => {
     if (detectMobile()) return
     const section = $('js-hidden-sec')
     if (!section) return
-    const src = section.attr('data-src')
     const node = section.eq(0)
-    const width = node.clientWidth
-    const height = node.clientHeight
-    const params = { background: '#040214', width, height }
-    const app = await appInit({
-        node: node,
-        params
-    })
-    const backgroundImage = await PIXI.Assets.load(src)
-    const background = new PIXI.Sprite(backgroundImage)
-    const blurSize = 32
+    const src = section.attr('data-src')
     const radius = 200
-    let interval = null
+    const blurSize = 32
+    const maxSize = (radius + blurSize) * 2
+    let size = 1
     let posX = 0
     let posY = 0
+    let interval = null
 
-    app.stage.addChild(background)
-    background.width = width * ratio
-    background.height = height * ratio
+    const reveal = document.createElement('div')
+    reveal.className = 'hidden-sec__reveal'
+    reveal.style.backgroundImage = `url(${src})`
+    node.prepend(reveal)
 
-    const circle = new PIXI.Graphics().circle(radius + blurSize, radius + blurSize, radius).fill({ color: 0xff0000 })
-    // { strength, quality, resolution, kernelSize }
-    circle.filters = [new PIXI.BlurFilter({ strength: blurSize + 20, quality: 10 })]
-    const bounds = new PIXI.Rectangle(0, 0, (radius + blurSize) * 2, (radius + blurSize) * 2)
-    const texture = app.renderer.generateTexture({
-        target: circle,
-        resolution: 1,
-        frame: bounds,
-    })
-    const focus = new PIXI.Sprite(texture)
-    app.stage.addChild(focus)
-    background.mask = focus
+    const updateMask = () => {
+        const half = size / 2
+        const inner = Math.max(half - blurSize - 20, 0)
+        reveal.style.setProperty('--x', `${posX}px`)
+        reveal.style.setProperty('--y', `${posY}px`)
+        reveal.style.setProperty('--inner-r', `${inner}px`)
+        reveal.style.setProperty('--outer-r', `${half}px`)
+    }
 
-    app.stage.eventMode = 'static'
-    app.stage.hitArea = app.screen
-    app.stage.on('pointermove', (event) => {
-        posX = event.global.x
-        posY = event.global.y
-        focus.position.x = Math.max(posX - focus.width / 2, 0)
-        focus.position.y = Math.max(posY - focus.height / 2, 0)
-    })
-
-    focus.width = 1
-    focus.height = 1
-
-    section.on('mouseleave', () => {
-        // focus.width = 0
+    const animateSize = (target) => {
         if (interval) clearInterval(interval)
         interval = setInterval(() => {
-            const { height } = focus
-            if (height - 10 <= 1) {
-                focus.width = 1
-                focus.height = 1
-                clearInterval(interval)
+            if (target > size) {
+                size = Math.min(size + 20, target)
+                if (size >= target) clearInterval(interval)
             } else {
-                focus.width = height - 20
-                focus.height = height - 20
-                focus.position.x = Math.max(posX - focus.width / 2, 0)
-                focus.position.y = Math.max(posY - focus.height / 2, 0)
+                size = Math.max(size - 20, target)
+                if (size <= target) clearInterval(interval)
             }
+            updateMask()
         }, 10)
+    }
+
+    node.addEventListener('pointermove', (event) => {
+        const rect = node.getBoundingClientRect()
+        posX = event.clientX - rect.left
+        posY = event.clientY - rect.top
+        updateMask()
     })
 
-    section.on('mouseenter', () => {
-        // focus.width = (radius + blurSize) * 2
-        if (interval) clearInterval(interval)
-        interval = setInterval(() => {
-            const { height } = focus
-            if (height + 10 >= (radius + blurSize) * 2) {
-                focus.height = (radius + blurSize) * 2
-                focus.width = (radius + blurSize) * 2
-                clearInterval(interval)
-            } else {
-                focus.height = height + 20
-                focus.width = height + 20
-                focus.position.x = Math.max(posX - focus.width / 2, 0)
-                focus.position.y = Math.max(posY - focus.height / 2, 0)
-            }
-        }, 10)
-    })
+    section.on('mouseleave', () => animateSize(1))
+    section.on('mouseenter', () => animateSize(maxSize))
+
+    updateMask()
 }
 
 checkIsNeedVideo()

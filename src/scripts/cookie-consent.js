@@ -13,8 +13,6 @@ const cookieConsentInit = () => {
         return
     }
 
-    requestAnimationFrame(() => banner.attr('data-visible', 'true'))
-
     const dismissBanner = () => {
         localStorage.setItem(STORAGE_KEY, 'true')
         banner.attr('data-visible', 'false')
@@ -24,6 +22,29 @@ const cookieConsentInit = () => {
 
     $('js-cookie-consent-btn').on('click', dismissBanner)
     $('js-cookie-consent-close').on('click', dismissBanner)
+
+    const showBanner = () => {
+        requestAnimationFrame(() => banner.attr('data-visible', 'true'))
+    }
+
+    const loader = document.querySelector('.js-loader')
+
+    if (!loader || loader.getAttribute('data-hidden') === 'true' || window.isLoaderHide) {
+        showBanner()
+        return
+    }
+
+    const observer = new MutationObserver(() => {
+        if (loader.getAttribute('data-hidden') !== 'true') return
+
+        observer.disconnect()
+        showBanner()
+    })
+
+    observer.observe(loader, {
+        attributes: true,
+        attributeFilter: ['data-hidden'],
+    })
 }
 
 document.addEventListener('DOMContentLoaded', cookieConsentInit)

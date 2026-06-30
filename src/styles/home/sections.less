@@ -79,10 +79,10 @@
         height: 400px;
         position: absolute;
         z-index: 3;
-        background: linear-gradient(0deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 1) 50%, rgba(4, 2, 20, 0) 100%);
+        background: linear-gradient(9deg, rgba(4, 2, 20, 0.5) 10.96%, rgba(4, 2, 20, 0.5) 31.75%, rgba(4, 2, 20, 0.416149) 60.74%, rgba(4, 2, 20, 0) 87.75%);
 
         @media @desktop {
-            background: linear-gradient(0deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 50%, rgba(4, 2, 20, 0) 100%);
+            display: none;
         }
     }
 
@@ -240,9 +240,11 @@
         height: 400px;
         position: absolute;
         z-index: 3;
+        opacity: 0.5;
         background: linear-gradient(0deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 1) 50%, rgba(4, 2, 20, 0) 100%);
 
         @media @desktop {
+            display: none;
             background: linear-gradient(0deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0.75) 50%, rgba(4, 2, 20, 0) 100%);
         }
     }
@@ -265,13 +267,17 @@
             flex-grow: 0;
             flex-shrink: 0;
             width: 100%;
-            max-width: 280px;
             margin-top: 40px;
+            display: flex;
+            justify-content: center;
 
             @media @desktop {
                 width: 350px;
-                max-width: none;
                 margin-top: 0;
+
+                >* {
+                    width: 100%;
+                }
             }
         }
 
@@ -809,17 +815,30 @@
     justify-content: center;
     align-items: center;
     margin: 140px 0;
+    background: #040214;
 
     @media @desktop {
         margin: 80px 0 0;
         height: calc(100vw / 2.057);
     }
 
-    canvas {
-        top: 0;
-        left: 0;
-        z-index: 1;
+    &__reveal {
         position: absolute;
+        inset: 0;
+        z-index: 1;
+        background-size: cover;
+        background-position: center;
+        pointer-events: none;
+        mask-image: radial-gradient(
+            circle at var(--x, 50%) var(--y, 50%),
+            #000 var(--inner-r, 0px),
+            transparent var(--outer-r, 1px)
+        );
+        -webkit-mask-image: radial-gradient(
+            circle at var(--x, 50%) var(--y, 50%),
+            #000 var(--inner-r, 0px),
+            transparent var(--outer-r, 1px)
+        );
     }
 
     &__title {
