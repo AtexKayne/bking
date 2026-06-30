@@ -477,30 +477,66 @@ const sectionLineInit = () => {
     })
 }
 
+const CRITERIA_SHAPE_REF = {
+    mobile: {
+        width: 160,
+        notchInner: 29.25,
+        notchStep: 49.75,
+        notchBottom: 69.25,
+    },
+    desktop: {
+        width: 266,
+        notchInner: 39.25,
+        notchStep: 59.75,
+        notchBottom: 79.25,
+    },
+}
+
+const roundShapeCoord = (value) => Math.round(value * 10000) / 10000
+
+const clampShapeValue = (value, min, max) => Math.min(max, Math.max(min, value))
+
+const lerpShapeValue = (from, to, progress) => from + (to - from) * progress
+
+const getCriteriaNotchMetrics = (width) => {
+    const { mobile, desktop } = CRITERIA_SHAPE_REF
+    const progress = clampShapeValue(
+        (width - mobile.width) / (desktop.width - mobile.width),
+        0,
+        1,
+    )
+
+    return {
+        inner: roundShapeCoord(lerpShapeValue(mobile.notchInner, desktop.notchInner, progress)),
+        step: roundShapeCoord(lerpShapeValue(mobile.notchStep, desktop.notchStep, progress)),
+        bottom: roundShapeCoord(lerpShapeValue(mobile.notchBottom, desktop.notchBottom, progress)),
+    }
+}
+
 const buildCriteriaShapePath = (width, height) => {
-    const r = (n) => Math.round(n * 10000) / 10000
-    const dy = (height - 187) * 0.2
-    const yNotchInner = r(29.25 + dy)
-    const yNotchStep = r(49.75 + dy)
-    const yNotchBottom = r(69.25 + dy)
-    const yNotchCurve = r(yNotchStep - 9.1782)
     const radius = 20
+    const stroke = 0.5
     const topRight = width - radius
-    const bottomY = height - radius
+    const rightX = width - stroke
+    const bottomY = height - stroke
+    const bottomCornerY = height - radius
+    const { inner: yNotchInner, step: yNotchStep, bottom: yNotchBottom } = getCriteriaNotchMetrics(width)
+    const yNotchCurve = roundShapeCoord(yNotchStep - 9.1782)
+    const yNotchBottomCurve = roundShapeCoord(yNotchBottom - 10.7696)
 
     return [
-        `M86.5 0.5H${topRight}`,
-        `C${r(width - 9.23)} 0.5 ${width - 0.5} 9.23045 ${width - 0.5} ${radius}`,
-        `V${bottomY}`,
-        `C${width - 0.5} ${r(height - 9.23)} ${r(width - 9.23)} ${height - 0.5} ${topRight} ${height - 0.5}`,
+        `M86.5 ${stroke}H${topRight}`,
+        `C${roundShapeCoord(width - 9.23)} ${stroke} ${rightX} 9.23045 ${rightX} ${radius}`,
+        `V${bottomCornerY}`,
+        `C${rightX} ${roundShapeCoord(height - 9.23)} ${roundShapeCoord(width - 9.23)} ${bottomY} ${topRight} ${bottomY}`,
         `H${radius}`,
-        `C9.23045 ${height - 0.5} 0.5 ${r(height - 9.23)} 0.5 ${bottomY}`,
+        `C9.23045 ${bottomY} ${stroke} ${roundShapeCoord(height - 9.23)} ${stroke} ${bottomCornerY}`,
         `V${yNotchBottom}`,
-        `C0.5 ${r(yNotchBottom - 10.7696)} 9.23045 ${yNotchStep} ${radius} ${yNotchStep}`,
+        `C${stroke} ${yNotchBottomCurve} 9.23045 ${yNotchStep} ${radius} ${yNotchStep}`,
         `H46.5`,
         `C57.8218 ${yNotchStep} 67 ${yNotchCurve} 67 ${yNotchInner}`,
         `V${radius}`,
-        `C67 9.23045 75.7304 0.5 86.5 0.5Z`,
+        `C67 9.23045 75.7304 ${stroke} 86.5 ${stroke}Z`,
     ].join('')
 }
 

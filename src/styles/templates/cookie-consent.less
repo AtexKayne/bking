@@ -1,0 +1,110 @@
+.cookie-consent {
+    position: fixed;
+    z-index: 11;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    padding-top: 44px;
+    background-color: var(--c-dark-violet);
+    border: 1px solid var(--c-white);
+    border-radius: 20px;
+    color: var(--c-white);
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    transition: opacity var(--ts), transform var(--ts);
+
+    &[data-visible='true'] {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
+
+    @media @desktop {
+        left: auto;
+        right: 24px;
+        bottom: 24px;
+        width: 100%;
+        max-width: 600px;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 48px 16px 20px;
+    }
+
+    &__close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 12px;
+        height: 12px;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: var(--c-white);
+        -webkit-tap-highlight-color: transparent;
+        transition: opacity var(--ts);
+
+        svg {
+            display: block;
+        }
+
+        @media @desktop {
+            top: 20px;
+            right: 20px;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
+    &__text {
+        margin: 0;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        font-size: 14px;
+        line-height: 18px;
+
+        @media @desktop {
+            flex: 1;
+        }
+    }
+
+    &__btn {
+        flex-shrink: 0;
+        align-self: flex-end;
+        padding: 11px 32px 7px;
+        font-family: "HelveticaNeueCyr", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.3em;
+        color: var(--c-dark);
+        background-color: var(--c-white);
+        border: 1px solid var(--c-white);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: var(--ts);
+
+        @media @desktop {
+            align-self: center;
+            margin-left: auto;
+            padding: 7px 20px 5px 20px;
+            font-size: 16px;
+            border-radius: 30px;
+
+            &:hover {
+                background-color: transparent;
+                color: var(--c-white);
+            }
+        }
+    }
+}

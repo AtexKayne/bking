@@ -45,8 +45,8 @@
                         Фестиваля барбер-культуры 2О26
                     </div>
                     <div class="info-sec__buttons">
-                        <div class="btn btn--lg btn--primary js-btn">
-                            ПОДАТЬ ЗАЯВКУ
+                        <div data-disabled="true" class="btn btn--lg btn--primary js-btn">
+                            <nobr>ПОДАТЬ ЗАЯВКУ — СКОРО!</nobr>
                         </div>
                         <div data-scroll="#nominations" class="btn btn--lg btn--secondary js-btn js-scroll-to">
                             чекнуть номинации
@@ -355,6 +355,7 @@
         <%= require('html-loader!./templates/hidden-sec.html').default %>
         <%= require('html-loader!./templates/footer.html').default %>
     </div>
+    <%= require('html-loader!./templates/cookie-consent.html').default %>
 </body>
 
 </html>

@@ -63,6 +63,11 @@ body {
     transition: .3s;
     text-decoration: none;
 
+    &[data-disabled='true'] {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
     &--fill {
         width: 100%;
     }
@@ -703,8 +708,9 @@ a.mailto {
 
         @media @desktop {
             background-image: url('../images/main/2026/error-desk.png');
-            width: 1440px;
-            height: 1476px;
+            top: 270px;
+            width: 1040px;
+            height: 1076px;
         }
     }
 
@@ -712,8 +718,9 @@ a.mailto {
         position: relative;
         font-size: 160px;
         font-weight: 700;
+        font-family: 'Bender bold';
         line-height: 1em;
-        margin-top: 30px;
+        text-shadow: 5px 5px #FF00FF, -5px -5px rgb(0, 255, 0);
 
         @media @desktop {
             font-size: 220px;
@@ -737,7 +744,7 @@ a.mailto {
         margin-top: 60px;
         font-size: 16px;
         letter-spacing: 2px;
-        line-height: 1.4em;
+        line-height: 1.5em!important;
         max-width: 568px;
         text-align: center;
 

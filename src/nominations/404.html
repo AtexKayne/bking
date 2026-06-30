@@ -17,19 +17,22 @@
                 <h1 class="errors-page__title">
                     Страница не найдена
                 </h1>
-                <div class="errors-page__404 static-glitch">
+                <div class="errors-page__404">
                     4o4
                 </div>
                 <div class="errors-page__text">
                     Мы не смогли найти страницу, которую вы искали. Но вы можете вернуться на главную.
                 </div>
-    
+
                 <div class="errors-page__btn">
                     <a href="/" class="btn btn--secondary btn--fill btn--lg">На главную</a>
                 </div>
             </div>
         </div>
+
+        <%= require('html-loader!../templates/footer.html').default %>
     </div>
+    <%= require('html-loader!../templates/cookie-consent.html').default %>
 </body>
 </body>
 
