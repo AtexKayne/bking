@@ -79,7 +79,7 @@
         height: 200px;
         position: absolute;
         z-index: 3;
-background: linear-gradient(0deg,rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0) 100%);
+        background: linear-gradient(0deg, rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0) 100%);
 
         @media @desktop {
             display: none;
@@ -829,16 +829,12 @@ background: linear-gradient(0deg,rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0) 100%);
         background-size: cover;
         background-position: center;
         pointer-events: none;
-        mask-image: radial-gradient(
-            circle at var(--x, 50%) var(--y, 50%),
-            #000 var(--inner-r, 0px),
-            transparent var(--outer-r, 1px)
-        );
-        -webkit-mask-image: radial-gradient(
-            circle at var(--x, 50%) var(--y, 50%),
-            #000 var(--inner-r, 0px),
-            transparent var(--outer-r, 1px)
-        );
+        mask-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%),
+                #000 var(--inner-r, 0px),
+                transparent var(--outer-r, 1px));
+        -webkit-mask-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%),
+                #000 var(--inner-r, 0px),
+                transparent var(--outer-r, 1px));
     }
 
     &__title {
@@ -2954,6 +2950,7 @@ background: linear-gradient(0deg,rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0) 100%);
 
 .document-sec {
     padding-top: 140px;
+    color: var(--c-white);
 
     @media @phone {
         padding-bottom: 140px;
@@ -2976,16 +2973,131 @@ background: linear-gradient(0deg,rgba(4, 2, 20, 1) 0%, rgba(4, 2, 20, 0) 100%);
             line-height: 40px;
             margin: 40px 0 40px;
         }
+
+        a {
+            color: var(--c-white);
+            text-decoration: underline;
+            text-decoration-color: fade(#fff, 35%);
+            text-underline-offset: 4px;
+            transition: opacity var(--ts);
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
     }
 
     p {
         font-size: 18px;
         line-height: 1.4em;
         letter-spacing: 2px;
+        margin-bottom: 12px;
+        color: fade(#fff, 88%);
+
+        @media @phone {
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+    }
+
+    a:not(h1 a) {
+        color: var(--c-white);
+        text-decoration: underline;
+        text-decoration-color: fade(#fff, 35%);
+        text-underline-offset: 4px;
+        transition: opacity var(--ts);
+
+        &:hover {
+            opacity: 0.7;
+        }
     }
 
     b {
         font-weight: 600;
+        color: var(--c-white);
+    }
+
+    &__list-item {
+        margin-bottom: 10px;
+    }
+
+    &__table-wrap {
+        overflow-x: auto;
+        margin: 28px 0 44px;
+        border-radius: 20px;
+        border: 1px solid fade(#fff, 18%);
+        background-color: fade(#fff, 3%);
+        -webkit-overflow-scrolling: touch;
+
+        @media @phone {
+            margin: 20px 0 32px;
+            border-radius: 14px;
+        }
+    }
+
+    &__table {
+        width: 100%;
+        min-width: 720px;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.55em;
+        letter-spacing: 1px;
+
+        th,
+        td {
+            padding: 18px 20px;
+            vertical-align: top;
+            text-align: left;
+            border-bottom: 1px solid fade(#fff, 10%);
+
+            @media @phone {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+        }
+
+        thead th {
+            background-color: fade(#fff, 6%);
+            color: var(--c-white);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid fade(#fff, 22%);
+
+            @media @phone {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+        }
+
+        tbody tr {
+            transition: background-color var(--ts);
+
+            &:hover td {
+                background-color: fade(#fff, 4%);
+            }
+
+            &:last-child td {
+                border-bottom: none;
+            }
+        }
+
+        td {
+            color: fade(#fff, 88%);
+
+            br {
+                display: block;
+                margin-top: 10px;
+                content: '';
+            }
+        }
+
+        &_cols-2 {
+            min-width: 640px;
+        }
     }
 }
 

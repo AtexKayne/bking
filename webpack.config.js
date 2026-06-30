@@ -90,6 +90,21 @@ const config = {
             template: 'documents/rules.html',
             chunks: ['main']
         }),
+        new HtmlWebpackPlugin({
+            filename: 'consent.html',
+            template: 'documents/consent.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'pd-policy.html',
+            template: 'documents/pd-policy.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'cookie-policy.html',
+            template: 'documents/cookie-policy.html',
+            chunks: ['main']
+        }),
         new CopyPlugin({
             patterns: [
                 {
