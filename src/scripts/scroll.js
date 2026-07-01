@@ -1,8 +1,10 @@
 import locomotiveScroll from 'locomotive-scroll'
-import { $, detectMobile } from './helper'
+import { $, debounce, detectMobile } from './helper'
+
+const scrollEl = document.querySelector('.scroll')
 
 window.locscroll = new locomotiveScroll({
-    el: document.querySelector('.scroll'),
+    el: scrollEl,
     smooth: true,
     // tablet: {
     //     smooth: true
@@ -11,6 +13,44 @@ window.locscroll = new locomotiveScroll({
     //     smooth: true
     // }
 })
+
+const updateScroll = debounce(() => {
+    window.locscroll?.update()
+}, 100)
+
+const bindImageLoadUpdates = (root = scrollEl) => {
+    if (!root) return
+
+    root.querySelectorAll('img').forEach(img => {
+        if (img.complete) return
+        img.addEventListener('load', updateScroll, { once: true })
+        img.addEventListener('error', updateScroll, { once: true })
+    })
+}
+
+const bindScrollHeightUpdates = () => {
+    if (!scrollEl) return
+
+    bindImageLoadUpdates()
+    updateScroll()
+
+    window.addEventListener('load', updateScroll)
+    window.addEventListener('resize', updateScroll)
+
+    if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(updateScroll).observe(scrollEl)
+    }
+
+    if (document.fonts?.ready) {
+        document.fonts.ready.then(updateScroll)
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindScrollHeightUpdates)
+} else {
+    bindScrollHeightUpdates()
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const scrollLinks = $('js-scroll-to')
