@@ -259,6 +259,22 @@ body {
         }
     }
 
+    &--lg {
+        @media @phone {
+            gap: 8px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .icon-text__text {
+            .t-m(14px, 1.4em);
+            .t-d(20px, 1.4em);
+        }
+    }
+
     &__text {
         text-transform: uppercase;
         text-decoration: underline;
@@ -753,7 +769,7 @@ a.mailto {
         margin-top: 60px;
         font-size: 16px;
         letter-spacing: 2px;
-        line-height: 1.5em!important;
+        line-height: 1.5em !important;
         max-width: 568px;
         text-align: center;
 

@@ -44,11 +44,6 @@ const priceSecInit = () => {
         slidePrevClass: 'js-price-item-prev',
         slideNextClass: 'js-price-item-next',
         slideActiveClass: 'js-price-item-active',
-        breakpoints: {
-            1024: {
-                centeredSlides: false
-            }
-        },
     })
     swiper.slideTo(index)
 }
