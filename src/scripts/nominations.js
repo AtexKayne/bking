@@ -208,6 +208,24 @@ const judgesSecInit = () => {
     const prev = $('js-judges-prev')
     prev.attr('data-active', 'false')
 
+    const syncJudgesDescHeights = () => {
+        $('js-judges-item').each((item) => {
+            const desc = item.querySelector('.judges-sec__item-desc')
+            if (!desc) return
+
+            const { height, overflow, visibility } = desc.style
+            desc.style.height = 'auto'
+            desc.style.overflow = 'visible'
+            desc.style.visibility = 'hidden'
+            const measured = desc.scrollHeight
+            desc.style.height = height
+            desc.style.overflow = overflow
+            desc.style.visibility = visibility
+
+            item.style.setProperty('--judges-desc-height', `${measured}px`)
+        })
+    }
+
     const swiper = new Swiper('.js-judges', {
         slidesPerView: 'auto',
         wrapperClass: 'js-judges-inner',
@@ -233,6 +251,9 @@ const judgesSecInit = () => {
         prev.attr('data-active', progress !== 0)
         next.attr('data-active', progress !== 1)
     })
+
+    syncJudgesDescHeights()
+    window.addEventListener('resize', debounce(syncJudgesDescHeights, 200))
 
     next.on('click', () => swiper.slideNext())
     prev.on('click', () => swiper.slidePrev())
