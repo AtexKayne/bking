@@ -1274,11 +1274,9 @@
 
     &__inner {
         display: flex;
+        width: 100%;
+        overflow: visible;
         box-sizing: content-box;
-
-        @media @desktop {
-            justify-content: center;
-        }
     }
 
     &__title {
@@ -1713,6 +1711,8 @@
     &__head {
         display: flex;
         align-items: baseline;
+        position: relative;
+        z-index: 2;
         justify-content: space-between;
     }
 
@@ -2137,6 +2137,8 @@
         display: flex;
         align-items: baseline;
         justify-content: space-between;
+        position: relative;
+        z-index: 2;
     }
 
     &__title {

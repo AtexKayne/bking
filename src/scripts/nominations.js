@@ -38,6 +38,7 @@ const priceSecInit = () => {
     const swiper = new Swiper('.js-price', {
         slidesPerView: 'auto',
         centeredSlides: true,
+        centerInsufficientSlides: true,
         spaceBetween: 40,
         slideClass: 'js-price-item',
         wrapperClass: 'js-price-inner',
@@ -46,11 +47,19 @@ const priceSecInit = () => {
         slideActiveClass: 'js-price-item-active',
         breakpoints: {
             1024: {
-                centeredSlides: false
+                centeredSlides: false,
+                centerInsufficientSlides: true,
             }
         },
     })
-    swiper.slideTo(index)
+    swiper.update()
+    swiper.slideTo(index, 0)
+
+    if (window.locscroll) {
+        window.locscroll.update()
+        swiper.update()
+        swiper.slideTo(index, 0)
+    }
 }
 
 const participantSecInit = () => {
@@ -657,7 +666,6 @@ document.addEventListener('DOMContentLoaded', () => {
     workSecInit()
     judgesSecInit()
     cinemaSecInit()
-    priceSecInit()
     timelineSecInit()
     participantSecInit()
     referencesSecInit()
@@ -665,6 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // criteriaShapeInit()
     lazyVideosInit()
     setTimeout(() => {
+        priceSecInit()
         rulesSecInit()
         sectionLineInit()
     }, 2000)
