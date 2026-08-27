@@ -105,6 +105,21 @@ const config = {
             template: 'documents/cookie-policy.html',
             chunks: ['main']
         }),
+        new HtmlWebpackPlugin({
+            filename: 'barberking.html',
+            template: 'winners/barberking.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'winners-oldschool.html',
+            template: 'winners/oldschool.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'winners-cinema.html',
+            template: 'winners/cinema.html',
+            chunks: ['main']
+        }),
         new CopyPlugin({
             patterns: [
                 {

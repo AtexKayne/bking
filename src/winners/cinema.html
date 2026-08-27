@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Barber King — победители баттла Кинопроба</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <%= require('html-loader!../templates/loader.html').default %>
+    <%= require('html-loader!../templates/header.html').default %>
+    <div class="scroll">
+        <!-- ИНТРО: desktop -->
+        <section class="section font-bender is-hidden-mobile">
+            <div class="main-sec2 main-sec2--cinema">
+                <div class="main-sec2__photos">
+                    <div class="main-sec2__video">
+                        <img src="src/images/sections/winner/cinema/hero-nishman.png" alt="NISHMAN">
+                    </div>
+                    <div class="main-sec2__video">
+                        <img src="src/images/sections/winner/cinema/hero-kult.png" alt="культ Комьюнити">
+                    </div>
+                </div>
+
+                <div class="main-sec2__text">
+                    <div class="stroke-line js-line">
+                        <div class="stroke-line__container js-line-container">
+                            <div class="stroke-line__item js-line-item">
+                                <div class="line-text">Кинопроба</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-sec2__gradient"></div>
+                <div class="main-sec2__desc">
+                    <div class="main-sec2__desc-container container">
+                        <div class="main-sec2__desc-text is-hidden-mobile"></div>
+                        <div class="main-sec2__desc-name t-center">
+                            <div class="t-6 t-4:d t-u t-s4">победители баттла<br />“Кинопроба”</div>
+                            <div class="t-5 t-2:d t-u font-bender--b mt-1">NISHMAN и культ Комьюнити</div>
+                        </div>
+                        <div class="main-sec2__desc-partner is-hidden-mobile">
+                            <div class="t-10 t-s2 t-u">партнер баттла</div>
+                            <div class="mt-2">
+                                <img src="src/images/sections/winner/cinema/partner-rh-market.svg" alt="RH Market">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ИНТРО: mobile — горизонтальное -->
+        <section class="section font-bender is-hidden-desktop">
+            <div class="main-sec2">
+                <div class="main-sec2__video">
+                    <img src="src/images/sections/winner/cinema/hero-nishman.png" alt="NISHMAN">
+                </div>
+                <div class="main-sec2__text">
+                    <div class="stroke-line js-line">
+                        <div class="stroke-line__container js-line-container">
+                            <div class="stroke-line__item js-line-item">
+                                <div class="line-text">Кинопроба</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-sec__gradient"></div>
+                <div class="main-sec2__desc">
+                    <div class="main-sec2__desc-container container">
+                        <div class="main-sec2__desc-name t-center">
+                            <div class="t-9 t-u cinema-hero-label">победители баттла<br />“Кинопроба” горизонтальное видео</div>
+                            <div class="t-u font-bender--b mt-1 cinema-hero-name">NISHMAN</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ИНТРО: mobile — вертикальное -->
+        <section class="section font-bender is-hidden-desktop">
+            <div class="main-sec2">
+                <div class="main-sec2__video">
+                    <img src="src/images/sections/winner/cinema/hero-kult.png" alt="культ Комьюнити">
+                </div>
+                <div class="main-sec2__text">
+                    <div class="stroke-line js-line">
+                        <div class="stroke-line__container js-line-container">
+                            <div class="stroke-line__item js-line-item">
+                                <div class="line-text">Кинопроба</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-sec__gradient"></div>
+                <div class="main-sec2__desc">
+                    <div class="main-sec2__desc-container container">
+                        <div class="main-sec2__desc-name t-center">
+                            <div class="t-9 t-u cinema-hero-label">победители баттла<br />“Кинопроба” вертикальное видео</div>
+                            <div class="t-u font-bender--b mt-1 cinema-hero-name">культ Комьюнити</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="t-10 t-s2 t-u t-center mt-4 is-hidden-desktop">партнер баттла</div>
+            <div class="mt-2 t-center is-hidden-desktop">
+                <img src="src/images/sections/winner/cinema/partner-rh-market.svg" width="208" alt="RH Market">
+            </div>
+        </section>
+
+        <!-- РАБОТЫ ПОБЕДИТЕЛЕЙ -->
+        <section class="section">
+            <div class="container">
+                <div class="work-sec work-sec--cinema">
+                    <div class="work-sec__sub-title">
+                        <div class="t-u">Работы победителей</div>
+                    </div>
+
+                    <div class="t-12 t-4:d t-s5 t-u mt-6 cinema-sub">горизонтальное видео</div>
+                    <div data-color="green" class="cinema-winner mt-4 mt-4:d">
+                        <div class="cinema-winner__person">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">I место</div>
+                            <div class="cinema-winner__photo">
+                                <img src="src/images/sections/winner/cinema/hero-nishman.png" alt="NISHMAN">
+                            </div>
+                            <div class="cinema-winner__info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">I место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">NISHMAN</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Москва</div>
+                                <div class="mt-0.5 t-s2 t-6">Александр Баратов, Олег Бакин, Рафаил Малышев</div>
+                            </div>
+                        </div>
+                        <div class="cinema-winner__media">
+                            <a href="#" class="cinema-winner__video cinema-winner__video--h">
+                                <img src="src/images/sections/winner/cinema/video-h.png" alt="NISHMAN. Горизонтальное видео">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="t-12 t-4:d t-s5 t-u mt-10 cinema-sub">вертикальное видео</div>
+                    <div data-color="purple" class="cinema-winner cinema-winner--vertical mt-4 mt-4:d">
+                        <div class="cinema-winner__person">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">I место</div>
+                            <div class="cinema-winner__photo">
+                                <img src="src/images/sections/winner/cinema/hero-kult.png" alt="культ Комьюнити">
+                            </div>
+                            <div class="cinema-winner__info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">I место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">культ Комьюнити</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Краснодар</div>
+                                <div class="mt-0.5 t-s2 t-6">Алиса Петроченко, Дмитрий Кучер, Ксения Инокеньтевна</div>
+                            </div>
+                        </div>
+                        <div class="cinema-winner__media">
+                            <a href="#" class="cinema-winner__video cinema-winner__video--v">
+                                <img src="src/images/sections/winner/cinema/video-v.png" alt="культ Комьюнити. Вертикальное видео">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ПРИЗЁРЫ -->
+        <section class="section">
+            <div class="container">
+                <div class="work-sec work-sec--cinema">
+                    <div class="work-sec__sub-title mt-0">
+                        <div class="t-u">Призёры</div>
+                    </div>
+
+                    <div class="t-12 t-4:d t-s5 t-u mt-6 cinema-sub">горизонтальное видео</div>
+                    <div data-color="green" class="cinema-winner mt-4 mt-4:d">
+                        <div class="cinema-winner__person">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">II место</div>
+                            <div class="cinema-winner__photo">
+                                <img src="src/images/sections/winner/cinema/hero-nishman.png" alt="NISHMAN">
+                            </div>
+                            <div class="cinema-winner__info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">II место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">NISHMAN</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Москва</div>
+                                <div class="mt-0.5 t-s2 t-6">Александр Баратов, Олег Бакин, Рафаил Малышев</div>
+                            </div>
+                        </div>
+                        <div class="cinema-winner__media">
+                            <a href="#" class="cinema-winner__video cinema-winner__video--h">
+                                <img src="src/images/sections/winner/cinema/video-h.png" alt="NISHMAN. Горизонтальное видео">
+                            </a>
+                        </div>
+                    </div>
+                    <div data-color="purple" class="cinema-winner">
+                        <div class="cinema-winner__person">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">III место</div>
+                            <div class="cinema-winner__photo">
+                                <img src="src/images/sections/winner/cinema/hero-kult.png" alt="культ Комьюнити">
+                            </div>
+                            <div class="cinema-winner__info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">III место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">культ Комьюнити</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Краснодар</div>
+                                <div class="mt-0.5 t-s2 t-6">Алиса Петроченко, Дмитрий Кучер, Ксения Инокеньтевна</div>
+                            </div>
+                        </div>
+                        <div class="cinema-winner__media">
+                            <a href="#" class="cinema-winner__video cinema-winner__video--h">
+                                <img src="src/images/sections/winner/cinema/video-h.png" alt="культ Комьюнити. Горизонтальное видео">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="t-12 t-4:d t-s5 t-u mt-10 cinema-sub">вертикальное видео</div>
+                    <div data-color="green" class="cinema-winner cinema-winner--vertical mt-4 mt-4:d">
+                        <div class="cinema-winner__person">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">II место</div>
+                            <div class="cinema-winner__photo">
+                                <img src="src/images/sections/winner/cinema/hero-nishman.png" alt="NISHMAN">
+                            </div>
+                            <div class="cinema-winner__info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">II место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">NISHMAN</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Москва</div>
+                                <div class="mt-0.5 t-s2 t-6">Александр Баратов, Олег Бакин, Рафаил Малышев</div>
+                            </div>
+                        </div>
+                        <div class="cinema-winner__media">
+                            <a href="#" class="cinema-winner__video cinema-winner__video--v">
+                                <img src="src/images/sections/winner/cinema/video-v.png" alt="NISHMAN. Вертикальное видео">
+                            </a>
+                        </div>
+                    </div>
+                    <div data-color="purple" class="cinema-winner cinema-winner--vertical">
+                        <div class="cinema-winner__person">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">III место</div>
+                            <div class="cinema-winner__photo">
+                                <img src="src/images/sections/winner/cinema/hero-kult.png" alt="культ Комьюнити">
+                            </div>
+                            <div class="cinema-winner__info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">III место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">культ Комьюнити</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Краснодар</div>
+                                <div class="mt-0.5 t-s2 t-6">Алиса Петроченко, Дмитрий Кучер, Ксения Инокеньтевна</div>
+                            </div>
+                        </div>
+                        <div class="cinema-winner__media">
+                            <a href="#" class="cinema-winner__video cinema-winner__video--v">
+                                <img src="src/images/sections/winner/cinema/video-v.png" alt="культ Комьюнити. Вертикальное видео">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ОСТАЛЬНЫЕ УЧАСТНИКИ -->
+        <section class="section">
+            <div class="container">
+                <div class="work-sec">
+                    <div class="work-sec__sub-title mt-0">
+                        <div class="t-u">Остальные участники и их работы</div>
+                        <small>Работы всех участников баттла, с которыми те заявились на конкурс.<br>Мы сохраним их здесь для истории.</small>
+                    </div>
+
+                    <div class="t-12 t-4:d t-s5 t-u mt-4 mt-6:d cinema-sub">горизонтальное видео</div>
+                    <div class="cinema-card-grid mt-4 mt-4:d">
+                        <div class="cinema-card cinema-card--h">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-2.png" alt="NISHMAN">
+                                </div>
+                                <div class="cinema-card__name">NISHMAN</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Москва</div>
+                                    <div class="cinema-card__shop">NISHMAN</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--h">
+                                <img src="src/images/sections/winner/cinema/work-h-1.png" alt="NISHMAN. Горизонтальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--h">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-1.png" alt="культ Комьюнити">
+                                </div>
+                                <div class="cinema-card__name">культ Комьюнити</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Краснодар</div>
+                                    <div class="cinema-card__shop">культ Комьюнити</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--h">
+                                <img src="src/images/sections/winner/cinema/work-h-2.png" alt="культ Комьюнити. Горизонтальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--h">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-3.png" alt="NISHMAN">
+                                </div>
+                                <div class="cinema-card__name">NISHMAN</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Краснодар</div>
+                                    <div class="cinema-card__shop">культ Комьюнити</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--h">
+                                <img src="src/images/sections/winner/cinema/work-h-3.png" alt="NISHMAN. Горизонтальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--h">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-4.png" alt="культ Комьюнити">
+                                </div>
+                                <div class="cinema-card__name">культ Комьюнити</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Краснодар</div>
+                                    <div class="cinema-card__shop">культ Комьюнити</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--h">
+                                <img src="src/images/sections/winner/cinema/work-h-4.png" alt="культ Комьюнити. Горизонтальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--h">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-1.png" alt="культ Комьюнити">
+                                </div>
+                                <div class="cinema-card__name">культ Комьюнити</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Краснодар</div>
+                                    <div class="cinema-card__shop">культ Комьюнити</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--h">
+                                <img src="src/images/sections/winner/cinema/work-h-5.png" alt="культ Комьюнити. Горизонтальное видео">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="t-12 t-4:d t-s5 t-u mt-10">вертикальное видео</div>
+                    <div class="cinema-card-grid mt-4 mt-4:d">
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-1.png" alt="Алексей Прокошев">
+                                </div>
+                                <div class="cinema-card__name">Алексей<br>Прокошев</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-v-1.png" alt="Алексей Прокошев. Вертикальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-5.png" alt="культ Комьюнити">
+                                </div>
+                                <div class="cinema-card__name">культ<br>Комьюнити</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-h-5.png" alt="культ Комьюнити. Вертикальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-3.png" alt="Алексей Прокошев">
+                                </div>
+                                <div class="cinema-card__name">Алексей<br>Прокошев</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-h-3.png" alt="Алексей Прокошев. Вертикальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-1.png" alt="Алексей Прокошев">
+                                </div>
+                                <div class="cinema-card__name">Алексей<br>Прокошев</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-h-2.png" alt="Алексей Прокошев. Вертикальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-3.png" alt="Алексей Прокошев">
+                                </div>
+                                <div class="cinema-card__name">Алексей<br>Прокошев</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-h-3.png" alt="Алексей Прокошев. Вертикальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-1.png" alt="Алексей Прокошев">
+                                </div>
+                                <div class="cinema-card__name">Алексей<br>Прокошев</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-v-1.png" alt="Алексей Прокошев. Вертикальное видео">
+                            </a>
+                        </div>
+                        <div class="cinema-card cinema-card--v">
+                            <div class="cinema-card__head">
+                                <div class="cinema-card__photo">
+                                    <img src="src/images/sections/winner/cinema/avatar-2.png" alt="Алексей Прокошев">
+                                </div>
+                                <div class="cinema-card__name">Алексей<br>Прокошев</div>
+                                <div class="cinema-card__meta">
+                                    <div class="cinema-card__city">Екатеринбург</div>
+                                    <div class="cinema-card__shop">Независимый барбер</div>
+                                </div>
+                            </div>
+                            <a href="#" class="cinema-card__video cinema-card__video--v">
+                                <img src="src/images/sections/winner/cinema/work-h-4.png" alt="Алексей Прокошев. Вертикальное видео">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СУДЬИ -->
+        <section class="section">
+            <div class="container">
+                <div class="judges-sec">
+                    <div class="judges-sec__head">
+                        <div class="judges-sec__title">
+                            <span class="t-5 t-2:d t-s5 t-u">Судьи 2026</span>
+                        </div>
+                        <div class="judges-sec__nav">
+                            <div class="judges-sec__nav-prev js-judges-prev">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.75076 21.0585L8.75076 18.9415L30.1469 1.25L31.5078 2.9133L10.8677 20L31.5078 37.0867L30.1469 38.75L8.75076 21.0585Z" fill="white" />
+                                </svg>
+                            </div>
+                            <div class="judges-sec__nav-next js-judges-next">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="white" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="judges-sec__container js-judges">
+                        <div class="judges-sec__inner js-judges-inner">
+                            <div class="judges-sec__item js-judges-item">
+                                <div class="judges-sec__item-image">
+                                    <img src="src/images/sections/judges/image-1.jpg" alt="Олег Миронов">
+                                    <div class="judges-sec__item-filler">
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-cinema)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip-judges-cinema">
+                                                    <rect width="97" height="81" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-cinema)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <div class="judges-sec__item-name">Олег Миронов</div>
+                                    </div>
+                                </div>
+                                <div class="judges-sec__item-desc">
+                                    <div class="judges-sec__item-city">Москва</div>
+                                    <div class="judges-sec__item-info">Тренер Академии Simushka, амбассадор бренда Reuzel</div>
+                                </div>
+                            </div>
+                            <div class="judges-sec__item js-judges-item">
+                                <div class="judges-sec__item-image">
+                                    <img src="src/images/sections/judges/image-1.jpg" alt="Валерий Гребин">
+                                    <div class="judges-sec__item-filler">
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-cinema)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-cinema)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <div class="judges-sec__item-name">Валерий Гребин</div>
+                                    </div>
+                                </div>
+                                <div class="judges-sec__item-desc">
+                                    <div class="judges-sec__item-city">Москва</div>
+                                    <div class="judges-sec__item-info">Тренер Академии Simushka, амбассадор бренда Reuzel</div>
+                                </div>
+                            </div>
+                            <div class="judges-sec__item js-judges-item">
+                                <div class="judges-sec__item-image">
+                                    <img src="src/images/sections/judges/image-1.jpg" alt="Богдан Бородин">
+                                    <div class="judges-sec__item-filler">
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-cinema)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-cinema)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <div class="judges-sec__item-name">Богдан Бородин</div>
+                                    </div>
+                                </div>
+                                <div class="judges-sec__item-desc">
+                                    <div class="judges-sec__item-city">Москва</div>
+                                    <div class="judges-sec__item-info">Тренер Академии Simushka, амбассадор бренда Reuzel</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%= require('html-loader!../templates/footer.html').default %>
+    </div>
+    <%= require('html-loader!../templates/cookie-consent.html').default %>
+</body>
+
+</html>

@@ -281,18 +281,18 @@ const workSecInit = () => {
     let modalSwiperClass
 
     section.each((el) => {
-        const turn = el.$('js-works-turn')
+        // const turn = el.$('js-works-turn')
         const isEmpty = typeof el.getAttribute('empty') === 'string'
         const isWinner = typeof el.getAttribute('winner') === 'string'
         let currentSide = 'main'
 
-        turn.on('click', () => {
-            currentSide = currentSide === 'main' ? 'alter' : 'main'
-            el.dataset.side = currentSide
+        // turn.on('click', () => {
+        //     currentSide = currentSide === 'main' ? 'alter' : 'main'
+        //     el.dataset.side = currentSide
 
-            if (!isWinner && !detectMobile()) return
-            setTimeout(() => locscroll.update(), 300)
-        })
+        //     if (!isWinner && !detectMobile()) return
+        //     setTimeout(() => locscroll.update(), 300)
+        // })
 
         if (isEmpty) return
 

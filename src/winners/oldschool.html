@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Barber King — победитель баттла Олдскул</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <%= require('html-loader!../templates/loader.html').default %>
+    <%= require('html-loader!../templates/header.html').default %>
+    <div class="scroll">
+        <!-- ИНТРО -->
+        <section class="section font-bender">
+            <div class="main-sec2">
+                <div class="main-sec2__video">
+                    <img src="src/images/sections/winner/oldschool/hero.png" alt="Евгения Ефремова">
+                </div>
+
+                <div class="main-sec2__text">
+                    <div class="stroke-line js-line">
+                        <div class="stroke-line__container js-line-container">
+                            <div class="stroke-line__item js-line-item">
+                                <div class="line-text">Олдскул</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-sec__gradient"></div>
+                <div class="main-sec2__desc">
+                    <div class="main-sec2__desc-container container">
+                        <div class="main-sec2__desc-text is-hidden-mobile"></div>
+                        <div class="main-sec2__desc-name t-center">
+                            <div class="t-6 t-4:d t-u t-s4">победитель баттла<br />“Олдскул”</div>
+                            <div class="t-5 t-2:d t-u font-bender--b mt-1">Евгения Ефремова</div>
+                        </div>
+                        <div class="main-sec2__desc-partner is-hidden-mobile">
+                            <div class="t-10 t-s2 t-u">партнер баттла</div>
+                            <div class="mt-2">
+                                <img src="src/images/sections/winner/oldschool/partner-reuzel.png" alt="Reuzel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="t-10 t-s2 t-u t-center mt-4 is-hidden-desktop">партнер баттла</div>
+            <div class="mt-2 t-center is-hidden-desktop">
+                <img src="src/images/sections/winner/oldschool/partner-reuzel.png" width="80" alt="Reuzel">
+            </div>
+        </section>
+
+        <!-- ПРИЗЁРЫ -->
+        <section class="section">
+            <div class="container">
+                <div class="work-sec">
+                    <div class="work-sec__sub-title">
+                        <div class="t-u">Призёры</div>
+                    </div>
+                    <div class="work-sec__final mt-4 mt-6:d">
+                        <div class="work-sec__final-item">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">II место</div>
+                            <div class="work-sec__final-item-image">
+                                <img src="src/images/sections/winner/oldschool/balykshova.png" alt="Арина Балыкшова" />
+                            </div>
+                            <div class="work-sec__final-item-info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">II место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">Арина Балыкшова</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Краснодар</div>
+                                <div class="mt-0.5 t-s2 t-6">Работаю на себя</div>
+                            </div>
+                        </div>
+                        <div class="work-sec__final-item">
+                            <div class="t-5 t-s2 font-bender--w is-hidden-desktop static-glitch">III место</div>
+                            <div class="work-sec__final-item-image">
+                                <img src="src/images/sections/winner/oldschool/efremova.png" alt="Евгения Ефремова" />
+                            </div>
+                            <div class="work-sec__final-item-info">
+                                <div class="t-5 t-s2 font-bender--w is-hidden-mobile static-glitch">III место</div>
+                                <div class="mt-2 mt-4:d t-5 t-4:d font-bender--w">Евгения Ефремова</div>
+                                <div class="mt-2 t-s2 t-6 t-u">Екатеринбург</div>
+                                <div class="mt-0.5 t-s2 t-6">Работаю на себя</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ПОЛУФИНАЛИСТЫ -->
+        <section class="section">
+            <div class="container">
+                <div class="work-sec">
+                    <div class="work-sec__sub-title mt-0">
+                        <div class="t-u">Полуфиналисты</div>
+                        <small>Остальные 7 участников, которые вышли в полуфинал в своей номинации.</small>
+                    </div>
+                    <div class="work-sec__cards mt-4 mt-6:d">
+                        <div data-color="green" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-gavrushev.png" alt="Сергей Гаврушев">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Сергей<br>Гаврушев</div>
+                                <div class="participant-sec__item-text">Самара</div>
+                                <div class="participant-sec__item-work">Барбершоп Big Bro</div>
+                            </div>
+                        </div>
+                        <div data-color="purple" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-petrova.jpg" alt="Света Петрова">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Света<br>Петрова</div>
+                                <div class="participant-sec__item-text">Санкт-Петербург</div>
+                                <div class="participant-sec__item-work">Барбершоп TOPGUN</div>
+                            </div>
+                        </div>
+                        <div data-color="green" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-gavrushev.png" alt="Сергей Гаврушев">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Сергей<br>Гаврушев</div>
+                                <div class="participant-sec__item-text">Самара</div>
+                                <div class="participant-sec__item-work">Барбершоп Big Bro</div>
+                            </div>
+                        </div>
+                        <div data-color="purple" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-petrova.jpg" alt="Света Петрова">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Света<br>Петрова</div>
+                                <div class="participant-sec__item-text">Санкт-Петербург</div>
+                                <div class="participant-sec__item-work">Барбершоп TOPGUN</div>
+                            </div>
+                        </div>
+                        <div data-color="purple" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-petrova.jpg" alt="Света Петрова">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Света<br>Петрова</div>
+                                <div class="participant-sec__item-text">Санкт-Петербург</div>
+                                <div class="participant-sec__item-work">Барбершоп TOPGUN</div>
+                            </div>
+                        </div>
+                        <div data-color="green" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-gavrushev.png" alt="Сергей Гаврушев">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Сергей<br>Гаврушев</div>
+                                <div class="participant-sec__item-text">Самара</div>
+                                <div class="participant-sec__item-work">Барбершоп Big Bro</div>
+                            </div>
+                        </div>
+                        <div data-color="purple" class="participant-sec__item">
+                            <div class="participant-sec__item-image">
+                                <img src="src/images/sections/winner/oldschool/avatar-petrova.jpg" alt="Света Петрова">
+                            </div>
+                            <div class="participant-sec__item-side-l">
+                                <div class="participant-sec__item-name t-u">Света<br>Петрова</div>
+                                <div class="participant-sec__item-text">Санкт-Петербург</div>
+                                <div class="participant-sec__item-work">Барбершоп TOPGUN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ОСТАЛЬНЫЕ УЧАСТНИКИ -->
+        <section class="section">
+            <div class="container">
+                <div class="work-sec">
+                    <div class="work-sec__sub-title mt-0">
+                        <div class="t-u">Остальные участники и их работы</div>
+                        <small>Работы всех участников баттла, с которыми те заявились на конкурс. Мы сохраним их здесь для истории.</small>
+                    </div>
+                    <div class="mt-4 mt-6:d"></div>
+
+                    <div data-color="green" class="work-sec__wrapper js-works">
+                        <div class="work-sec__container">
+                            <div class="work-sec__info js-work-info">
+                                <div class="work-sec__author-image">
+                                    <img src="src/images/sections/winner/oldschool/avatar-prokoshev.png" alt="Алексей Прокошев" />
+                                </div>
+                                <div class="work-sec__author-name font-bender--b t-u">Алексей Прокошев</div>
+                                <div class="work-sec__author-city t-u">Екатеринбург</div>
+                                <div class="work-sec__author-info">Независимый барбер</div>
+                            </div>
+                            <div class="work-sec__prev js-works-prev">
+                                <svg style="transform: rotate(180deg);" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div class="work-sec__inner js-work-inner">
+                                <div class="work-sec__works js-works-swiper-container">
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-1.png" data-fullsize="src/images/sections/winner/oldschool/work-1.png" alt="Алексей Прокошев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-2.png" data-fullsize="src/images/sections/winner/oldschool/work-2.png" alt="Алексей Прокошев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-3.png" data-fullsize="src/images/sections/winner/oldschool/work-3.png" alt="Алексей Прокошев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-1.png" data-fullsize="src/images/sections/winner/oldschool/work-1.png" alt="Алексей Прокошев. Работы автора" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="work-sec__next js-works-next">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div data-active="false" class="work-sec__inner-side">
+                                <div class="work-sec__inner-side-container js-work-inner-container">
+                                    <div class="work-sec__title">Девиз:</div>
+                                    <div class="work-sec__subtitle font-bender--b">Ваш стиль - моя забота</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-color="purple" class="work-sec__wrapper js-works">
+                        <div class="work-sec__container">
+                            <div class="work-sec__info js-work-info">
+                                <div class="work-sec__author-image">
+                                    <img src="src/images/sections/winner/oldschool/avatar-sirozhev.png" alt="Камол Сирожев" />
+                                </div>
+                                <div class="work-sec__author-name font-bender--b t-u">Камол Сирожев</div>
+                                <div class="work-sec__author-city t-u">Узбекистан Самарканд</div>
+                                <div class="work-sec__author-info">Барбершоп Eleven</div>
+                            </div>
+                            <div class="work-sec__prev js-works-prev">
+                                <svg style="transform: rotate(180deg);" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div class="work-sec__inner js-work-inner">
+                                <div class="work-sec__works js-works-swiper-container">
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-4.png" data-fullsize="src/images/sections/winner/oldschool/work-4.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-5.png" data-fullsize="src/images/sections/winner/oldschool/work-5.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-6.png" data-fullsize="src/images/sections/winner/oldschool/work-6.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="work-sec__next js-works-next">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div data-active="false" class="work-sec__inner-side">
+                                <div class="work-sec__inner-side-container js-work-inner-container">
+                                    <div class="work-sec__title">Девиз:</div>
+                                    <div class="work-sec__subtitle font-bender--b">Ваш стиль - моя забота</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-color="green" class="work-sec__wrapper js-works">
+                        <div class="work-sec__container">
+                            <div class="work-sec__info js-work-info">
+                                <div class="work-sec__author-image">
+                                    <img src="src/images/sections/winner/oldschool/avatar-gavrushev.png" alt="Сергей Гаврушев" />
+                                </div>
+                                <div class="work-sec__author-name font-bender--b t-u">Сергей Гаврушев</div>
+                                <div class="work-sec__author-city t-u">Самара</div>
+                                <div class="work-sec__author-info">Барбершоп Big Bro</div>
+                            </div>
+                            <div class="work-sec__prev js-works-prev">
+                                <svg style="transform: rotate(180deg);" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div class="work-sec__inner js-work-inner">
+                                <div class="work-sec__works js-works-swiper-container">
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-7.png" data-fullsize="src/images/sections/winner/oldschool/work-7.png" alt="Сергей Гаврушев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-8.png" data-fullsize="src/images/sections/winner/oldschool/work-8.png" alt="Сергей Гаврушев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-9.png" data-fullsize="src/images/sections/winner/oldschool/work-9.png" alt="Сергей Гаврушев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-9.png" data-fullsize="src/images/sections/winner/oldschool/work-9.png" alt="Сергей Гаврушев. Работы автора" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="work-sec__next js-works-next">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div data-active="false" class="work-sec__inner-side">
+                                <div class="work-sec__inner-side-container js-work-inner-container">
+                                    <div class="work-sec__title">Девиз:</div>
+                                    <div class="work-sec__subtitle font-bender--b">Ваш стиль - моя забота</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-color="purple" class="work-sec__wrapper js-works">
+                        <div class="work-sec__container">
+                            <div class="work-sec__info js-work-info">
+                                <div class="work-sec__author-image">
+                                    <img src="src/images/sections/winner/oldschool/avatar-sirozhev.png" alt="Камол Сирожев" />
+                                </div>
+                                <div class="work-sec__author-name font-bender--b t-u">Камол Сирожев</div>
+                                <div class="work-sec__author-city t-u">Узбекистан Самарканд</div>
+                                <div class="work-sec__author-info">Барбершоп Eleven</div>
+                            </div>
+                            <div class="work-sec__prev js-works-prev">
+                                <svg style="transform: rotate(180deg);" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div class="work-sec__inner js-work-inner">
+                                <div class="work-sec__works js-works-swiper-container">
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-4.png" data-fullsize="src/images/sections/winner/oldschool/work-4.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-5.png" data-fullsize="src/images/sections/winner/oldschool/work-5.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-6.png" data-fullsize="src/images/sections/winner/oldschool/work-6.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                    <div class="work-sec__item js-works-swiper-item">
+                                        <img src="src/images/sections/winner/oldschool/work-4.png" data-fullsize="src/images/sections/winner/oldschool/work-4.png" alt="Камол Сирожев. Работы автора" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="work-sec__next js-works-next">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div data-active="false" class="work-sec__inner-side">
+                                <div class="work-sec__inner-side-container js-work-inner-container">
+                                    <div class="work-sec__title">Девиз:</div>
+                                    <div class="work-sec__subtitle font-bender--b">Ваш стиль - моя забота</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СУДЬИ -->
+        <section class="section">
+            <div class="container">
+                <div class="judges-sec">
+                    <div class="judges-sec__head">
+                        <div class="judges-sec__title">
+                            <span class="t-5 t-2:d t-s5 t-u">Судьи 2026</span>
+                        </div>
+                        <div class="judges-sec__nav">
+                            <div class="judges-sec__nav-prev js-judges-prev">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.75076 21.0585L8.75076 18.9415L30.1469 1.25L31.5078 2.9133L10.8677 20L31.5078 37.0867L30.1469 38.75L8.75076 21.0585Z" fill="white" />
+                                </svg>
+                            </div>
+                            <div class="judges-sec__nav-next js-judges-next">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M31.5071 18.9415V21.0585L10.1109 38.75L8.75 37.0867L29.3901 20L8.75 2.91331L10.1109 1.25L31.5071 18.9415Z" fill="white" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="judges-sec__container js-judges">
+                        <div class="judges-sec__inner js-judges-inner">
+                            <div class="judges-sec__item js-judges-item">
+                                <div class="judges-sec__item-image">
+                                    <img src="src/images/sections/judges/image-1.jpg" alt="Олег Миронов">
+                                    <div class="judges-sec__item-filler">
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-os)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip-judges-os">
+                                                    <rect width="97" height="81" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-os)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <div class="judges-sec__item-name">Олег Миронов</div>
+                                    </div>
+                                </div>
+                                <div class="judges-sec__item-desc">
+                                    <div class="judges-sec__item-city">Москва</div>
+                                    <div class="judges-sec__item-info">Тренер Академии Simushka, амбассадор бренда Reuzel</div>
+                                </div>
+                            </div>
+                            <div class="judges-sec__item js-judges-item">
+                                <div class="judges-sec__item-image">
+                                    <img src="src/images/sections/judges/image-1.jpg" alt="Валерий Гребин">
+                                    <div class="judges-sec__item-filler">
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-os)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-os)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <div class="judges-sec__item-name">Валерий Гребин</div>
+                                    </div>
+                                </div>
+                                <div class="judges-sec__item-desc">
+                                    <div class="judges-sec__item-city">Москва</div>
+                                    <div class="judges-sec__item-info">Тренер Академии Simushka, амбассадор бренда Reuzel</div>
+                                </div>
+                            </div>
+                            <div class="judges-sec__item js-judges-item">
+                                <div class="judges-sec__item-image">
+                                    <img src="src/images/sections/judges/image-1.jpg" alt="Богдан Бородин">
+                                    <div class="judges-sec__item-filler">
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-os)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <svg width="97" height="81" viewBox="0 0 97 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip-judges-os)">
+                                                <path d="M58 238C58 260.091 40.0914 278 18 278L-162 278C-184.091 278 -202 260.091 -202 238L-202 58C-202 35.9086 -184.091 18 -162 18L-31.3259 18C-13.9388 18 0.15619 32.095 0.156191 49.4821L0.156192 52.0423C0.156193 68.0154 13.105 80.9642 29.0781 80.9642V80.9642C45.0512 80.9642 58 93.913 58 109.886L58 238Z" fill="#1D1B2B" />
+                                            </g>
+                                        </svg>
+                                        <div class="judges-sec__item-name">Богдан Бородин</div>
+                                    </div>
+                                </div>
+                                <div class="judges-sec__item-desc">
+                                    <div class="judges-sec__item-city">Москва</div>
+                                    <div class="judges-sec__item-info">Тренер Академии Simushka, амбассадор бренда Reuzel</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%= require('html-loader!../templates/footer.html').default %>
+    </div>
+
+    <div class="modal js-modal" data-modal="work" data-open="false">
+        <div class="modal__background js-modal-close"></div>
+        <div class="modal__container">
+            <div class="work-modal">
+                <div class="work-modal__info js-work-modal-info"></div>
+                <div class="work-modal__nav">
+                    <div class="work-modal__prev js-work-modal-prev">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25.7508 41.0585L25.7508 38.9415L47.1469 21.25L48.5078 22.9133L27.8677 40L48.5078 57.0867L47.1469 58.75L25.7508 41.0585Z" fill="white" />
+                        </svg>
+                    </div>
+                    <div class="work-modal__next js-work-modal-next">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M54.5071 38.9415V41.0585L33.1109 58.75L31.75 57.0867L52.3901 40L31.75 22.9133L33.1109 21.25L54.5071 38.9415Z" fill="white" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="work-modal__swiper js-work-modal-swiper">
+                    <div class="work-modal__swiper-container js-work-modal-swiper-items"></div>
+                    <div class="work-modal__pagination js-work-modal-swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal__close js-modal-close">
+            <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M28.5 9.5L9.5 28.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M9.5 9.5L28.5 28.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+    </div>
+    <%= require('html-loader!../templates/cookie-consent.html').default %>
+</body>
+
+</html>
