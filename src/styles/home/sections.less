@@ -263,6 +263,10 @@
             padding: 0 0 60px;
         }
 
+        &--np {
+            padding-bottom: 0!important;
+        }
+
         &-btn {
             flex-grow: 0;
             flex-shrink: 0;
@@ -504,11 +508,13 @@
     margin-bottom: 200px;
     position: relative;
 
-    @media @phone {
-        &--nm {
-            height: auto;
-            margin-bottom: 0;
-        }
+    &--nm {
+        height: auto;
+        margin-bottom: 0;
+    }
+
+    @media @desktop {
+        min-height: 800px;
     }
 
     &__image {
@@ -664,8 +670,8 @@
         }
 
         @media @desktop {
-            min-width: 500px;
-            min-height: 719px;
+            min-width: 400px;
+            min-height: 500px;
             aspect-ratio: 500 / 719;
             width: calc(100vh / 1440 * 500);
             top: 150px;
@@ -4285,7 +4291,7 @@
         line-height: 1.5em;
 
         @media @phone {
-            + .cinema-card__meta {
+            +.cinema-card__meta {
                 margin-top: -14px;
             }
         }

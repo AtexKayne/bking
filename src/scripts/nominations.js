@@ -74,7 +74,7 @@ const participantSecInit = () => {
         const prev = head.$('js-participant-prev')
         const pagi = el.$('js-participant-pagination')
 
-        prev.attr('data-active', 'false')
+        if (prev) prev.attr('data-active', 'false')
 
         // items.items.forEach(item => {
         //     const btn = item.querySelector('.js-participant-item-switch')
@@ -117,13 +117,13 @@ const participantSecInit = () => {
         })
 
         if (swiper.isLocked) {
-            prev.attr('data-hidden', true)
-            next.attr('data-hidden', true)
+            if (prev) prev.attr('data-hidden', true)
+            if (next) next.attr('data-hidden', true)
             pagi.attr('data-hidden', true)
 
             const debounceResize = debounce(() => {
-                prev.attr('data-hidden', swiper.isLocked)
-                next.attr('data-hidden', swiper.isLocked)
+                if (prev) prev.attr('data-hidden', swiper.isLocked)
+                if (next) next.attr('data-hidden', swiper.isLocked)
                 pagi.attr('data-hidden', swiper.isLocked)
             }, 2000)
 
@@ -133,12 +133,12 @@ const participantSecInit = () => {
         swiper.on('transitionEnd', () => {
             const { progress } = swiper
 
-            prev.attr('data-active', progress !== 0)
-            next.attr('data-active', progress !== 1)
+            if (prev) prev.attr('data-active', progress !== 0)
+            if (next) next.attr('data-active', progress !== 1)
         })
 
-        next.on('click', () => swiper.slideNext())
-        prev.on('click', () => swiper.slidePrev())
+        if (prev) next.on('click', () => swiper.slideNext())
+        if (next) prev.on('click', () => swiper.slidePrev())
     })
 }
 
