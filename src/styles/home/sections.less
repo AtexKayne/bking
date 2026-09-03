@@ -4189,6 +4189,7 @@
         overflow: hidden;
         border-radius: 20px;
         flex-shrink: 0;
+        cursor: pointer;
 
         img {
             display: block;
@@ -4218,6 +4219,43 @@
                 max-width: 300px;
                 aspect-ratio: 300 / 533;
             }
+        }
+    }
+}
+
+.cinema-video-modal {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 24px);
+    max-width: 960px;
+    max-height: calc(100dvh - 140px);
+
+    video {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: calc(100dvh - 140px);
+        border-radius: 12px;
+        background-color: #000;
+        object-fit: contain;
+
+        @media @desktop {
+            border-radius: 20px;
+        }
+    }
+
+    &[data-orient="v"] {
+        width: auto;
+        max-width: min(360px, calc(100vw - 24px));
+        height: calc(100dvh - 140px);
+
+        video {
+            width: auto;
+            height: 100%;
+            max-width: calc(100vw - 24px);
         }
     }
 }
@@ -4324,6 +4362,7 @@
         display: block;
         overflow: hidden;
         width: 100%;
+        cursor: pointer;
 
         img {
             display: block;

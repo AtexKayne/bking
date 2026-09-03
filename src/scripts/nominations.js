@@ -608,6 +608,46 @@ const criteriaShapeInit = () => {
     })
 }
 
+const cinemaVideoModalInit = () => {
+    const triggers = $('js-cinema-video')
+    const modal = $('js-modal[data-modal="video"]')
+    if (!triggers || !modal) return
+
+    const modalElem = modal.eq(0)
+    const playerWrap = modalElem.$('js-cinema-video-modal')
+    const player = modalElem.$('js-cinema-video-player')
+    if (!playerWrap || !player) return
+
+    const playerEl = player.eq(0)
+    const wrapEl = playerWrap.eq(0)
+
+    const stopPlayer = () => {
+        playerEl.pause()
+        playerEl.removeAttribute('src')
+        playerEl.load()
+        if (window.locscroll) window.locscroll.start()
+    }
+
+    triggers.on('click', event => {
+        event.preventDefault()
+        const trigger = event.currentTarget
+        const src = trigger.getAttribute('href')
+        if (!src || src === '#') return
+
+        wrapEl.dataset.orient = trigger.dataset.orient || 'h'
+        playerEl.src = src
+        modal.attr('data-open', true)
+        if (window.locscroll) window.locscroll.stop()
+
+        const playPromise = playerEl.play()
+        if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {})
+        }
+    })
+
+    modalElem.$('js-modal-close').on('click', stopPlayer)
+}
+
 const cinemaSecInit = () => {
     const sections = $('js-cinema')
     if (!sections) return
@@ -666,6 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
     workSecInit()
     judgesSecInit()
     cinemaSecInit()
+    cinemaVideoModalInit()
     timelineSecInit()
     participantSecInit()
     referencesSecInit()
